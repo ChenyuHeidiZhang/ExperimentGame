@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background1"
+    android:orientation="vertical"
+    tools:context="com.example.chenyuzhang.experimentgame.QuestionActivity">
+
+    <Button
+        android:id="@+id/button_pause"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:text="@string/pause" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/option1"
+            android:layout_width="250dp"
+            android:layout_height="700dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/pink">
+
+            <com.wajahatkarim3.easyflipview.EasyFlipView
+                android:id="@+id/flip_view_dollar1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:flipOnTouch="true"
+                app:flipEnabled="true"
+                app:flipDuration="400"
+                app:flipType="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_dollar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"
+                    android:text="50"
+                    android:clickable="true"
+                    android:onClick="onClick"/>
+
+                <ImageView
+                    android:id="@+id/image_view_dollar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dollar1" />
+
+            </com.wajahatkarim3.easyflipview.EasyFlipView>
+
+            <com.wajahatkarim3.easyflipview.EasyFlipView
+                android:id="@+id/flip_view_probability1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="50dp"
+                app:flipOnTouch="true"
+                app:flipEnabled="true"
+                app:flipDuration="400"
+                app:flipType="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_probability1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"
+                    android:text="50"/>
+
+                <ImageView
+                    android:id="@+id/image_view_probability1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability1" />
+
+            </com.wajahatkarim3.easyflipview.EasyFlipView>
+
+            <Button
+                android:id="@+id/button_select1"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/select"/>
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/option2"
+            android:layout_width="250dp"
+            android:layout_height="700dp"
+            android:layout_toRightOf="@+id/option1"
+            android:layout_marginLeft="50dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/green">
+
+            <com.wajahatkarim3.easyflipview.EasyFlipView
+                android:id="@+id/flip_view_dollar2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:flipOnTouch="true"
+                app:flipEnabled="true"
+                app:flipDuration="400"
+                app:flipType="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_dollar2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"
+                    android:text="50"/>
+
+                <ImageView
+                    android:id="@+id/image_view_dollar2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dollar1" />
+
+            </com.wajahatkarim3.easyflipview.EasyFlipView>
+
+            <com.wajahatkarim3.easyflipview.EasyFlipView
+                android:id="@+id/flip_view_probability2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="50dp"
+                app:flipOnTouch="true"
+                app:flipEnabled="true"
+                app:flipDuration="400"
+                app:flipType="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_probability2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50dp"
+                    android:textColor="@color/white"
+                    android:text="50"/>
+
+                <ImageView
+                    android:id="@+id/image_view_probability2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability1" />
+
+            </com.wajahatkarim3.easyflipview.EasyFlipView>
+
+            <Button
+                android:id="@+id/button_select2"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/select"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/time_in_nanoseconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:textSize="50dp"
+        android:text="100"/>
+
+</RelativeLayout>

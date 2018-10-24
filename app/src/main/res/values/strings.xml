@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Experiment Game</string>
+    <string name="title_activity_question">QuestionActivity</string>
+
+    <string name="play_game">Play Game</string>
+    <string name="quit">Quit</string>
+
+    <string name="pause">Pause</string>
+    <string name="select">Select</string>
+</resources>

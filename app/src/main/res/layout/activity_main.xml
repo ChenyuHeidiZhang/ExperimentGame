@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background1"
+    tools:context="com.example.chenyuzhang.experimentgame.MainActivity">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
+
+    <Button
+        android:id="@+id/button_playGame"
+        android:layout_width="500dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/green"
+        android:text="@string/play_game" />
+
+    <Button
+        android:id="@+id/button_quit"
+        android:layout_width="500dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/green"
+        android:text="@string/quit" />
+</LinearLayout>
