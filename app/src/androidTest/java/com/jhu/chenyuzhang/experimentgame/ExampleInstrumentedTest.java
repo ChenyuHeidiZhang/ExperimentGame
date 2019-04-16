@@ -1,4 +1,4 @@
-package com.example.chenyuzhang.experimentgame;
+package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

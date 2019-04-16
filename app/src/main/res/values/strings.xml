@@ -2,9 +2,19 @@
     <string name="app_name">Experiment Game</string>
     <string name="title_activity_question">QuestionActivity</string>
 
+    <string name="intro">You will see a screen with options as shown above. Each rectangle corresponds to one choice you can make. To learn more about the options, tap on the $ sign for the virtual money it may earn you and the dice for the probability that you actually receive this virtual money. You can tap on the symbols as much as you want. When you have decided, tap on the select button.</string>
+
     <string name="play_game">Play Game</string>
     <string name="quit">Quit</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="password">1234</string>
+    <string name="BTonOff">Bluetooth</string>
 
-    <string name="pause">Pause</string>
+    <string name="demo">TRAINING</string>
+    <string name="end_demo">END TRAINING</string>
+    <string name="finish_demo">You\'ve finished the training! \n\nGood luck playing!</string>
+
     <string name="select">Select</string>
+    <string name="next_trial">Next</string>
 </resources>

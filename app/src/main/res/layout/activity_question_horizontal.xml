@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,22 +6,21 @@
     android:layout_height="match_parent"
     android:background="@drawable/background1"
     android:orientation="vertical"
-    tools:context="com.jhu.chenyuzhang.experimentgame.QuestionActivity">
+    tools:context=".QuestionActivityHorizontal">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:gravity="center">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/option1"
-            android:layout_width="250dp"
-            android:layout_height="700dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:orientation="vertical"
+            android:layout_width="650dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
             android:gravity="center"
             android:background="@color/blue">
 
@@ -30,7 +28,8 @@
                 android:id="@+id/view_animator_dollar1"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginTop="50dp">
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
 
                 <ImageView
                     android:id="@+id/image_view_dollar1"
@@ -52,12 +51,14 @@
 
             </ViewAnimator>
 
-
             <ViewAnimator
                 android:id="@+id/view_animator_probability1"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginTop="50dp">
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="200dp"
+                android:layout_marginStart="200dp">
 
                 <ImageView
                     android:id="@+id/image_view_probability1"
@@ -81,22 +82,24 @@
 
             <Button
                 android:id="@+id/button_select1"
-                android:layout_width="200dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="80dp"
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="400dp"
+                android:layout_marginStart="400dp"
                 android:text="@string/select"
                 android:textSize="20sp"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/option2"
-            android:layout_width="250dp"
-            android:layout_height="700dp"
-            android:layout_toRightOf="@+id/option1"
-            android:layout_marginLeft="50dp"
-            android:orientation="vertical"
+            android:layout_width="650dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="150dp"
+            android:orientation="horizontal"
             android:gravity="center"
             android:background="@color/green">
 
@@ -104,7 +107,8 @@
                 android:id="@+id/view_animator_dollar2"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginTop="50dp">
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
 
                 <ImageView
                     android:id="@+id/image_view_dollar2"
@@ -130,7 +134,10 @@
                 android:id="@+id/view_animator_probability2"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginTop="50dp">
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="200dp"
+                android:layout_marginStart="200dp">
 
                 <ImageView
                     android:id="@+id/image_view_probability2"
@@ -154,14 +161,17 @@
 
             <Button
                 android:id="@+id/button_select2"
-                android:layout_width="200dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="80dp"
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="400dp"
+                android:layout_marginStart="400dp"
                 android:text="@string/select"
                 android:textSize="20sp"/>
 
-        </LinearLayout>
-    </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/text_view_test"

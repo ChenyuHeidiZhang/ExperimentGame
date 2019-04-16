@@ -1,4 +1,4 @@
-package com.example.chenyuzhang.experimentgame;
+package com.jhu.chenyuzhang.experimentgame;
 
 import org.junit.Test;
 

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#f92fade2</color>
-    <color name="colorPrimaryDark">#c70e2340</color>
+    <color name="colorPrimary">#2fade2</color>
+    <color name="colorPrimaryDark">#0e2340</color>
 
     <color name="pink">#c0e90b2d</color>
-    <color name="blue">#a433e4ea</color>
+    <color name="blue">#b833e4ea</color>
     <color name="green">#bb2de453</color>
     <color name="white">#ffffff</color>
     <color name="dark_gray">#3b3838</color>
+    <color name="pinky">#fcff6980</color>
+    <color name="yellow">#fcfff64b</color>
 
 
-    <color name="black_overlay">#66000000</color>
+    <color name="black_overlay">#82000000</color>
 </resources>

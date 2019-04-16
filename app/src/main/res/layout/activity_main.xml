@@ -5,27 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:background="@drawable/background1"
-    tools:context="com.example.chenyuzhang.experimentgame.MainActivity">
+    tools:context="com.jhu.chenyuzhang.experimentgame.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/button_signOut"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="@string/sign_out"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/button_BT"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="50dp"
+            android:text="@string/BTonOff"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/button_sound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Play Sound" />
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/intro" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_gravity="center"
+        android:text="@string/intro"
+        android:textColor="@color/white"
+        android:textSize="30sp"/>
 
     <Button
         android:id="@+id/button_playGame"
         android:layout_width="500dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
         android:background="@color/green"
-        android:text="@string/play_game" />
+        android:text="@string/play_game"
+        android:textColor="@color/black_overlay"
+        android:textSize="40sp" />
 
-    <Button
-        android:id="@+id/button_quit"
-        android:layout_width="500dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/green"
-        android:text="@string/quit" />
 </LinearLayout>

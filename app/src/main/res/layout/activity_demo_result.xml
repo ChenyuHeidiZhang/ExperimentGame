@@ -7,7 +7,7 @@
     android:background="@drawable/background1"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.jhu.chenyuzhang.experimentgame.ResultActivity">
+    tools:context="com.jhu.chenyuzhang.experimentgame.DemoResultActivity">
 
     <ImageView
         android:id="@+id/image_view_congrats"
