@@ -12,8 +12,6 @@ public class cBaseApplication extends Application {
 
     private static cBaseApplication sInstance;
 
-    //public BluetoothConnectionService myBlueComms;
-
     public static cBaseApplication getApplication() {
         return sInstance;
     }
@@ -28,7 +26,6 @@ public class cBaseApplication extends Application {
 
     public void setupBluetoothConnection(BluetoothSocket socket)
     {
-        //myBlueComms = blueComms;
         btSocket = socket;
     }
 
@@ -36,25 +33,5 @@ public class cBaseApplication extends Application {
         return btSocket;
     }
 
-
-    //public BluetoothConnectionService myBlueComms;
-
-    /*private static final UUID MY_UUID_INSECURE =
-            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
-
-    @Override
-    public void onCreate()
-    {
-        super.onCreate();
-        myBlueComms = new BluetoothConnectionService(cBaseApplication.this);
-
-    } */
-
-    /*public void startBTConnection(BluetoothDevice device, UUID uuid){
-        Log.d(TAG, "startBTConnection: Initializing RFCOM Bluetooth Connection.");
-
-        //mBluetoothConnection.startClient(device,uuid);
-        myBlueComms.startClient(device,uuid);
-    } */
 
 }

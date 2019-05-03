@@ -34,7 +34,6 @@
         <activity android:name=".DemoActivity" />
         <activity android:name=".DemoActivityHorizontal" />
         <activity android:name=".DemoResultActivity" />
-        <activity android:name=".BluetoothActivity" />
     </application>
 
 </manifest>
