@@ -170,7 +170,7 @@ public class BluetoothActivity2 extends AppCompatActivity {
                                 byte b = packetBytes[i];
                                 if(b == delimiter)
                                 {
-                                    bytey[] encodedBytes = new byte[readBufferPosition];
+                                    byte[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
