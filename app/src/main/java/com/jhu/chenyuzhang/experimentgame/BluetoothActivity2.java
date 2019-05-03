@@ -89,12 +89,12 @@ public class BluetoothActivity2 extends AppCompatActivity {
         });
     }
 
-    public void findBT()
-    {
+    public void findBT() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(mBluetoothAdapter == null)
         {
             myLabel.setText("No bluetooth adapter available");
+            return;
         } else {
             Log.d(TAG, "Bluetooth adapter is not null");
         }
@@ -111,15 +111,17 @@ public class BluetoothActivity2 extends AppCompatActivity {
             Log.d(TAG, "pairedDevices>0");
             for(BluetoothDevice device : pairedDevices)
             {
-                if(device.getName().equals("J205"))
+                if(device.getName().equals("iPhone"))
                 {
                     mmDevice = device;
+
                     ParcelUuid[] uuids = device.getUuids();
                     try {
                         openBT(uuids);
                     } catch (IOException e) {
                         Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
                     }
+
                     break;
                 }
             }
@@ -137,7 +139,7 @@ public class BluetoothActivity2 extends AppCompatActivity {
         mmOutputStream = mmSocket.getOutputStream();
         mmInputStream = mmSocket.getInputStream();
 
-        beginListenForData();
+        //beginListenForData();
 
         myLabel.setText("Bluetooth Opened");
     }
@@ -168,7 +170,7 @@ public class BluetoothActivity2 extends AppCompatActivity {
                                 byte b = packetBytes[i];
                                 if(b == delimiter)
                                 {
-                                    byte[] encodedBytes = new byte[readBufferPosition];
+                                    bytey[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
@@ -201,6 +203,10 @@ public class BluetoothActivity2 extends AppCompatActivity {
 
     public void sendData(String msg) throws IOException
     {
+        try {
+            mmOutputStream = mmSocket.getOutputStream();
+        } catch (IOException e) {}
+
         msg += "\n";
         mmOutputStream.write(msg.getBytes());
         myLabel.setText("Data Sent");

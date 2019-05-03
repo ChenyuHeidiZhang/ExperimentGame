@@ -56,16 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         btOnOff = findViewById(R.id.button_BT);
 
-        Button btnSound = findViewById(R.id.button_sound);
-        btnSound.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //playSound();
-                v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
-
-            }
-        });
-
 
         btOnOff.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,20 +91,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*MediaPlayer mp;
-    public void playSound(){
-        if (mp != null) {
-            mp.release();
-            mp = null;
-        }
-        try {
-            mp = MediaPlayer
-                    .create(MainActivity.this, R.raw.sound);
-            mp.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    } */
 
     public void checkPasswordDialog() {
             LayoutInflater li = LayoutInflater.from(MainActivity.this);
@@ -151,30 +127,5 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
-    /* public void showDialog(){
-        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage("Are you sure you want to sign out?");
-        builder.setCancelable(true);
-        builder.setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                isSignedIn = false;
-                prefSignedIn.edit().putBoolean(KEY_IS_SIGNED_IN, isSignedIn).apply();
-
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    } */
 
 }
