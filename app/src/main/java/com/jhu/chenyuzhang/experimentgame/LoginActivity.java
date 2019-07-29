@@ -32,10 +32,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
 
+    //Bluetooth bluetooth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //TimeDbHelper timeRecordDb = new TimeDbHelper(this);
+        //bluetooth = new Bluetooth(timeRecordDb);
+        //bluetooth.findBT();
 
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);

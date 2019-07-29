@@ -1,38 +1,30 @@
 package com.jhu.chenyuzhang.experimentgame;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "BluetoothActivity2";
     private Button playGame;
     private static boolean doDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
@@ -42,11 +34,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
     private SharedPreferences prefSignedIn;
 
-    private Button btOnOff;
+    private TimeDbHelper timeRecordDb;
+
+    private Button btnBT;
+    Bluetooth bluetooth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        timeRecordDb = new TimeDbHelper(this);
+
         setContentView(R.layout.activity_main);
         playGame = findViewById(R.id.button_playGame);
 
@@ -54,14 +51,22 @@ public class MainActivity extends AppCompatActivity {
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
 
-        btOnOff = findViewById(R.id.button_BT);
+        bluetooth = new Bluetooth(timeRecordDb);
+        btnBT = findViewById(R.id.button_bluetooth);
 
-
-        btOnOff.setOnClickListener(new View.OnClickListener() {
+        btnBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BluetoothActivity2.class);
-                startActivity(intent);
+                Context context = getApplicationContext();
+                try {
+                    //bluetooth.findBT();
+                    findBT();
+                    Toast toast = Toast.makeText(context, "bluetooth connected", Toast.LENGTH_SHORT);
+                    toast.show();
+                } catch (IOException e) {
+                    Toast toast = Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 
@@ -82,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +95,51 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void findBT() throws IOException {
+        bluetooth.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(bluetooth.mBluetoothAdapter == null)
+        {
+            Log.d(TAG,"No bluetooth adapter available");
+            return;
+        } else {
+            Log.d(TAG, "Bluetooth adapter is not null");
+        }
+
+
+        if(!bluetooth.mBluetoothAdapter.isEnabled())
+        {
+            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBluetooth, 0);
+        }
+
+
+        Set<BluetoothDevice> pairedDevices = bluetooth.mBluetoothAdapter.getBondedDevices();
+        if(pairedDevices.size() > 0)
+        {
+            Log.d(TAG, "pairedDevices>0");
+            for(BluetoothDevice device : pairedDevices)
+            {
+                if(device.getName().equals("HC-06"))
+                {
+                    bluetooth.mmDevice = device;
+
+                    ParcelUuid[] uuids = device.getUuids();
+                    bluetooth.openBT(uuids);
+
+                    /*
+                    try {
+                        bluetooth.openBT(uuids);
+                    } catch (IOException e) {
+                        Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
+                    }
+                    */
+
+                    break;
+                }
+            }
+        }
+        Log.d(TAG,"Bluetooth Device Found");
+    }
 
     public void checkPasswordDialog() {
             LayoutInflater li = LayoutInflater.from(MainActivity.this);
@@ -128,4 +177,19 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public static String getCurrentTime() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
+        String formattedDate= dateFormat.format(date);
+        return formattedDate;
+    }
+
+    public static String getBinaryTime() {
+        String time = getCurrentTime();
+        String binaryTime = "";
+        // sending numbers instead of binary string
+        // 14 characters instead of 32
+        binaryTime = time;
+        return binaryTime;
+    }
 }

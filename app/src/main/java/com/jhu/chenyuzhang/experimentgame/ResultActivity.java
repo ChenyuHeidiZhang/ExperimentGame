@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class ResultActivity extends AppCompatActivity {
@@ -17,6 +18,9 @@ public class ResultActivity extends AppCompatActivity {
     private TextView textViewSorry;
     private TextView textViewAmount;
     private Button buttonNextTrial;
+
+    TimeDbHelper timeRecordDb;
+    Bluetooth bluetooth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +34,18 @@ public class ResultActivity extends AppCompatActivity {
         textViewAmount = findViewById(R.id.text_view_result_amount);
         buttonNextTrial = findViewById(R.id.button_next_trial);
 
+        timeRecordDb = new TimeDbHelper(this);
+        bluetooth = new Bluetooth(timeRecordDb);
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                try {
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( "14", MainActivity.getCurrentTime());
+                    bluetooth.sendData(String.format ("%.2f",amountWon));
+                } catch (IOException e) {}
                 buttonNextTrial.setVisibility(View.VISIBLE);
                 if (amountWon == 0) {
                     imageViewCongrats.setVisibility(View.GONE);

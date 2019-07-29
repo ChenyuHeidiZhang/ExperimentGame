@@ -199,6 +199,8 @@
         android:layout_alignParentBottom="true"
         android:text=""
         android:textSize="100sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:background="@color/white"/>
+
 
 </RelativeLayout>

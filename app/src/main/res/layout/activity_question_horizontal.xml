@@ -174,13 +174,27 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/text_view_test2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="       "
+        android:textSize="150sp"
+        android:textColor="@color/colorTest"
+        android:background="@color/colorTest"/>
+
+    <TextView
         android:id="@+id/text_view_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:text=""
-        android:textSize="100sp"
-        android:textColor="@color/white"/>
+        android:text="       "
+        android:textSize="150sp"
+        android:textColor="@color/white"
+        android:background="@color/white" />
 
 </RelativeLayout>

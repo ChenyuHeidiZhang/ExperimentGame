@@ -2,10 +2,12 @@ package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
+import android.view.Choreographer;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ import java.util.Date;
 import java.util.Random;
 
 public class QuestionActivity extends AppCompatActivity {
+    private static final String TAG = "bluetooth";
+
     public static double totalAmountWon;
     public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
 
@@ -53,6 +58,17 @@ public class QuestionActivity extends AppCompatActivity {
     private ViewAnimator viewAnimatorProbability1;
     private ViewAnimator viewAnimatorProbability2;
 
+    private Choreographer.FrameCallback frameCallbackA1 = null;
+    private boolean frameCallbackPendingA1 = false;
+    /*
+    private Choreographer.FrameCallback frameCallbackP1 = null;
+    private boolean frameCallbackPendingP1 = false;
+    private Choreographer.FrameCallback frameCallbackA2 = null;
+    private boolean frameCallbackPendingA2 = false;
+    private Choreographer.FrameCallback frameCallbackP2 = null;
+    private boolean frameCallbackPendingP2 = false;
+    */
+
     //private LocalTime startTimeWorld;
     private String startTimeWorld;
     private long startTime;
@@ -60,9 +76,11 @@ public class QuestionActivity extends AppCompatActivity {
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
-    private int random_position = new Random().nextInt(4);
+    private int random_position = new Random().nextInt(2);
 
     private long backPressedTime;
+
+    Bluetooth bluetooth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,12 +120,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         String position = "A1P1,A2P2";
         if (random_position==1){
-            position = "P1A1,A2P2";
-            exchangeA1P1();
-        } else if(random_position==2){
-            position = "A1P1,P2A2";
-            exchangeA2P2();
-        } else if(random_position==3){
             position = "P1A1,P2A2";
             exchangeA1P1();
             exchangeA2P2();
@@ -120,20 +132,62 @@ public class QuestionActivity extends AppCompatActivity {
         loadUpdateTrialCounter();
         currentTrial = trialList.get(trialCounter-1);
         getAttributes();
+        
 
         timeRecordDb = new TimeDbHelper(this);
-        timeRecordDb.insertData(startTimeWorld, "startTrial" + trialCounter + "; Option1(Blue): A1=" + a1 + " P1=" + p1 + ", Option2(Green): A2=" + a2 + " P2=" + p2 + "; Orientation: vertical" + position);
+        timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1(Blue): A1=" + a1 + " P1=" + p1 + ", Option2(Green): A2=" + a2 + " P2=" + p2 + "; Orientation: vertical" + position);
+
+        bluetooth = new Bluetooth(timeRecordDb);
+
+        try {
+            // send trial number
+            bluetooth.timeStamper(Integer.toString(trialCounter +200),getCurrentTime());
+            // send attribute magnitudes
+            bluetooth.timeStamper(Integer.toString(16),String.format ("%.0f",a1*100));
+            bluetooth.timeStamper(Integer.toString(18),String.format ("%.0f",p1));
+            bluetooth.timeStamper(Integer.toString(17),String.format ("%.0f",a2*100));
+            bluetooth.timeStamper(Integer.toString(19),String.format ("%.0f",p2));
+
+            bluetooth.timeStamper( "20", Integer.toString(random_position));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         viewAnimatorDollar1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //for testing purposes
+                if (textViewTest.getVisibility() == View.VISIBLE) {
+                    textViewTest.setVisibility(View.GONE);
+                } else {
+                    textViewTest.setVisibility(View.VISIBLE);
+                }
+
+
                 if (viewAnimatorDollar1.getDisplayedChild() == 0) {
+                    try {
+                        // send identifier and timestamp
+                        bluetooth.timeStamper( "3", getCurrentTime());
+                    } catch (IOException e) {}
+                    //armVSyncHandlerA1();
                     viewAnimatorDollar1.showNext();
+                    try {
+                        // send identifier and timestamp
+                        bluetooth.timeStamper( "7", getCurrentTime());
+                    } catch (IOException e) {}
+
                     recordEvent("A1 "+eventClick);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             if (viewAnimatorDollar1.getDisplayedChild() == 1) {
+                                try {
+                                    // send identifier and timestamp
+                                    bluetooth.timeStamper( "16", getCurrentTime());
+                                } catch (IOException e) {}
+
                                 viewAnimatorDollar1.showNext();
                                 recordEvent("A1 "+eventTimeOut);
                             }
@@ -141,11 +195,35 @@ public class QuestionActivity extends AppCompatActivity {
                     }, 1000);
 
                     if (viewAnimatorDollar2.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "5", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorDollar2.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "9", getCurrentTime());
+                        } catch (IOException e) {}
                     } else if (viewAnimatorProbability1.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "4", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorProbability1.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "8", getCurrentTime());
+                        } catch (IOException e) {}
                     } else if (viewAnimatorProbability2.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "6", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorProbability2.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "10", getCurrentTime());
+                        } catch (IOException e) {}
                     }
                 }
 
@@ -156,26 +234,80 @@ public class QuestionActivity extends AppCompatActivity {
 
         viewAnimatorDollar2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //for testing purposes
+                if (textViewTest.getVisibility() == View.VISIBLE) {
+                    textViewTest.setVisibility(View.GONE);
+                } else {
+                    textViewTest.setVisibility(View.VISIBLE);
+                }
+
+
                 if (viewAnimatorDollar2.getDisplayedChild() == 0) {
+                    try {
+                        // send identifier and timestamp
+                        bluetooth.timeStamper( "5", getCurrentTime());
+                    } catch (IOException e) {}
                     viewAnimatorDollar2.showNext();
+                    try {
+                        // send identifier and timestamp
+                        bluetooth.timeStamper( "9", getCurrentTime());
+                    } catch (IOException e) {}
                     recordEvent("A2 " + eventClick);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             if (viewAnimatorDollar2.getDisplayedChild() == 1) {
+                                try {
+                                    // send identifier and timestamp
+                                    bluetooth.timeStamper( "16", getCurrentTime());
+                                } catch (IOException e) {}
+
                                 viewAnimatorDollar2.showNext();
+                                try {
+                                    // send identifier and timestamp
+                                    bluetooth.timeStamper( "9", getCurrentTime());
+                                } catch (IOException e) {}
                                 recordEvent("A2 " + eventTimeOut);
                             }
                         }
                     }, 1000);
 
                     if (viewAnimatorDollar1.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "3", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorDollar1.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "7", getCurrentTime());
+                        } catch (IOException e) {}
                     } else if (viewAnimatorProbability1.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "4", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorProbability1.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "8", getCurrentTime());
+                        } catch (IOException e) {}
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "8", getCurrentTime());
+                        } catch (IOException e) {}
                     } else if (viewAnimatorProbability2.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "6", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorProbability2.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "10", getCurrentTime());
+                        } catch (IOException e) {}
                     }
                 }
 
@@ -186,14 +318,35 @@ public class QuestionActivity extends AppCompatActivity {
 
         viewAnimatorProbability1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //for testing purposes
+                if (textViewTest.getVisibility() == View.VISIBLE)
+                    textViewTest.setVisibility(View.GONE);
+                else
+                    textViewTest.setVisibility(View.VISIBLE);
+
+
                 if (viewAnimatorProbability1.getDisplayedChild() == 0) {
+                    try {
+                        // send identifier and timestamp
+                        bluetooth.timeStamper( "4", getCurrentTime());
+                    } catch (IOException e) {}
                     viewAnimatorProbability1.showNext();
+                    try {
+                        // send identifier and timestamp
+                        bluetooth.timeStamper( "8", getCurrentTime());
+                    } catch (IOException e) {}
+
                     recordEvent("P1 " + eventClick);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             if (viewAnimatorProbability1.getDisplayedChild() == 1) {
+                                try {
+                                    // send identifier and timestamp
+                                    bluetooth.timeStamper( "16", getCurrentTime());
+                                } catch (IOException e) {}
                                 viewAnimatorProbability1.showNext();
                                 recordEvent("P1 " + eventTimeOut);
                             }
@@ -201,11 +354,35 @@ public class QuestionActivity extends AppCompatActivity {
                     }, 1000);
 
                     if (viewAnimatorDollar1.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "3", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorDollar1.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "7", getCurrentTime());
+                        } catch (IOException e) {}
                     } else if (viewAnimatorDollar2.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "5", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorDollar2.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "9", getCurrentTime());
+                        } catch (IOException e) {}
                     } else if (viewAnimatorProbability2.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "6", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorProbability2.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "10", getCurrentTime());
+                        } catch (IOException e) {}
                     }
                 }
 
@@ -216,14 +393,34 @@ public class QuestionActivity extends AppCompatActivity {
 
         viewAnimatorProbability2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //for testing purposes
+                if (textViewTest.getVisibility() == View.VISIBLE)
+                    textViewTest.setVisibility(View.GONE);
+                else
+                    textViewTest.setVisibility(View.VISIBLE);
+
+
                 if (viewAnimatorProbability2.getDisplayedChild() == 0) {
+                    try {
+                        // send identifier and timestamp
+                        bluetooth.timeStamper( "6", getCurrentTime());
+                    } catch (IOException e) {}
                     viewAnimatorProbability2.showNext();
+                    try {
+                        // send identifier and timestamp
+                        bluetooth.timeStamper( "10", getCurrentTime());
+                    } catch (IOException e) {}
                     recordEvent("P2 " + eventClick);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             if (viewAnimatorProbability2.getDisplayedChild() == 1) {
+                                try {
+                                    // send identifier and timestamp
+                                    bluetooth.timeStamper( "16", getCurrentTime());
+                                } catch (IOException e) {}
                                 viewAnimatorProbability2.showNext();
                                 recordEvent("P2 " + eventTimeOut);
                             }
@@ -231,11 +428,35 @@ public class QuestionActivity extends AppCompatActivity {
                     }, 1000);
 
                     if (viewAnimatorDollar1.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "3", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorDollar1.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "7", getCurrentTime());
+                        } catch (IOException e) {}
                     } else if (viewAnimatorDollar2.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "5", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorDollar2.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "9", getCurrentTime());
+                        } catch (IOException e) {}
                     } else if (viewAnimatorProbability1.getDisplayedChild() == 1) {
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "4", getCurrentTime());
+                        } catch (IOException e) {}
                         viewAnimatorProbability1.showNext();
+                        try {
+                            // send identifier and timestamp
+                            bluetooth.timeStamper( "8", getCurrentTime());
+                        } catch (IOException e) {}
                     }
                 }
 
@@ -246,12 +467,20 @@ public class QuestionActivity extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                try {
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( "12", getCurrentTime());
+                } catch (IOException e) {}
                 showResult(p1, a1,"Option1");
             }
         });
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                try {
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( "13", getCurrentTime());
+                } catch (IOException e) {}
                 showResult(p2, a2,"Option2");
             }
         });
@@ -286,14 +515,15 @@ public class QuestionActivity extends AppCompatActivity {
     //get current time in milliseconds
     private String getCurrentTime() {
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss.SSS");
+        DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
         String formattedDate= dateFormat.format(date);
         return formattedDate;
     }
 
     private void recordEvent(String event) {
-        long timeSpan = System.nanoTime() - startTime;
-        String timeString = String.format("%d", timeSpan / 1000);
+        //long timeSpan = System.nanoTime() - startTime;
+        //String timeString = String.format("%d", timeSpan / 1000);
+        String timeString = getCurrentTime();
 
         timeRecordDb.insertData(timeString, event);
     }

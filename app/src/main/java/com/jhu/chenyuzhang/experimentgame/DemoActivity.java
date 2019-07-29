@@ -2,10 +2,10 @@ package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class DemoActivity extends AppCompatActivity {
@@ -63,7 +62,7 @@ public class DemoActivity extends AppCompatActivity {
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
-    private int random_position = new Random().nextInt(4);
+    private int random_position = new Random().nextInt(2);
 
     private long backPressedTime;
 
@@ -73,19 +72,6 @@ public class DemoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
-
-        map.put("startTrial","99");
-        map.put("startTrainingTrial","98");
-        map.put("A1 "+eventClick,"11");
-        map.put("A2 "+eventClick,"12");
-        map.put("P1 "+eventClick,"21");
-        map.put("P2 "+eventClick,"22");
-        map.put("A1 "+eventTimeOut,"13");
-        map.put("A2 "+eventTimeOut,"14");
-        map.put("P1 "+eventTimeOut,"23");
-        map.put("P2 "+eventTimeOut,"24");
-        map.put("Option1", "31");
-        map.put("Option2", "32");
 
         buttonEndDemo = findViewById(R.id.button_end_demo);
 
@@ -128,12 +114,6 @@ public class DemoActivity extends AppCompatActivity {
 
         String position = "A1P1,A2P2";
         if (random_position==1){
-            position = "P1A1,A2P2";
-            exchangeA1P1();
-        } else if(random_position==2){
-            position = "A1P1,P2A2";
-            exchangeA2P2();
-        } else if(random_position==3){
             position = "P1A1,P2A2";
             exchangeA1P1();
             exchangeA2P2();
@@ -311,12 +291,10 @@ public class DemoActivity extends AppCompatActivity {
     //get current time in milliseconds
     private String getCurrentTime() {
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
         String formattedDate= dateFormat.format(date);
         return formattedDate;
     }
-
-
 
     private void recordEvent(String event) {
         long timeSpan = System.nanoTime() - startTime;
@@ -324,38 +302,8 @@ public class DemoActivity extends AppCompatActivity {
 
         timeRecordDb.insertData(timeString, event);
 
-        Log.d("BluetoothDemoActivity","get: "+ map.get("P1 "+eventTimeOut));
-        Log.d("BluetoothDemoActivity","timestring is " + timeString);
-
-        int len = timeString.length();
-        for (int i=0; i<len; i++) {
-            Log.d("BluetoothDemoActivity","get: "+ map.get("P1 "+eventTimeOut));
-            sendBT("0" + timeString.substring(i, i + 1));
-        }
-        if (event.substring(0,5).equals("start")) {
-            sendBT(map.get("startTrainingTrial"));
-        } else if (event.substring(0,6).equals("Option")){
-            sendBT(map.get(event.substring(0,7)));
-        } else {
-            sendBT(map.get(event));
-        }
-    }
-
-    private void sendBT(String input) {
-        byte[] bytes1 = input.substring(0,1).getBytes(Charset.defaultCharset());
-        //((cBaseApplication)this.getApplicationContext()).myBlueComms.write(bytes1);
-        //BluetoothActivity.mBluetoothConnection.write(bytes1);
-        try {
-            BluetoothActivity2.mmOutputStream.write(bytes1);
-        } catch (Exception e){
-            Log.d("BluetoothDemoActivity", "can't write bytes1; "+e);
-        }
-        Log.d("BluetoothDemoActivity","sending via bt "+input+" ,"+bytes1);
-
-        byte[] bytes2 = input.substring(1,2).getBytes(Charset.defaultCharset());
 
     }
-
 
     private void endDemo(){
         Intent intent = new Intent(DemoActivity.this, EndDemoActivity.class);

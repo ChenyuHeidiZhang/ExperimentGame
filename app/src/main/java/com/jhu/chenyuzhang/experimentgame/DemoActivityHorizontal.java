@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class DemoActivityHorizontal extends AppCompatActivity {
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
-    private int random_position = new Random().nextInt(4);
+    private int random_position = new Random().nextInt(2);
 
     private long backPressedTime;
 
@@ -108,12 +109,6 @@ public class DemoActivityHorizontal extends AppCompatActivity {
 
         String position = "A1P1,A2P2";
         if (random_position==1){
-            position = "P1A1,A2P2";
-            exchangeA1P1();
-        } else if(random_position==2){
-            position = "A1P1,P2A2";
-            exchangeA2P2();
-        } else if(random_position==3){
             position = "P1A1,P2A2";
             exchangeA1P1();
             exchangeA2P2();
@@ -130,6 +125,14 @@ public class DemoActivityHorizontal extends AppCompatActivity {
 
         timeRecordDb = new TimeDbHelper(this);
         timeRecordDb.insertData(startTimeWorld, "startTrainingTrial" + trialCounter + "; Option1(Blue): A1=" + a1 + " P1=" + p1 + ", Option2(Green): A2=" + a2 + " P2=" + p2 + "; Orientation: vertical; " + position);
+
+        /*
+        try {
+            MainActivity.sendData(String.valueOf(currentTrial));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
 
         viewAnimatorDollar1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -350,4 +353,5 @@ public class DemoActivityHorizontal extends AppCompatActivity {
 
         backPressedTime = System.currentTimeMillis();
     }
+
 }
