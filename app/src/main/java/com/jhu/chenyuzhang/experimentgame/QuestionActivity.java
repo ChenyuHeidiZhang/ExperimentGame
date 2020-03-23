@@ -88,7 +88,6 @@ public class QuestionActivity extends AppCompatActivity {
     // identifers maps the id of a attribute view to the code sent when it is uncovered
     // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
-    private ViewAnimator[] all_view_animators;
 
     // the code sent when an attribute view is covered after 1s
     private String identifier_cover = "16";
@@ -118,9 +117,6 @@ public class QuestionActivity extends AppCompatActivity {
         viewAnimatorProbability1 = findViewById(R.id.view_animator_probability1);
         viewAnimatorProbability2 = findViewById(R.id.view_animator_probability2);
 
-        all_view_animators = new ViewAnimator[] { viewAnimatorDollar1, viewAnimatorDollar2,
-                viewAnimatorProbability1, viewAnimatorProbability2 };
-
         startTime = System.nanoTime();
         //startTimeWorld = LocalTime.now();  --API 26, nanoseconds
         startTimeWorld = getCurrentTime();
@@ -149,15 +145,13 @@ public class QuestionActivity extends AppCompatActivity {
         Collections.shuffle(trialList);
 
         loadUpdateTrialCounter();
-        currentTrial = trialList.get(trialCounter-1);
+        currentTrial = trialList.get(trialCounter - 1);
         getAttributes();
-        
 
         timeRecordDb = new TimeDbHelper(this);
         timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1(Blue): A1=" + a1 + " P1=" + p1 + ", Option2(Green): A2=" + a2 + " P2=" + p2 + "; Orientation: vertical" + position);
 
-
-        bluetooth = new Bluetooth(timeRecordDb);
+        //bluetooth = new Bluetooth(timeRecordDb);
 
         /*
         try {
@@ -179,8 +173,8 @@ public class QuestionActivity extends AppCompatActivity {
         viewAnimatorDollar1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    attributeOnClick_test(viewAnimatorDollar1.getId(),
-                            new int[] {viewAnimatorDollar2.getId(), viewAnimatorProbability1.getId(), viewAnimatorProbability2.getId()});
+                    attributeOnClick(viewAnimatorDollar1,
+                            new ViewAnimator[] {viewAnimatorDollar2, viewAnimatorProbability1, viewAnimatorProbability2});
                 } catch (NullPointerException e) {
                     Log.d("onClickMethod", "some error");
                 }
@@ -189,23 +183,23 @@ public class QuestionActivity extends AppCompatActivity {
 
         viewAnimatorDollar2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollar2,
-                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorProbability1, viewAnimatorProbability2});
+                attributeOnClick_test(viewAnimatorDollar2.getId(),
+                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorProbability1.getId(), viewAnimatorProbability2.getId()});
 
             }
         });
 
         viewAnimatorProbability1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbability1,
-                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorDollar2, viewAnimatorProbability2});
+                attributeOnClick_test(viewAnimatorProbability1.getId(),
+                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorDollar2.getId(), viewAnimatorProbability2.getId()});
             }
         });
 
         viewAnimatorProbability2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbability2,
-                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorDollar2, viewAnimatorProbability1});
+                attributeOnClick_test(viewAnimatorProbability2.getId(),
+                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorDollar2.getId(), viewAnimatorProbability1.getId()});
             }
         });
 
@@ -263,7 +257,7 @@ public class QuestionActivity extends AppCompatActivity {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}
             */
-            recordEvent(codes[3] + " " + eventClick);
+            recordEvent(codes[2] + " " + eventClick);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();
@@ -278,7 +272,7 @@ public class QuestionActivity extends AppCompatActivity {
                         */
 
                         tappedView.showNext();
-                        recordEvent(codes[3] + " " + eventTimeOut);
+                        recordEvent(codes[2] + " " + eventTimeOut);
                     }
                 }
             }, 1000);
@@ -318,7 +312,7 @@ public class QuestionActivity extends AppCompatActivity {
 
             tappedView.showNext();  /* uncover */
 
-            recordEvent(codes[3] + " " + eventClick);
+            recordEvent(codes[2] + " " + eventClick);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();
@@ -328,7 +322,7 @@ public class QuestionActivity extends AppCompatActivity {
                     if (tappedView.getDisplayedChild() == 1) {
 
                         tappedView.showNext();
-                        recordEvent(codes[3] + " " + eventTimeOut);
+                        recordEvent(codes[2] + " " + eventTimeOut);
                     }
                 }
             }, 1000);
@@ -402,6 +396,8 @@ public class QuestionActivity extends AppCompatActivity {
         prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float)totalAmountWon).apply();
 
         recordEvent(option+" selected, $"+amountWon+" won; total amount won: $"+totalAmountWon);
+
+        timeRecordDb.close();
 
         Intent intent = new Intent(QuestionActivity.this, ResultActivity.class);
         intent.putExtra("EXTRA_AMOUNT_WON", amountWon);

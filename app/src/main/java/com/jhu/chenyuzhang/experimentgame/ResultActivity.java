@@ -35,17 +35,20 @@ public class ResultActivity extends AppCompatActivity {
         buttonNextTrial = findViewById(R.id.button_next_trial);
 
         timeRecordDb = new TimeDbHelper(this);
-        bluetooth = new Bluetooth(timeRecordDb);
+
+        //bluetooth = new Bluetooth(timeRecordDb);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                /*
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( "14", MainActivity.getCurrentTime());
                     bluetooth.sendData(String.format ("%.2f",amountWon));
                 } catch (IOException e) {}
+                */
                 buttonNextTrial.setVisibility(View.VISIBLE);
                 if (amountWon == 0) {
                     imageViewCongrats.setVisibility(View.GONE);

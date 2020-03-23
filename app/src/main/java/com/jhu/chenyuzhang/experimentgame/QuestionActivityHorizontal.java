@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 public class QuestionActivityHorizontal extends AppCompatActivity {
@@ -66,10 +68,22 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
     Bluetooth bluetooth;
 
+    // identifers maps the id of a attribute view to the code sent when it is uncovered
+    // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
+    private HashMap<Integer, String[]> identifiers = new HashMap<>();
+
+    // the code sent when an attribute view is covered after 1s
+    private String identifier_cover = "16";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_horizontal);
+
+        identifiers.put(R.id.view_animator_dollar1, new String[] {"3", "7", "A1"});
+        identifiers.put(R.id.view_animator_dollar2, new String[] {"5", "9", "A2"});
+        identifiers.put(R.id.view_animator_probability1, new String[] {"4", "8", "P1"});
+        identifiers.put(R.id.view_animator_probability2, new String[] {"6", "10", "P2"});
 
         textViewDollar1 = findViewById(R.id.text_view_dollar1);
         textViewDollar2 = findViewById(R.id.text_view_dollar2);
@@ -116,13 +130,12 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         currentTrial = trialList.get(trialCounter-1);
         getAttributes();
 
-        
         timeRecordDb = new TimeDbHelper(this);
         timeRecordDb.insertData(startTimeWorld, "startTrial" + trialCounter + "; Option1(Blue): A1=" + a1 + " P1=" + p1 + ", Option2(Green): A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal" + position);
 
+        //bluetooth = new Bluetooth(timeRecordDb);
 
-        bluetooth = new Bluetooth(timeRecordDb);
-
+        /*
         try {
             // send trial number
             bluetooth.timeStamper(Integer.toString(trialCounter + 200),getCurrentTime());
@@ -135,335 +148,112 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
 
         viewAnimatorDollar1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                //for testing purposes
-                if (textViewTest.getVisibility() == View.VISIBLE)
-                    textViewTest.setVisibility(View.GONE);
-                else
-                    textViewTest.setVisibility(View.VISIBLE);
-
-
-                if (viewAnimatorDollar1.getDisplayedChild() == 0) {
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper( "3", getCurrentTime());
-                    } catch (IOException e) {e.printStackTrace();}
-                    //armVSyncHandlerA1();
-                    viewAnimatorDollar1.showNext();
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper( "7", getCurrentTime());
-                    } catch (IOException e) {e.printStackTrace();}
-
-                    recordEvent("A1 "+eventClick);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (viewAnimatorDollar1.getDisplayedChild() == 1) {
-                                try {
-                                    // send identifier and timestamp
-                                    bluetooth.timeStamper( "16", getCurrentTime());
-                                } catch (IOException e) {e.printStackTrace();}
-
-                                viewAnimatorDollar1.showNext();
-                                recordEvent("A1 "+eventTimeOut);
-                            }
-                        }
-                    }, 1000);
-
-                    if (viewAnimatorDollar2.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "5", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorDollar2.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "9", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    } else if (viewAnimatorProbability1.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "4", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorProbability1.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "8", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    } else if (viewAnimatorProbability2.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "6", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorProbability2.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "10", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    }
+                try {
+                    attributeOnClick_test(viewAnimatorDollar1.getId(),
+                            new int[] {viewAnimatorDollar2.getId(), viewAnimatorProbability1.getId(), viewAnimatorProbability2.getId()});
+                } catch (NullPointerException e) {
+                    Log.d("onClickMethod", "some error");
                 }
-
-                countDownTimer.cancel();
-                countDownTimer.start();
             }
         });
 
         viewAnimatorDollar2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                attributeOnClick_test(viewAnimatorDollar2.getId(),
+                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorProbability1.getId(), viewAnimatorProbability2.getId()});
 
-                //for testing purposes
-                if (textViewTest.getVisibility() == View.VISIBLE)
-                    textViewTest.setVisibility(View.GONE);
-                else
-                    textViewTest.setVisibility(View.VISIBLE);
-
-
-                if (viewAnimatorDollar2.getDisplayedChild() == 0) {
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper( "5", getCurrentTime());
-                    } catch (IOException e) {e.printStackTrace();}
-                    viewAnimatorDollar2.showNext();
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper( "9", getCurrentTime());
-                    } catch (IOException e) {e.printStackTrace();}
-                    recordEvent("A2 " + eventClick);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (viewAnimatorDollar2.getDisplayedChild() == 1) {
-                                try {
-                                    // send identifier and timestamp
-                                    bluetooth.timeStamper( "16", getCurrentTime());
-                                } catch (IOException e) {e.printStackTrace();}
-
-                                viewAnimatorDollar2.showNext();
-                                try {
-                                    // send identifier and timestamp
-                                    bluetooth.timeStamper( "9", getCurrentTime());
-                                } catch (IOException e) {e.printStackTrace();}
-                                recordEvent("A2 " + eventTimeOut);
-                            }
-                        }
-                    }, 1000);
-
-                    if (viewAnimatorDollar1.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "3", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorDollar1.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "7", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    } else if (viewAnimatorProbability1.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "4", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorProbability1.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "8", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "8", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    } else if (viewAnimatorProbability2.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "6", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorProbability2.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "10", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    }
-                }
-
-                countDownTimer.cancel();
-                countDownTimer.start();
             }
         });
 
         viewAnimatorProbability1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                //for testing purposes
-                if (textViewTest.getVisibility() == View.VISIBLE)
-                    textViewTest.setVisibility(View.GONE);
-                else
-                    textViewTest.setVisibility(View.VISIBLE);
-
-
-                if (viewAnimatorProbability1.getDisplayedChild() == 0) {
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper( "4", getCurrentTime());
-                    } catch (IOException e) {e.printStackTrace();}
-                    viewAnimatorProbability1.showNext();
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper( "8", getCurrentTime());
-                    } catch (IOException e) {e.printStackTrace();}
-
-                    recordEvent("P1 " + eventClick);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (viewAnimatorProbability1.getDisplayedChild() == 1) {
-                                try {
-                                    // send identifier and timestamp
-                                    bluetooth.timeStamper( "16", getCurrentTime());
-                                } catch (IOException e) {e.printStackTrace();}
-                                viewAnimatorProbability1.showNext();
-                                recordEvent("P1 " + eventTimeOut);
-                            }
-                        }
-                    }, 1000);
-
-                    if (viewAnimatorDollar1.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "3", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorDollar1.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "7", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    } else if (viewAnimatorDollar2.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "5", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorDollar2.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "9", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    } else if (viewAnimatorProbability2.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "6", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorProbability2.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "10", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    }
-                }
-
-                countDownTimer.cancel();
-                countDownTimer.start();
+                attributeOnClick_test(viewAnimatorProbability1.getId(),
+                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorDollar2.getId(), viewAnimatorProbability2.getId()});
             }
         });
 
         viewAnimatorProbability2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                //for testing purposes
-                if (textViewTest.getVisibility() == View.VISIBLE)
-                    textViewTest.setVisibility(View.GONE);
-                else
-                    textViewTest.setVisibility(View.VISIBLE);
-
-
-                if (viewAnimatorProbability2.getDisplayedChild() == 0) {
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper( "6", getCurrentTime());
-                    } catch (IOException e) {e.printStackTrace();}
-                    viewAnimatorProbability2.showNext();
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper( "10", getCurrentTime());
-                    } catch (IOException e) {e.printStackTrace();}
-                    recordEvent("P2 " + eventClick);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (viewAnimatorProbability2.getDisplayedChild() == 1) {
-                                try {
-                                    // send identifier and timestamp
-                                    bluetooth.timeStamper( "16", getCurrentTime());
-                                } catch (IOException e) {e.printStackTrace();}
-                                viewAnimatorProbability2.showNext();
-                                recordEvent("P2 " + eventTimeOut);
-                            }
-                        }
-                    }, 1000);
-
-                    if (viewAnimatorDollar1.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "3", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorDollar1.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "7", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    } else if (viewAnimatorDollar2.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "5", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorDollar2.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "9", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    } else if (viewAnimatorProbability1.getDisplayedChild() == 1) {
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "4", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                        viewAnimatorProbability1.showNext();
-                        try {
-                            // send identifier and timestamp
-                            bluetooth.timeStamper( "8", getCurrentTime());
-                        } catch (IOException e) {e.printStackTrace();}
-                    }
-                }
-
-                countDownTimer.cancel();
-                countDownTimer.start();
+                attributeOnClick_test(viewAnimatorProbability2.getId(),
+                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorDollar2.getId(), viewAnimatorProbability1.getId()});
             }
         });
 
+
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                /*
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( "12", getCurrentTime());
                 } catch (IOException e) {e.printStackTrace();}
+                */
                 showResult(p1, a1,"Option1");
             }
         });
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                /*
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( "13", getCurrentTime());
                 } catch (IOException e) {e.printStackTrace();}
+                */
                 showResult(p2, a2,"Option2");
             }
         });
+    }
+
+    // called when each attribute is clicked
+    private void attributeOnClick_test(int tappedViewID, int[] otherViewsID) {
+        //for testing purposes
+        if (textViewTest.getVisibility() == View.VISIBLE) {
+            textViewTest.setVisibility(View.GONE);
+        } else {
+            textViewTest.setVisibility(View.VISIBLE);
+        }
+
+        final ViewAnimator tappedView = findViewById(tappedViewID);
+
+        /* on tap, if the attribute view is covered, uncover it for 1s and cover other attributes */
+        if (tappedView.getDisplayedChild() == 0) {
+            final String[] codes = identifiers.get(tappedViewID);
+
+            tappedView.showNext();  /* uncover */
+
+            recordEvent(codes[2] + " " + eventClick);
+
+            /* automatically re-cover after 1000ms */
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (tappedView.getDisplayedChild() == 1) {
+
+                        tappedView.showNext();
+                        recordEvent(codes[2] + " " + eventTimeOut);
+                    }
+                }
+            }, 1000);
+
+            ViewAnimator otherView;
+            /* if other attributes are uncovered, cover them */
+            for (int v_id: otherViewsID) {
+                otherView = findViewById(v_id);
+                if (otherView.getDisplayedChild() == 1) {
+
+                    otherView.showNext();
+                }
+            }
+        }
+
+        countDownTimer.cancel();
+        countDownTimer.start();
     }
 
     private void loadUpdateTrialCounter(){
@@ -520,6 +310,9 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float)totalAmountWon).apply();
 
         recordEvent(option+" selected, $"+amountWon+" won; total amount won: $"+totalAmountWon);
+
+        timeRecordDb.close();
+
         Intent intent = new Intent(QuestionActivityHorizontal.this, ResultActivity.class);
         intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
         startActivity(intent);
