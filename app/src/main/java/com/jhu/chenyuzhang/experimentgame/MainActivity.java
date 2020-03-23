@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
 
+
+        // bluetooth set up
         bluetooth = new Bluetooth(timeRecordDb);
         btnBT = findViewById(R.id.button_bluetooth);
 
@@ -126,13 +128,11 @@ public class MainActivity extends AppCompatActivity {
                     ParcelUuid[] uuids = device.getUuids();
                     bluetooth.openBT(uuids);
 
-                    /*
                     try {
                         bluetooth.openBT(uuids);
                     } catch (IOException e) {
                         Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
                     }
-                    */
 
                     break;
                 }

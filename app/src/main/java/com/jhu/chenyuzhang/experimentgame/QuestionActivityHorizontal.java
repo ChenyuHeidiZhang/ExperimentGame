@@ -120,6 +120,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         timeRecordDb = new TimeDbHelper(this);
         timeRecordDb.insertData(startTimeWorld, "startTrial" + trialCounter + "; Option1(Blue): A1=" + a1 + " P1=" + p1 + ", Option2(Green): A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal" + position);
 
+
         bluetooth = new Bluetooth(timeRecordDb);
 
         try {

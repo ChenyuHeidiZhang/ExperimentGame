@@ -137,5 +137,4 @@ public class Bluetooth {
         });
         workerThread.start();
     }
-
 }
