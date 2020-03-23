@@ -152,37 +152,32 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         viewAnimatorDollar1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
-                    attributeOnClick_test(viewAnimatorDollar1.getId(),
-                            new int[] {viewAnimatorDollar2.getId(), viewAnimatorProbability1.getId(), viewAnimatorProbability2.getId()});
-                } catch (NullPointerException e) {
-                    Log.d("onClickMethod", "some error");
-                }
+                attributeOnClick(viewAnimatorDollar1,
+                        new ViewAnimator[] {viewAnimatorDollar2, viewAnimatorProbability1, viewAnimatorProbability2});
             }
         });
 
         viewAnimatorDollar2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick_test(viewAnimatorDollar2.getId(),
-                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorProbability1.getId(), viewAnimatorProbability2.getId()});
+                attributeOnClick(viewAnimatorDollar2,
+                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorProbability1, viewAnimatorProbability2});
 
             }
         });
 
         viewAnimatorProbability1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick_test(viewAnimatorProbability1.getId(),
-                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorDollar2.getId(), viewAnimatorProbability2.getId()});
+                attributeOnClick(viewAnimatorProbability1,
+                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorDollar2, viewAnimatorProbability2});
             }
         });
 
         viewAnimatorProbability2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick_test(viewAnimatorProbability2.getId(),
-                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorDollar2.getId(), viewAnimatorProbability1.getId()});
+                attributeOnClick(viewAnimatorProbability2,
+                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorDollar2, viewAnimatorProbability1});
             }
         });
-
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
@@ -210,7 +205,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     }
 
     // called when each attribute is clicked
-    private void attributeOnClick_test(int tappedViewID, int[] otherViewsID) {
+    private void attributeOnClick(final ViewAnimator tappedView, ViewAnimator[] otherViews) {
         //for testing purposes
         if (textViewTest.getVisibility() == View.VISIBLE) {
             textViewTest.setVisibility(View.GONE);
@@ -218,14 +213,24 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             textViewTest.setVisibility(View.VISIBLE);
         }
 
-        final ViewAnimator tappedView = findViewById(tappedViewID);
-
         /* on tap, if the attribute view is covered, uncover it for 1s and cover other attributes */
         if (tappedView.getDisplayedChild() == 0) {
-            final String[] codes = identifiers.get(tappedViewID);
+            final String[] codes = identifiers.get(tappedView.getId());
+
+            /*
+            try {
+                // send identifier and timestamp
+                bluetooth.timeStamper( codes[0], getCurrentTime());
+            } catch (IOException e) {}
+            */
+            //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
-
+            /*
+            try {
+                bluetooth.timeStamper( codes[1], getCurrentTime());
+            } catch (IOException e) {}
+            */
             recordEvent(codes[2] + " " + eventClick);
 
             /* automatically re-cover after 1000ms */
@@ -234,6 +239,11 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
+                        /*
+                        try {
+                            bluetooth.timeStamper( identifier_cover, getCurrentTime());
+                        } catch (IOException e) {}
+                        */
 
                         tappedView.showNext();
                         recordEvent(codes[2] + " " + eventTimeOut);
@@ -241,13 +251,15 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 }
             }, 1000);
 
-            ViewAnimator otherView;
             /* if other attributes are uncovered, cover them */
-            for (int v_id: otherViewsID) {
-                otherView = findViewById(v_id);
-                if (otherView.getDisplayedChild() == 1) {
-
-                    otherView.showNext();
+            for (ViewAnimator v: otherViews) {
+                if (v.getDisplayedChild() == 1) {
+                    /*
+                    try {
+                        bluetooth.timeStamper( identifier_cover, getCurrentTime());
+                    } catch (IOException e) {}
+                    */
+                    v.showNext();
                 }
             }
         }

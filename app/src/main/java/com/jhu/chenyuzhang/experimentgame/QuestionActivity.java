@@ -172,34 +172,30 @@ public class QuestionActivity extends AppCompatActivity {
 
         viewAnimatorDollar1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
-                    attributeOnClick(viewAnimatorDollar1,
-                            new ViewAnimator[] {viewAnimatorDollar2, viewAnimatorProbability1, viewAnimatorProbability2});
-                } catch (NullPointerException e) {
-                    Log.d("onClickMethod", "some error");
-                }
+                attributeOnClick(viewAnimatorDollar1,
+                        new ViewAnimator[] {viewAnimatorDollar2, viewAnimatorProbability1, viewAnimatorProbability2});
             }
         });
 
         viewAnimatorDollar2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick_test(viewAnimatorDollar2.getId(),
-                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorProbability1.getId(), viewAnimatorProbability2.getId()});
+                attributeOnClick(viewAnimatorDollar2,
+                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorProbability1, viewAnimatorProbability2});
 
             }
         });
 
         viewAnimatorProbability1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick_test(viewAnimatorProbability1.getId(),
-                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorDollar2.getId(), viewAnimatorProbability2.getId()});
+                attributeOnClick(viewAnimatorProbability1,
+                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorDollar2, viewAnimatorProbability2});
             }
         });
 
         viewAnimatorProbability2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick_test(viewAnimatorProbability2.getId(),
-                        new int[] {viewAnimatorDollar1.getId(), viewAnimatorDollar2.getId(), viewAnimatorProbability1.getId()});
+                attributeOnClick(viewAnimatorProbability2,
+                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorDollar2, viewAnimatorProbability1});
             }
         });
 
@@ -286,54 +282,6 @@ public class QuestionActivity extends AppCompatActivity {
                     } catch (IOException e) {}
                     */
                     v.showNext();
-                }
-            }
-        }
-
-        countDownTimer.cancel();
-        countDownTimer.start();
-
-    }
-
-    // called when each attribute is clicked
-    private void attributeOnClick_test(int tappedViewID, int[] otherViewsID) {
-        //for testing purposes
-        if (textViewTest.getVisibility() == View.VISIBLE) {
-            textViewTest.setVisibility(View.GONE);
-        } else {
-            textViewTest.setVisibility(View.VISIBLE);
-        }
-
-        final ViewAnimator tappedView = findViewById(tappedViewID);
-
-        /* on tap, if the attribute view is covered, uncover it for 1s and cover other attributes */
-        if (tappedView.getDisplayedChild() == 0) {
-            final String[] codes = identifiers.get(tappedViewID);
-
-            tappedView.showNext();  /* uncover */
-
-            recordEvent(codes[2] + " " + eventClick);
-
-            /* automatically re-cover after 1000ms */
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (tappedView.getDisplayedChild() == 1) {
-
-                        tappedView.showNext();
-                        recordEvent(codes[2] + " " + eventTimeOut);
-                    }
-                }
-            }, 1000);
-
-            ViewAnimator otherView;
-            /* if other attributes are uncovered, cover them */
-            for (int v_id: otherViewsID) {
-                otherView = findViewById(v_id);
-                if (otherView.getDisplayedChild() == 1) {
-
-                    otherView.showNext();
                 }
             }
         }
