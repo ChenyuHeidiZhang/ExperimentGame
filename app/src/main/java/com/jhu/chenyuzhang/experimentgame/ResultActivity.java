@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
+import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
+import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
+
 import java.util.Random;
 
 public class ResultActivity extends AppCompatActivity {
@@ -67,7 +70,8 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int random = new Random().nextInt(2);
                 Intent intent;
-                if (random==0) {
+
+                if (random == 0) {
                     intent = new Intent(ResultActivity.this, QuestionActivity.class);
                 } else {
                     intent = new Intent(ResultActivity.this, QuestionActivityHorizontal.class);

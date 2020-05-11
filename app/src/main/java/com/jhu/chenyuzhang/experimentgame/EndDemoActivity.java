@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
+import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
+
 import java.util.Random;
 
 public class EndDemoActivity extends AppCompatActivity {
@@ -22,7 +25,7 @@ public class EndDemoActivity extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int random = new Random().nextInt(2);
+                int random = new Random().nextInt(2);   // generate random integer between 0 (inclusive) and 2 (exclusive)
                 Intent intent;
                 if (random==0) {
                     intent = new Intent(EndDemoActivity.this, QuestionActivity.class);

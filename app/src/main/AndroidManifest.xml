@@ -17,6 +17,12 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Questions.Question2Att4OpHorizontal"></activity>
+        <activity android:name=".Questions.Question2Att4OpActivity" />
+        <activity android:name=".Questions.Question4Att2OpActivityHorizontal" />
+        <activity android:name=".Questions.Question4Att2OpActivity" />
+        <activity android:name=".Questions.Question4ActivityHorizontal" />
+        <activity android:name=".Questions.Question4Activity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +32,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".ResultActivity" />
-        <activity android:name=".QuestionActivity" />
-        <activity android:name=".QuestionActivityHorizontal" />
+        <activity android:name=".Questions.QuestionActivity" />
+        <activity android:name=".Questions.QuestionActivityHorizontal" />
         <activity android:name=".EndDemoActivity" />
         <activity android:name=".DemoActivity" />
         <activity android:name=".DemoActivityHorizontal" />

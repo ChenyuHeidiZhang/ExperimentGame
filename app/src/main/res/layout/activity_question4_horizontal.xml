@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background1"
+    android:orientation="vertical"
+    tools:context=".Questions.Question4ActivityHorizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingStart="20dp"
+        android:paddingRight="20dp"
+        android:paddingEnd="20dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/option1"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/gray">
+
+            <ViewAnimator
+                android:id="@+id/view_animator_dollar1_win"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:id="@+id/image_view_dollar1_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dollar_win" />
+
+                <TextView
+                    android:id="@+id/text_view_dollar1_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="50"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_probability1_win"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="150dp"
+                android:layout_marginStart="150dp">
+
+                <ImageView
+                    android:id="@+id/image_view_probability1_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability_win"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_probability1_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="40"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_dollar1_lose"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="300dp"
+                android:layout_marginStart="300dp">
+
+                <ImageView
+                    android:id="@+id/image_view_dollar1_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dollar_lose"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_dollar1_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="50"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_probability1_lose"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="450dp"
+                android:layout_marginStart="450dp">
+
+                <ImageView
+                    android:id="@+id/image_view_probability1_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability_lose"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_probability1_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="40"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <Button
+                android:id="@+id/button_select1"
+                style="@android:style/Widget.Button"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="600dp"
+                android:layout_marginLeft="600dp"
+                android:text="@string/select"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/option2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/gray">
+
+            <ViewAnimator
+                android:id="@+id/view_animator_dollar2_win"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:id="@+id/image_view_dollar2_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dollar_win"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_dollar2_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="50"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_probability2_win"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="150dp"
+                android:layout_marginStart="150dp">
+
+                <ImageView
+                    android:id="@+id/image_view_probability2_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability_win"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_probability2_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="40"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_dollar2_lose"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="300dp"
+                android:layout_marginStart="300dp">
+
+                <ImageView
+                    android:id="@+id/image_view_dollar2_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dollar_lose"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_dollar2_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="50"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_probability2_lose"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="450dp"
+                android:layout_marginStart="450dp">
+
+                <ImageView
+                    android:id="@+id/image_view_probability2_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability_lose"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_probability2_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="40"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <Button
+                android:id="@+id/button_select2"
+                style="@android:style/Widget.Button"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="600dp"
+                android:layout_marginLeft="600dp"
+                android:text="@string/select"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/option3"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/gray">
+
+            <ViewAnimator
+                android:id="@+id/view_animator_dollar3_win"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:id="@+id/image_view_dollar3_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dollar_win"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_dollar3_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="50"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_probability3_win"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="150dp"
+                android:layout_marginStart="150dp">
+
+                <ImageView
+                    android:id="@+id/image_view_probability3_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability_win"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_probability3_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="40"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_dollar3_lose"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="300dp"
+                android:layout_marginStart="300dp">
+
+                <ImageView
+                    android:id="@+id/image_view_dollar3_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dollar_lose"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_dollar3_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="50"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_probability3_lose"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="450dp"
+                android:layout_marginStart="450dp">
+
+                <ImageView
+                    android:id="@+id/image_view_probability3_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability_lose"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_probability3_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="40"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <Button
+                android:id="@+id/button_select3"
+                style="@android:style/Widget.Button"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="600dp"
+                android:layout_marginLeft="600dp"
+                android:text="@string/select"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/option4"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/gray">
+
+            <ViewAnimator
+                android:id="@+id/view_animator_dollar4_win"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:id="@+id/image_view_dollar4_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dollar_win"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_dollar4_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="50"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_probability4_win"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="150dp"
+                android:layout_marginStart="150dp">
+
+                <ImageView
+                    android:id="@+id/image_view_probability4_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability_win"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_probability4_win"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="40"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_dollar4_lose"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="300dp"
+                android:layout_marginStart="300dp">
+
+                <ImageView
+                    android:id="@+id/image_view_dollar4_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dollar_lose"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_dollar4_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="50"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <ViewAnimator
+                android:id="@+id/view_animator_probability4_lose"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="450dp"
+                android:layout_marginStart="450dp">
+
+                <ImageView
+                    android:id="@+id/image_view_probability4_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/probability_lose"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_view_probability4_lose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/white"
+                    android:text="40"
+                    android:layout_gravity="center"/>
+
+            </ViewAnimator>
+
+            <Button
+                android:id="@+id/button_select4"
+                style="@android:style/Widget.Button"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="600dp"
+                android:layout_marginLeft="600dp"
+                android:text="@string/select"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

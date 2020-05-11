@@ -32,16 +32,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
 
-    //Bluetooth bluetooth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        //TimeDbHelper timeRecordDb = new TimeDbHelper(this);
-        //bluetooth = new Bluetooth(timeRecordDb);
-        //bluetooth.findBT();
 
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
@@ -92,6 +86,8 @@ public class LoginActivity extends AppCompatActivity {
         String notes = editTextNotes.getText().toString();
         timeRecordDb.insertData(startTimeWorld, "Sign In: Patient ID: "+name+", Password: "+key+", Notes: "+notes);
 
+        timeRecordDb.close();
+
         goToMainActivity();
     }
 
@@ -104,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
     //get current time in milliseconds
     private String getCurrentTime() {
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
         String formattedDate= dateFormat.format(date);
         return formattedDate;
     }

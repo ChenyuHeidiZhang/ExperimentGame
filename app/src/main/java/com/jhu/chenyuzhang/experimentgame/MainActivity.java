@@ -1,5 +1,6 @@
 package com.jhu.chenyuzhang.experimentgame;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -17,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,8 +29,6 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "BluetoothActivity2";
     private Button playGame;
-    private static boolean doDemo;
-    private static final String KEY_DO_DEMO = "keyDoDemo";
 
     private Button signOut;
     private static boolean isSignedIn;
@@ -50,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         signOut = findViewById(R.id.button_signOut);
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
-
 
         // bluetooth set up
         bluetooth = new Bluetooth(timeRecordDb);
@@ -75,20 +75,11 @@ public class MainActivity extends AppCompatActivity {
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
-                doDemo = prefs.getBoolean(KEY_DO_DEMO, true);
-
-                if (doDemo) {
-                    doDemo = false;
-                    prefs.edit().putBoolean(KEY_DO_DEMO, doDemo).apply();
-                    Intent intent = new Intent(MainActivity.this, DemoActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(MainActivity.this, QuestionActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(MainActivity.this, QuestionActivity.class);
+                startActivity(intent);
             }
         });
+
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

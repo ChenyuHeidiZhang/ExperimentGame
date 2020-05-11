@@ -7,7 +7,37 @@
     android:layout_height="match_parent"
     android:background="@drawable/background1"
     android:orientation="vertical"
-    tools:context="com.jhu.chenyuzhang.experimentgame.QuestionActivity">
+    tools:context="com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity">
+
+    <TextView
+        android:id="@+id/text_view_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:visibility="invisible"
+        android:text="@string/demo"
+        android:textColor="@color/pinky"
+        android:textStyle="bold"
+        android:textSize="50sp"/>
+
+    <Button
+        android:id="@+id/button_end_demo"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:visibility="invisible"
+        android:text="@string/end_demo"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@color/pink"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +54,7 @@
             android:layout_alignParentTop="true"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@color/blue">
+            android:background="@color/gray">
 
             <ViewAnimator
                 android:id="@+id/view_animator_dollar1"
@@ -36,7 +66,7 @@
                     android:id="@+id/image_view_dollar1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dollar1"
+                    android:src="@drawable/dollar_win"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -63,7 +93,7 @@
                     android:id="@+id/image_view_probability1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability1"
+                    android:src="@drawable/probability_win"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -81,11 +111,12 @@
 
             <Button
                 android:id="@+id/button_select1"
+                style="@android:style/Widget.Button"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="80dp"
                 android:text="@string/select"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -98,7 +129,7 @@
             android:layout_marginLeft="50dp"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@color/green">
+            android:background="@color/gray">
 
             <ViewAnimator
                 android:id="@+id/view_animator_dollar2"
@@ -110,7 +141,7 @@
                     android:id="@+id/image_view_dollar2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dollar1"
+                    android:src="@drawable/dollar_win"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -136,7 +167,7 @@
                     android:id="@+id/image_view_probability2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability1"
+                    android:src="@drawable/probability_win"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -154,11 +185,12 @@
 
             <Button
                 android:id="@+id/button_select2"
+                style="@android:style/Widget.Button"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="80dp"
                 android:text="@string/select"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
         </LinearLayout>
     </RelativeLayout>
