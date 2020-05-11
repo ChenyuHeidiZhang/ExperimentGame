@@ -18,24 +18,38 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpActivity;
+import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpHorizontal;
+import com.jhu.chenyuzhang.experimentgame.Questions.Question4Activity;
+import com.jhu.chenyuzhang.experimentgame.Questions.Question4ActivityHorizontal;
+import com.jhu.chenyuzhang.experimentgame.Questions.Question4Att2OpActivity;
+import com.jhu.chenyuzhang.experimentgame.Questions.Question4Att2OpHorizontal;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
+import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "BluetoothActivity2";
-    private Button playGame;
 
-    private Button signOut;
     private static boolean isSignedIn;
     private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
     private SharedPreferences prefSignedIn;
 
     private TimeDbHelper timeRecordDb;
+
+    private boolean isDemo;
+    private static final String KEY_DO_DEMO = "keyDoDemo";
+
+    TrialDbHelper trialInfoDb;
+
+    public static int trialCounter;
+    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
 
     private Button btnBT;
     Bluetooth bluetooth;
@@ -46,11 +60,17 @@ public class MainActivity extends AppCompatActivity {
         timeRecordDb = new TimeDbHelper(this);
 
         setContentView(R.layout.activity_main);
-        playGame = findViewById(R.id.button_playGame);
 
-        signOut = findViewById(R.id.button_signOut);
+        Button playGame = findViewById(R.id.button_playGame);
+
+        Button signOut = findViewById(R.id.button_signOut);
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
+
+        SharedPreferences demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
+        isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
+
+        trialInfoDb = new TrialDbHelper(this);
 
         // bluetooth set up
         bluetooth = new Bluetooth(timeRecordDb);
@@ -75,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, QuestionActivity.class);
+                Intent intent = getNextIntent();
                 startActivity(intent);
             }
         });
@@ -86,6 +106,48 @@ public class MainActivity extends AppCompatActivity {
                 checkPasswordDialog();
             }
         });
+    }
+
+    private Trial getNextTrial() {
+        SharedPreferences counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
+        trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
+        // start with trial 1 (default) if first access training; otherwise, start with trialCounter
+
+        return trialInfoDb.getTrial(trialCounter);
+    }
+
+    private Intent getNextIntent() {
+        // Random int decides the orientation. 0: vertical, 1: horizontal
+        int random = new Random().nextInt(2);
+        Intent intent;
+
+        Trial currentTrial = getNextTrial();
+        if (currentTrial.getType().equals("1")) {   // 2Opt2Attr
+            if (random == 0) {
+                intent = new Intent(MainActivity.this, QuestionActivity.class);
+            } else {
+                intent = new Intent(MainActivity.this, QuestionActivityHorizontal.class);
+            }
+        } else if (currentTrial.getType().equals("2")) {    // 2Opt4Attr
+            if (random == 0) {
+                intent = new Intent(MainActivity.this, Question4Att2OpActivity.class);
+            } else {
+                intent = new Intent(MainActivity.this, Question4Att2OpHorizontal.class);
+            }
+        } else if (currentTrial.getType().equals("3")) {    // 4Opt2Attr
+            if (random == 0) {
+                intent = new Intent(MainActivity.this, Question2Att4OpActivity.class);
+            } else {
+                intent = new Intent(MainActivity.this, Question2Att4OpHorizontal.class);
+            }
+        } else {   // 4Opt4Attr
+            if (random == 0) {
+                intent = new Intent(MainActivity.this, Question4Activity.class);
+            } else {
+                intent = new Intent(MainActivity.this, Question4ActivityHorizontal.class);
+            }
+        }
+        return intent;
     }
 
     public void findBT() throws IOException {

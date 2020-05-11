@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
@@ -34,6 +35,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     public static double totalAmountWon;
     public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
 
+    private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
     private SharedPreferences demo_prefs;
 
@@ -42,9 +44,10 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private TrialDbHelper trialInfoDb;
     private ArrayList<Trial> trialList;
     private Trial currentTrial;
-    public static int trialCounter=0;
+    public static int trialCounter;
+    private SharedPreferences counter_prefs;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
-    private double amountWon = 0;
+    private double amountWon;
     private double p1;
     private double p2;
     private double a1;
@@ -87,7 +90,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         setContentView(R.layout.activity_question_horizontal);
 
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
-        boolean isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
+        isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
         identifiers.put(R.id.view_animator_dollar1, new String[] {"3", "7", "A1"});
         identifiers.put(R.id.view_animator_dollar2, new String[] {"5", "9", "A2"});
@@ -147,25 +150,18 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         }
 
         timeRecordDb = new TimeDbHelper(this);
-
-        // get all trials and shuffle
         trialInfoDb = new TrialDbHelper(this);
-        trialList = trialInfoDb.getAllTrials();
-        //Collections.shuffle(trialList);
 
-        // if is in training, randomly choose a trial; otherwise, load the next trial
+        setupTrial();
+
         if (isDemo) {
-            int trial_num = new Random().nextInt(trialList.size()); // random integer in [0, trialList.size())
-            currentTrial = trialList.get(trial_num);
-            getAttributes();
-            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trial_num + "; Option1(Blue): A1=" + a1 + " P1=" + p1 + ", Option2(Green): A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal; " + position);
+            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A1=" + a1 + " P1=" + p1 + ", Option2: A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal; " + position);
+
         } else {
-            // load next trial
-            loadUpdateTrialCounter();
-            currentTrial = trialList.get(trialCounter - 1);
-            getAttributes();
-            timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1(Blue): A1=" + a1 + " P1=" + p1 + ", Option2(Green): A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal; " + position);
+            incrementTrialCounter();   // increment the counter to indicate the next trial
+            timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A1=" + a1 + " P1=" + p1 + ", Option2: A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal; " + position);
         }
+
 
         //bluetooth = new Bluetooth(timeRecordDb);
 
@@ -305,17 +301,52 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private void endDemo(){
         demo_prefs.edit().putBoolean(KEY_DO_DEMO, false).apply();    // change shared "prefs" for do_demo to false
 
+        // set trialCounter back to 1
+        counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, 1).apply();
+
         Intent intent = new Intent(QuestionActivityHorizontal.this, EndDemoActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void loadUpdateTrialCounter(){
-        SharedPreferences counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
-        trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 0);
+    private void setupTrial() {
+        // load trialCounter from shared preference
+        counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
+        trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
 
-        if (trialCounter == trialList.size()){
-            trialCounter = 1;
+        Log.d("QH Test", Integer.toString(trialCounter));
+
+        // get current trial
+        currentTrial = trialInfoDb.getTrial(trialCounter);
+        getAttributes();
+    }
+
+    private void getAttributes(){
+        ArrayList<String> attributes = currentTrial.getAttributes();
+        a1 = Double.parseDouble(attributes.get(2));
+        p1 = Double.parseDouble(attributes.get(3))*100;
+        a2 = Double.parseDouble(attributes.get(4));
+        p2 = Double.parseDouble(attributes.get(5))*100;
+        textViewProbability1.setText((int) p1 + "%");
+        textViewProbability2.setText((int) p2 + "%");
+        textViewDollar1.setText("$" + String.format("%.2f", a1));
+        textViewDollar2.setText("$" + String.format("%.2f", a2));
+
+        if (a1 < 0) {   // if the two dollar amounts are negative, set icons to losing
+            ImageView img_dollar1 = findViewById(R.id.image_view_dollar1);
+            ImageView img_prob1 = findViewById(R.id.image_view_probability1);
+            ImageView img_dollar2 = findViewById(R.id.image_view_dollar2);
+            ImageView img_prob2 = findViewById(R.id.image_view_probability2);
+            img_dollar1.setImageResource(R.drawable.dollar_lose);
+            img_dollar2.setImageResource(R.drawable.dollar_lose);
+            img_prob1.setImageResource(R.drawable.probability_lose);
+            img_prob2.setImageResource(R.drawable.probability_lose);
+        }
+    }
+
+    private void incrementTrialCounter() {
+        if (trialCounter == trialInfoDb.getNumRows()){  // increment trial counter
+            trialCounter = 1;       // wrap around if reaches the end
         } else {
             trialCounter++;
         }
@@ -323,16 +354,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trialCounter).apply();
     }
 
-    private void getAttributes(){
-        a1 = Double.parseDouble(currentTrial.getAmount1());
-        p1 = Double.parseDouble(currentTrial.getProbability1())*100;
-        a2 = Double.parseDouble(currentTrial.getAmount2());
-        p2 = Double.parseDouble(currentTrial.getProbability2())*100;
-        textViewProbability1.setText((int) p1 + "%");
-        textViewProbability2.setText((int) p2 + "%");
-        textViewDollar1.setText("$" + String.format("%.2f", a1));
-        textViewDollar2.setText("$" + String.format("%.2f", a2));
-    }
 
     //get current time in milliseconds
     private String getCurrentTime() {

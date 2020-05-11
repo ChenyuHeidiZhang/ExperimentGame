@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Questions.Question2Att4OpHorizontal"></activity>
         <activity android:name=".Questions.Question2Att4OpActivity" />
-        <activity android:name=".Questions.Question4Att2OpActivityHorizontal" />
+        <activity android:name=".Questions.Question4Att2OpHorizontal" />
         <activity android:name=".Questions.Question4Att2OpActivity" />
         <activity android:name=".Questions.Question4ActivityHorizontal" />
         <activity android:name=".Questions.Question4Activity" />
@@ -35,9 +35,6 @@
         <activity android:name=".Questions.QuestionActivity" />
         <activity android:name=".Questions.QuestionActivityHorizontal" />
         <activity android:name=".EndDemoActivity" />
-        <activity android:name=".DemoActivity" />
-        <activity android:name=".DemoActivityHorizontal" />
-        <activity android:name=".DemoResultActivity" />
     </application>
 
 </manifest>

@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         prefDoDemo.edit().putBoolean(KEY_DO_DEMO, true).apply();
 
         SharedPreferences prefTrialCounter = getSharedPreferences("trialCounter", MODE_PRIVATE);
-        prefTrialCounter.edit().putInt(KEY_TRIAL_COUNTER, 0).apply();
+        prefTrialCounter.edit().putInt(KEY_TRIAL_COUNTER, 1).apply();
 
         SharedPreferences prefTotalAmount = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
         prefTotalAmount.edit().putFloat(KEY_TOTAL_AMOUNT, 0).apply();

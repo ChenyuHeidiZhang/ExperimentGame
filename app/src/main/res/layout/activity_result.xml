@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:visibility="invisible"
-        android:text="Sorry"
+        android:text="Oh"
         android:textColor="@color/white"
         android:textSize="60dp"/>
 

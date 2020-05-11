@@ -1,51 +1,51 @@
 package com.jhu.chenyuzhang.experimentgame;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Trial  {
-    private String amount1;
-    private String probability1;
-    private String amount2;
-    private String probability2;
+    private String type; 	// task types - 1: 2Opt2Att, 2: 2Opt4Att, 3: 4Opt2Att, 4: 4Opt4Att
+    private ArrayList<String> attributes;   // this is a list of attributes for each trial ordered as in the excel / csv file
+
+    private String col3, col4;
+    private String col5;
+    private String col6;
+    private String col7;
+    private String col8;
+    private String col9;
+    private String col10;
+    private String col11;
+    private String col12;
+    private String col13;
+    private String col14;
+    private String col15;
+    private String col16;
+    private String col17;
+    private String col18;
 
     public Trial(){
     }
 
-    public Trial(String a1, String p1, String a2, String p2){
-        amount1 = a1;
-        probability1 = p1;
-        amount2 = a2;
-        probability2 = p2;
+    public Trial(String[] columns){
+        this.type = columns[0];
+        this.attributes = new ArrayList<String>(Arrays.asList(columns));
     }
 
 
-    public String getAmount1() {
-        return amount1;
+    public String getType() {
+        return type;
     }
 
-    public void setAmount1(String amount1) {
-        this.amount1 = amount1;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getProbability1() {
-        return probability1;
+    public ArrayList<String> getAttributes() {
+        return attributes;
     }
 
-    public void setProbability1(String probability1) {
-        this.probability1 = probability1;
+    public void setAttributes(ArrayList<String> attributes) {
+        this.attributes = attributes;
     }
 
-    public String getAmount2() {
-        return amount2;
-    }
-
-    public void setAmount2(String amount2) {
-        this.amount2 = amount2;
-    }
-
-    public String getProbability2() {
-        return probability2;
-    }
-
-    public void setProbability2(String probability2) {
-        this.probability2 = probability2;
-    }
 }
