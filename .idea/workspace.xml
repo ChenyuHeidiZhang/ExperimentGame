@@ -12,14 +12,12 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Test" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="QH" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cecc4bbd-98ea-4153-b701-ffebbad17ca9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/assets/allTrialsMADM_Tablet.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/intro_new.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
@@ -27,37 +25,16 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/DemoActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/DemoActivityHorizontal.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/DemoResultActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpHorizontal.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpHorizontal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Activity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4ActivityHorizontal.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4ActivityHorizontal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpActivityHorizontal.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpHorizontal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpHorizontal.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpHorizontal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivityHorizontal.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivityHorizontal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/ResultActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/ResultActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Trial.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Trial.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/TrialDbHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/TrialDbHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_demo.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_demo_horizontal.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_demo_result.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_question4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_question4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_question4_horizontal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_question4_horizontal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_question_2att_4op.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_question_2att_4op.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_question_2att_4op_horizontal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_question_2att_4op_horizontal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_question_4att_2op.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_question_4att_2op.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_question_4att_2op_horizontal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_question_4att_2op_horizontal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_result.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,14 +66,14 @@
         <counts>
           <entry key="apk" value="1" />
           <entry key="csv" value="7" />
-          <entry key="db" value="27" />
+          <entry key="db" value="31" />
           <entry key="db-shm" value="3" />
           <entry key="gradle" value="9" />
-          <entry key="java" value="164" />
+          <entry key="java" value="182" />
           <entry key="jpg" value="5" />
           <entry key="png" value="12" />
           <entry key="properties" value="1" />
-          <entry key="xml" value="135" />
+          <entry key="xml" value="137" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -104,17 +81,17 @@
           <entry key="APK" value="1" />
           <entry key="Groovy" value="9" />
           <entry key="Image" value="17" />
-          <entry key="JAVA" value="164" />
-          <entry key="PLAIN_TEXT" value="37" />
+          <entry key="JAVA" value="182" />
+          <entry key="PLAIN_TEXT" value="41" />
           <entry key="Properties" value="1" />
-          <entry key="XML" value="135" />
+          <entry key="XML" value="137" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="csv" value="1" />
           <entry key="gradle" value="2" />
-          <entry key="java" value="12597" />
+          <entry key="java" value="12982" />
           <entry key="xml" value="1121" />
         </counts>
       </usages-collector>
@@ -122,7 +99,7 @@
         <counts>
           <entry key="Android Room SQL" value="1" />
           <entry key="Groovy" value="2" />
-          <entry key="JAVA" value="12596" />
+          <entry key="JAVA" value="12981" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="XML" value="1121" />
         </counts>
@@ -134,26 +111,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="41" lean-forward="true" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/TrialDbHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="18" column="57" lean-forward="true" selection-start-line="18" selection-start-column="57" selection-end-line="18" selection-end-column="57" />
+            <state relative-caret-position="-457">
+              <caret line="4" column="41" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/ResultActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivityHorizontal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="872">
-              <caret line="117" selection-start-line="117" selection-end-line="117" />
+            <state relative-caret-position="-5">
+              <caret line="53" column="22" lean-forward="true" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -162,32 +130,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4ActivityHorizontal.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+            <state relative-caret-position="322">
+              <caret line="159" column="10" lean-forward="true" selection-start-line="159" selection-start-column="10" selection-end-line="159" selection-end-column="10" />
               <folding>
-                <element signature="e#8187#8438#0" expanded="true" />
-                <element signature="e#8437#8438#0" expanded="true" />
-                <element signature="e#15305#15909#0" expanded="true" />
-                <element signature="e#15908#15909#0" expanded="true" />
-                <element signature="e#15961#16565#0" expanded="true" />
-                <element signature="e#16564#16565#0" expanded="true" />
-                <element signature="e#16615#17219#0" expanded="true" />
-                <element signature="e#17218#17219#0" expanded="true" />
-                <element signature="e#17271#17875#0" expanded="true" />
-                <element signature="e#17874#17875#0" expanded="true" />
-                <element signature="e#17925#18529#0" expanded="true" />
-                <element signature="e#18528#18529#0" expanded="true" />
-                <element signature="e#18581#19185#0" expanded="true" />
-                <element signature="e#19184#19185#0" expanded="true" />
-                <element signature="e#19235#19839#0" expanded="true" />
-                <element signature="e#19838#19839#0" expanded="true" />
-                <element signature="e#19891#20495#0" expanded="true" />
-                <element signature="e#20494#20495#0" expanded="true" />
-                <element signature="e#20545#21149#0" expanded="true" />
-                <element signature="e#21148#21149#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -225,6 +183,7 @@
       <find>getNum</find>
       <find>position</find>
       <find>Probability</find>
+      <find>close</find>
     </findStrings>
     <replaceStrings>
       <replace>bluetooth.time</replace>
@@ -264,24 +223,24 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_result.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/assets/allTrialsMADM_Tablet.csv" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivityHorizontal.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/TrialDbHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpHorizontal.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_question4.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_question_2att_4op.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_question_2att_4op_horizontal.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_question4_horizontal.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_question_4att_2op.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_question_4att_2op_horizontal.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpHorizontal.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Activity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4ActivityHorizontal.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/ResultActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpHorizontal.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Activity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4ActivityHorizontal.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpHorizontal.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivityHorizontal.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpActivity.java" />
       </list>
     </option>
   </component>
@@ -342,7 +301,12 @@
             <path>
               <item name="ExperimentGame" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="assets" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="jhu" type="462c0819:PsiDirectoryNode" />
+              <item name="chenyuzhang" type="462c0819:PsiDirectoryNode" />
+              <item name="experimentgame" type="462c0819:PsiDirectoryNode" />
+              <item name="Questions" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ExperimentGame" type="1abcf292:AndroidViewProjectNode" />
@@ -492,9 +456,9 @@
       <window_info id="Designer" order="6" />
       <window_info id="Capture Tool" order="7" />
       <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49570817" visible="true" weight="0.21506849" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49570817" visible="true" weight="0.21232876" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32876712" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.4995579" weight="0.15753424" />
+      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.4995579" weight="0.18219177" />
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50429183" side_tool="true" weight="0.370068" />
       <window_info anchor="bottom" id="Build" order="5" sideWeight="0.49336872" weight="0.22191781" />
       <window_info anchor="bottom" id="Android Profiler" order="6" />
@@ -600,16 +564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/TimeDbHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-90">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/assets/allTrialsMADM_Tablet.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -654,16 +608,6 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
-          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_question_4att_2op.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
@@ -679,73 +623,6 @@
         </state>
       </provider>
       <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="448" column="5" selection-start-line="439" selection-start-column="4" selection-end-line="448" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivityHorizontal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="322" selection-start-line="322" selection-end-line="322" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpHorizontal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="970">
-          <caret line="379" selection-start-line="379" selection-end-line="379" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpHorizontal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="359" column="17" selection-start-line="359" selection-start-column="17" selection-end-line="359" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="251" selection-start-line="251" selection-end-line="251" />
-          <folding>
-            <element signature="e#8137#8388#0" expanded="true" />
-            <element signature="e#8387#8388#0" expanded="true" />
-            <element signature="e#15251#15855#0" expanded="true" />
-            <element signature="e#15854#15855#0" expanded="true" />
-            <element signature="e#15907#16511#0" expanded="true" />
-            <element signature="e#16510#16511#0" expanded="true" />
-            <element signature="e#16561#17165#0" expanded="true" />
-            <element signature="e#17164#17165#0" expanded="true" />
-            <element signature="e#17217#17821#0" expanded="true" />
-            <element signature="e#17820#17821#0" expanded="true" />
-            <element signature="e#17871#18475#0" expanded="true" />
-            <element signature="e#18474#18475#0" expanded="true" />
-            <element signature="e#18527#19131#0" expanded="true" />
-            <element signature="e#19130#19131#0" expanded="true" />
-            <element signature="e#19181#19785#0" expanded="true" />
-            <element signature="e#19784#19785#0" expanded="true" />
-            <element signature="e#19837#20441#0" expanded="true" />
-            <element signature="e#20440#20441#0" expanded="true" />
-            <element signature="e#20491#21095#0" expanded="true" />
-            <element signature="e#21094#21095#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/intro.png">
       <provider selected="true" editor-type-id="images" />
@@ -765,14 +642,6 @@
         </state>
       </provider>
       <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_question_horizontal.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/dollar_lose.png">
       <provider selected="true" editor-type-id="images" />
@@ -798,52 +667,6 @@
       <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/ResultActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="872">
-          <caret line="117" selection-start-line="117" selection-end-line="117" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4ActivityHorizontal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
-          <folding>
-            <element signature="e#8187#8438#0" expanded="true" />
-            <element signature="e#8437#8438#0" expanded="true" />
-            <element signature="e#15305#15909#0" expanded="true" />
-            <element signature="e#15908#15909#0" expanded="true" />
-            <element signature="e#15961#16565#0" expanded="true" />
-            <element signature="e#16564#16565#0" expanded="true" />
-            <element signature="e#16615#17219#0" expanded="true" />
-            <element signature="e#17218#17219#0" expanded="true" />
-            <element signature="e#17271#17875#0" expanded="true" />
-            <element signature="e#17874#17875#0" expanded="true" />
-            <element signature="e#17925#18529#0" expanded="true" />
-            <element signature="e#18528#18529#0" expanded="true" />
-            <element signature="e#18581#19185#0" expanded="true" />
-            <element signature="e#19184#19185#0" expanded="true" />
-            <element signature="e#19235#19839#0" expanded="true" />
-            <element signature="e#19838#19839#0" expanded="true" />
-            <element signature="e#19891#20495#0" expanded="true" />
-            <element signature="e#20494#20495#0" expanded="true" />
-            <element signature="e#20545#21149#0" expanded="true" />
-            <element signature="e#21148#21149#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/amazon-kfmawi-G0011J05942407M4/data/data/com.jhu.chenyuzhang.experimentgame/databases/TimeRecord.db">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Trial.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -854,17 +677,114 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpHorizontal.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="41" lean-forward="true" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
+        <state relative-caret-position="230">
+          <caret line="473" lean-forward="true" selection-start-line="473" selection-end-line="473" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4ActivityHorizontal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="581" lean-forward="true" selection-start-line="581" selection-end-line="581" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="581" lean-forward="true" selection-start-line="581" selection-end-line="581" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="431" selection-start-line="431" selection-end-line="431" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/TimeDbHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/TrialDbHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="18" column="57" lean-forward="true" selection-start-line="18" selection-start-column="57" selection-end-line="18" selection-end-column="57" />
+        <state relative-caret-position="-131">
+          <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/amazon-kfmawi-G0011J05942407M4/data/data/com.jhu.chenyuzhang.experimentgame/databases/TimeRecord.db">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Att2OpHorizontal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="428" selection-start-line="428" selection-end-line="428" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/ResultActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1665">
+          <caret line="117" selection-start-line="117" selection-end-line="117" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-457">
+          <caret line="4" column="41" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_question_horizontal.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivityHorizontal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5">
+          <caret line="53" column="22" lean-forward="true" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/QuestionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="159" column="10" lean-forward="true" selection-start-line="159" selection-start-column="10" selection-end-line="159" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question2Att4OpActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>

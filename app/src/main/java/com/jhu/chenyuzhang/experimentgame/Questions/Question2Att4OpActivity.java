@@ -29,8 +29,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
-// TODO: NOTE: no random position implemented except for 2Opt2Att trials
-
 public class Question2Att4OpActivity extends AppCompatActivity {
     private static final String TAG = "bluetooth";
 
@@ -469,8 +467,11 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
         totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
-        totalAmountWon = totalAmountWon + amountWon;
-        prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float)totalAmountWon).apply();
+
+        if (!isDemo) {      // only change totalAmountWon if is not in training
+            totalAmountWon = totalAmountWon + amountWon;
+            prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float) totalAmountWon).apply();
+        }
 
         recordEvent(option+" selected, $"+amountWon+" won; total amount won: $"+totalAmountWon);
 

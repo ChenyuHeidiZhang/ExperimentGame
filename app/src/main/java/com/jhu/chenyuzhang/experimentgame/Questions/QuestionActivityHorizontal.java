@@ -71,8 +71,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
-    private int random_position = new Random().nextInt(2);
-
     private long backPressedTime;
 
     Bluetooth bluetooth;
@@ -142,12 +140,18 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             }
         }.start();
 
+
         String position = "A1P1,A2P2";
+        /*
+        int random_position = new Random().nextInt(2);
+        Log.d("Random QH", Integer.toString(random_position));
         if (random_position==1){
+            Log.d("Random QH", Integer.toString(random_position));
             position = "P1A1,P2A2";
             exchangeA1P1();
             exchangeA2P2();
         }
+        */
 
         timeRecordDb = new TimeDbHelper(this);
         trialInfoDb = new TrialDbHelper(this);
@@ -381,8 +385,11 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
         totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
-        totalAmountWon = totalAmountWon + amountWon;
-        prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float)totalAmountWon).apply();
+
+        if (!isDemo) {      // only change totalAmountWon if is not in training
+            totalAmountWon = totalAmountWon + amountWon;
+            prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float) totalAmountWon).apply();
+        }
 
         recordEvent(option+" selected, $"+amountWon+" won; total amount won: $"+totalAmountWon);
 
@@ -397,11 +404,23 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private void exchangeA1P1(){
         ViewGroup parent = (ViewGroup) viewAnimatorDollar1.getParent();
         int indexDollar1 = parent.indexOfChild(viewAnimatorDollar1);
+        Log.d("QH: Index dollar1", Integer.toString(indexDollar1));
+
         int indexProbability1 = parent.indexOfChild(viewAnimatorProbability1);
-        parent.removeView(viewAnimatorDollar1);
-        parent.addView(viewAnimatorDollar1, indexProbability1);
-        parent.removeView(viewAnimatorProbability1);
-        parent.addView(viewAnimatorProbability1, indexDollar1);
+        Log.d("QH: Index prob1", Integer.toString(indexProbability1));
+        try {
+            parent.removeView(viewAnimatorDollar1);
+            parent.addView(viewAnimatorDollar1, indexProbability1);
+            parent.removeView(viewAnimatorProbability1);
+            parent.addView(viewAnimatorProbability1, indexDollar1);
+        } catch (Exception e) {
+            Log.d("QH: exchange", "Error");
+
+        }
+
+        Log.d("QH: Index dollar1 new", Integer.toString(parent.indexOfChild(viewAnimatorDollar1)));
+
+        Log.d("QH: Index prob1 new", Integer.toString(parent.indexOfChild(viewAnimatorProbability1)));
     }
 
     private void exchangeA2P2(){

@@ -6,6 +6,15 @@ May 11, 2020
 
 This version of the app completes the implementation of 4 configurations of tasks.
 
+TODO:
+
+1. Uncomment the code for bluetooth. Write event codes. Test this.
+
+2. Sync sqlite timestamps table to Firebase.
+
+3. Random positions is implemented only for 2Opt2Att trials and are not enabled now. Do we want those?
+
+
 Task (/trial) information is given in a .csv file named "allTrialsMADM_Tablet.csv."
 Description of this file:
 Column 1: task type
@@ -21,6 +30,7 @@ There are 5 Sessions total
 	◦	Each session is comprised of 20 blocks (5 blocks for each task type, 800 trials in each block); Each block is comprised of 40 trials (32 non-dominated, 8 dominated)
 
 * To replace this file, go the assets folder, copy the new csv file into the folder, and remove the first line (header) of the file.
+
 
 -----------
 Mar 21, 2020

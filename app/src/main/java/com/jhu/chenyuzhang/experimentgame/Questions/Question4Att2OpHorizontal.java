@@ -421,8 +421,11 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
         totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
-        totalAmountWon = totalAmountWon + amountWon;
-        prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float)totalAmountWon).apply();
+
+        if (!isDemo) {      // only change totalAmountWon if is not in training
+            totalAmountWon = totalAmountWon + amountWon;
+            prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float) totalAmountWon).apply();
+        }
 
         recordEvent(option+" selected, $"+amountWon+" won; total amount won: $"+totalAmountWon);
 

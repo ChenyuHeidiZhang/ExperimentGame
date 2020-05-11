@@ -86,8 +86,6 @@ public class QuestionActivity extends AppCompatActivity {
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
-    private int random_position = new Random().nextInt(2);
-
     private long backPressedTime;
 
     Bluetooth bluetooth;
@@ -157,12 +155,18 @@ public class QuestionActivity extends AppCompatActivity {
             }
         }.start();
 
-        String position = "A1P1,A2P2";
+
+        String position = "A1P1,A2P2";      // NOTE: dis-enabled random positions
+        /*
+        int random_position = new Random().nextInt(2);
+        Log.d("Random QH", Integer.toString(random_position));
         if (random_position==1){
+            Log.d("Random QH", Integer.toString(random_position));
             position = "P1A1,P2A2";
             exchangeA1P1();
             exchangeA2P2();
         }
+        */
 
         timeRecordDb = new TimeDbHelper(this);
         trialInfoDb = new TrialDbHelper(this);
@@ -399,8 +403,11 @@ public class QuestionActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
         totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
-        totalAmountWon = totalAmountWon + amountWon;
-        prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float)totalAmountWon).apply();
+
+        if (!isDemo) {      // only change totalAmountWon if is not in training
+            totalAmountWon = totalAmountWon + amountWon;
+            prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float) totalAmountWon).apply();
+        }
 
         recordEvent(option+" selected, $"+amountWon+" won; total amount won: $"+totalAmountWon);
 
