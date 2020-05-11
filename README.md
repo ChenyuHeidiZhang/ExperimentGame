@@ -16,6 +16,9 @@ TODO:
 
 
 Task (/trial) information is given in a .csv file named "allTrialsMADM_Tablet.csv."
+
+* To replace this file, go the assets folder, copy the new csv file into the folder, and remove the first line (header) of the file.
+
 Description of this file:
 
 Column 1: task type
@@ -33,7 +36,6 @@ Columns 3:end are the magnitudes for each option type according to the same mapp
 There are 5 Sessions total
 * Each session is comprised of 20 blocks (5 blocks for each task type, 800 trials in each block); Each block is comprised of 40 trials (32 non-dominated, 8 dominated)
 
-* To replace this file, go the assets folder, copy the new csv file into the folder, and remove the first line (header) of the file.
 
 
 -----------
