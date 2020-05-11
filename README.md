@@ -19,19 +19,19 @@ Task (/trial) information is given in a .csv file named "allTrialsMADM_Tablet.cs
 Description of this file:
 
 Column 1: task type
-	* 1 = 2Opt2Att
-	* 2 = 2Optt4Att
-	* 3 = 4Opt2Att
-	* 4 = 4Opt4Att
+* 1 = 2Opt2Att
+* 2 = 2Optt4Att
+* 3 = 4Opt2Att
+* 4 = 4Opt4Att
 	
 Column 2: trial type
-	* 1 = non-dominated
-	* 0 = dominated
+* 1 = non-dominated
+* 0 = dominated
 	
 Columns 3:end are the magnitudes for each option type according to the same mappings as AllTOD
 
 There are 5 Sessions total
-	* Each session is comprised of 20 blocks (5 blocks for each task type, 800 trials in each block); Each block is comprised of 40 trials (32 non-dominated, 8 dominated)
+* Each session is comprised of 20 blocks (5 blocks for each task type, 800 trials in each block); Each block is comprised of 40 trials (32 non-dominated, 8 dominated)
 
 * To replace this file, go the assets folder, copy the new csv file into the folder, and remove the first line (header) of the file.
 
