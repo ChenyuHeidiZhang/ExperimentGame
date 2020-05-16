@@ -37,6 +37,10 @@ public class ResultActivity extends AppCompatActivity {
     public static int trialCounter;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
 
+    public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
+    private TextView tvTotal;
+    private double totalAmountWon;
+
     TimeDbHelper timeRecordDb;
     Bluetooth bluetooth;
 
@@ -51,6 +55,10 @@ public class ResultActivity extends AppCompatActivity {
         textViewSorry = findViewById(R.id.text_view_sorry);
         textViewAmount = findViewById(R.id.text_view_result_amount);
         buttonNextTrial = findViewById(R.id.button_next_trial);
+
+        tvTotal = findViewById(R.id.text_view_total);
+        SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
+        totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
 
         timeRecordDb = new TimeDbHelper(this);
 
@@ -86,6 +94,8 @@ public class ResultActivity extends AppCompatActivity {
                     textViewSorry.setVisibility(View.GONE);
                     textViewAmount.setText("You won $" + String.format("%.2f",amountWon) + "!");
                 }
+                tvTotal.setText("Total Amount Won: $" + String.format("%.2f", totalAmountWon));
+
             }
         }, 1000);
 
