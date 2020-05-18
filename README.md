@@ -17,7 +17,7 @@ TODO:
 
 Task (/trial) information is given in a .csv file named "allTrialsMADM_Tablet.csv."
 
-**To replace this file, go the assets folder, copy the new csv file into the folder, and remove the first line (header) of the file.**
+**To replace this file, go to ExperimentGame/app/src/main/assets, copy the new csv file into the folder. (Need to remove the first line (header) of the file.)**
 
 Description of this file:
 
