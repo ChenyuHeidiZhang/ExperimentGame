@@ -12,9 +12,6 @@ TODO:
 
 2. Sync sqlite timestamps table to Firebase.
 
-3. Random positions is implemented only for 2Opt2Att trials and are not enabled now. Do we want those?
-
-
 Task (/trial) information is given in a .csv file named "allTrialsMADM_Tablet.csv."
 
 **To replace this file, go to ExperimentGame/app/src/main/assets, copy the new csv file into the folder. (Need to remove the first line (header) of the file.)**
