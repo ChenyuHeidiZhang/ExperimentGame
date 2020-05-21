@@ -33,7 +33,7 @@ Column 2: trial type
 Columns 3:end are the magnitudes for each option type according to the same mappings as AllTOD
 
 There are 5 Sessions total
-* Each session is comprised of 20 blocks (5 blocks for each task type, 800 trials in each block); Each block is comprised of 40 trials (32 non-dominated, 8 dominated)
+* Each session is comprised of 20 blocks (5 blocks for each task type); Each block is comprised of 40 trials (32 non-dominated, 8 dominated)
 
 
 
