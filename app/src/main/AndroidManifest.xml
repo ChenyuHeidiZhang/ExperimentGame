@@ -17,7 +17,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Questions.Question2Att4OpHorizontal"></activity>
+        <activity android:name=".TotalAmountActivity"></activity>
+        <activity android:name=".Questions.Question2Att4OpHorizontal" />
         <activity android:name=".Questions.Question2Att4OpActivity" />
         <activity android:name=".Questions.Question4Att2OpHorizontal" />
         <activity android:name=".Questions.Question4Att2OpActivity" />

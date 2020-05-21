@@ -32,9 +32,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class QuestionActivityHorizontal extends AppCompatActivity {
-    public static double totalAmountWon;
-    public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
-
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
     private SharedPreferences demo_prefs;
@@ -162,7 +159,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A1=" + a1 + " P1=" + p1 + ", Option2: A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal; " + position);
 
         } else {
-            incrementTrialCounter();   // increment the counter to indicate the next trial
             timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A1=" + a1 + " P1=" + p1 + ", Option2: A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal; " + position);
         }
 
@@ -318,8 +314,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
 
-        Log.d("QH Test", Integer.toString(trialCounter));
-
         // get current trial
         currentTrial = trialInfoDb.getTrial(trialCounter);
         getAttributes();
@@ -348,17 +342,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         }
     }
 
-    private void incrementTrialCounter() {
-        if (trialCounter == trialInfoDb.getNumRows()){  // increment trial counter
-            trialCounter = 1;       // wrap around if reaches the end
-        } else {
-            trialCounter++;
-        }
-
-        counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trialCounter).apply();
-    }
-
-
     //get current time in milliseconds
     private String getCurrentTime() {
         Date date = new Date();
@@ -383,16 +366,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             amountWon = 0;
         }
 
-        SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
-        totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
-
-        if (!isDemo) {      // only change totalAmountWon if is not in training
-            totalAmountWon = totalAmountWon + amountWon;
-            prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float) totalAmountWon).apply();
-        }
-
-        recordEvent(option+" selected, $"+amountWon+" won; total amount won: $"+totalAmountWon);
-
+        recordEvent(option+" selected, $"+amountWon+" won");
         timeRecordDb.close();
 
         Intent intent = new Intent(QuestionActivityHorizontal.this, ResultActivity.class);

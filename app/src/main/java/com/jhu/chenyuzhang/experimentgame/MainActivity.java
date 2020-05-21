@@ -212,8 +212,10 @@ public class MainActivity extends AppCompatActivity {
                                 isSignedIn = false;
                                 prefSignedIn.edit().putBoolean(KEY_IS_SIGNED_IN, isSignedIn).apply();
 
-                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                startActivity(intent);
+                                // display final total when logging out
+                                Intent intent_total = new Intent(MainActivity.this, TotalAmountActivity.class);
+                                intent_total.putExtra("EXTRA_DISPLAY_ID", 0);  // 0 means to display overall total
+                                startActivity(intent_total);
                                 finish();
                             } else {
                                 Toast.makeText(MainActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();

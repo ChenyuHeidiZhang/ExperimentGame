@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
 
     private static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
+    public static final String KEY_LAST_TOTAL = "keyLastTotal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,9 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences prefTotalAmount = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
         prefTotalAmount.edit().putFloat(KEY_TOTAL_AMOUNT, 0).apply();
+
+        SharedPreferences prefLastAmount = getSharedPreferences("lastTotal", MODE_PRIVATE);
+        prefLastAmount.edit().putFloat(KEY_LAST_TOTAL, 0).apply();  // total amount 4 blocks ago
 
         String tableName = "timeRecord_table_" + name;
 

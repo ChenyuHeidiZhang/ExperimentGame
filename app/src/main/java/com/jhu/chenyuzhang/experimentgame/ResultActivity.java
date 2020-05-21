@@ -23,6 +23,8 @@ import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
 import java.util.Random;
 
 public class ResultActivity extends AppCompatActivity {
+    private final double PERCENT_WIN = 0.1;
+
     private double amountWon;
     private ImageView imageViewCongrats;
     private TextView textViewSorry;
@@ -34,12 +36,11 @@ public class ResultActivity extends AppCompatActivity {
 
     TrialDbHelper trialInfoDb;
 
-    public static int trialCounter;
+    private SharedPreferences counter_prefs;
+    private int trialCounter;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
 
     public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
-    private TextView tvTotal;
-    private double totalAmountWon;
 
     TimeDbHelper timeRecordDb;
     Bluetooth bluetooth;
@@ -49,23 +50,34 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        amountWon = getIntent().getDoubleExtra("EXTRA_AMOUNT_WON", 0);
-
         imageViewCongrats = findViewById(R.id.image_view_congrats);
         textViewSorry = findViewById(R.id.text_view_sorry);
         textViewAmount = findViewById(R.id.text_view_result_amount);
         buttonNextTrial = findViewById(R.id.button_next_trial);
 
-        tvTotal = findViewById(R.id.text_view_total);
-        SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
-        totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
-
-        timeRecordDb = new TimeDbHelper(this);
+        amountWon = getIntent().getDoubleExtra("EXTRA_AMOUNT_WON", 0);   // get amount won passed as extra
 
         SharedPreferences demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
 
+        // update total amount won; only add to totalAmountWon with some probability and if is not in training
+        double random = new Random().nextDouble();
+        if (random <= PERCENT_WIN && !isDemo) {
+            SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
+            double totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
+
+            totalAmountWon = totalAmountWon + amountWon;
+            prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float) totalAmountWon).apply();
+
+            Log.d("TAG_total_amount", Double.toString(totalAmountWon));
+        }
+
+        timeRecordDb = new TimeDbHelper(this);
+
         trialInfoDb = new TrialDbHelper(this);
+
+        counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
+        trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
 
         //bluetooth = new Bluetooth(timeRecordDb);
 
@@ -94,25 +106,41 @@ public class ResultActivity extends AppCompatActivity {
                     textViewSorry.setVisibility(View.GONE);
                     textViewAmount.setText("You won $" + String.format("%.2f",amountWon) + "!");
                 }
-                tvTotal.setText("Total Amount Won: $" + String.format("%.2f", totalAmountWon));
-
             }
         }, 1000);
 
         buttonNextTrial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getNextIntent();
-                startActivity(intent);
-                finish();
+                // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
+                // go to new trial in that activity
+                if (!isDemo && trialCounter % 160 == 0) {
+                    incrementTrialCounter();
+                    Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
+                    intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
+                    startActivity(intent_total);
+                    finish();
+
+                } else {
+                    Intent intent = getNextIntent();
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
 
-    private Trial getNextTrial() {
-        SharedPreferences counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
-        trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
+    private void incrementTrialCounter() {  // increment trial counter
+        if (trialCounter == trialInfoDb.getNumRows()){
+            trialCounter = 1;       // wrap around if reaches the end
+        } else {
+            trialCounter++;
+        }
 
+        counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trialCounter).apply();
+    }
+
+    private Trial getNextTrial() {
         if (isDemo) {   // if is in training, randomly choose a trial; otherwise, pick the next one
             //int trial_num = new Random().nextInt((int)trialInfoDb.getNumRows()); // random integer in [0, table_size)
             int trial_num = new Random().nextInt(160);  // get one of the first 160 trials
@@ -121,8 +149,8 @@ public class ResultActivity extends AppCompatActivity {
             counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trial_num).apply();  // set shared trialCounter to trial_num
 
             return trialInfoDb.getTrial(trial_num);
-        }
-
+        }   // else
+        incrementTrialCounter();
         return trialInfoDb.getTrial(trialCounter);
     }
 

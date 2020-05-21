@@ -8,17 +8,6 @@
     android:orientation="vertical"
     tools:context="com.jhu.chenyuzhang.experimentgame.ResultActivity">
 
-    <TextView
-        android:id="@+id/text_view_total"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total Amount Won: "
-        android:paddingLeft="50dp"
-        android:paddingStart="50dp"
-        android:paddingTop="50dp"
-        android:textSize="30sp"
-        android:textColor="@color/white"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

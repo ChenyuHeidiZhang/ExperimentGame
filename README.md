@@ -2,17 +2,19 @@
 
 App developed for a multi-attribute decision making experiment.
 
-May 11, 2020
+May 21, 2020
 
-This version of the app completes the implementation of 4 configurations of tasks.
+Notes:
 
-TODO:
+1. To change the percentage (chance) of trials getting counted towards the total:
 
-1. Uncomment the code for bluetooth. Write event codes. Test this.
+Go to ResultActivity line 26, change the **PERCENT_WIN** variable.
 
-2. Sync sqlite timestamps table to Firebase.
+2. To change the password:
 
-Task (/trial) information is given in a .csv file named "allTrialsMADM_Tablet.csv."
+Go to res/values/strings.xml line 11
+
+3. Task (/trial) information is given in a .csv file named "allTrialsMADM_Tablet.csv."
 
 **To replace this file, go to ExperimentGame/app/src/main/assets, copy the new csv file into the folder. (Need to remove the first line (header) of the file.)**
 
@@ -33,6 +35,19 @@ Columns 3:end are the magnitudes for each option type according to the same mapp
 There are 5 Sessions total
 * Each session is comprised of 20 blocks (5 blocks for each task type, 800 trials in each block); Each block is comprised of 40 trials (32 non-dominated, 8 dominated)
 
+
+
+------------------------------
+
+May 11, 2020
+
+This version of the app completes the implementation of 4 configurations of tasks.
+
+TODO:
+
+1. Uncomment the code for bluetooth. Write event codes. Test this.
+
+2. Sync sqlite timestamps table to Firebase.
 
 
 -----------
