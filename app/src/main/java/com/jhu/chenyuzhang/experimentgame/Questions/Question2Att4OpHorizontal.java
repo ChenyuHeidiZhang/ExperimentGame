@@ -2,6 +2,7 @@ package com.jhu.chenyuzhang.experimentgame.Questions;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -404,12 +405,14 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         textViewProb1.setText((int) p1 + "%");
         textViewProb2.setText((int) p2 + "%");
-        textViewDollar1.setText("$" + String.format("%.2f", a1));
-        textViewDollar2.setText("$" + String.format("%.2f", a2));
+        textViewDollar1.setText("$" + String.format("%.2f", Math.abs(a1)));
+        textViewDollar2.setText("$" + String.format("%.2f", Math.abs(a2)));
         textViewProb3.setText((int) p3 + "%");
         textViewProb4.setText((int) p4 + "%");
-        textViewDollar3.setText("$" + String.format("%.2f", a3));
-        textViewDollar4.setText("$" + String.format("%.2f", a4));
+        textViewDollar3.setText("$" + String.format("%.2f", Math.abs(a3)));
+        textViewDollar4.setText("$" + String.format("%.2f", Math.abs(a4)));
+
+        setAttributeTextColor();
 
         if (a1 < 0) {   // if the two dollar amounts are negative, set icons to losing
             ImageView img_dollar1 = findViewById(R.id.image_view_dollar1);
@@ -428,6 +431,28 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             img_dollar4.setImageResource(R.drawable.dollar_lose);
             img_prob3.setImageResource(R.drawable.probability_lose);
             img_prob4.setImageResource(R.drawable.probability_lose);
+        }
+    }
+
+    private void setAttributeTextColor() {
+        if (a1 < 0) {
+            textViewDollar1.setTextColor(Color.RED);
+            textViewProb1.setTextColor(Color.RED);
+            textViewDollar2.setTextColor(Color.RED);
+            textViewProb2.setTextColor(Color.RED);
+            textViewDollar3.setTextColor(Color.RED);
+            textViewProb3.setTextColor(Color.RED);
+            textViewDollar4.setTextColor(Color.RED);
+            textViewProb4.setTextColor(Color.RED);
+        } else {
+            textViewDollar1.setTextColor(Color.GREEN);
+            textViewProb1.setTextColor(Color.GREEN);
+            textViewDollar2.setTextColor(Color.GREEN);
+            textViewProb2.setTextColor(Color.GREEN);
+            textViewDollar3.setTextColor(Color.GREEN);
+            textViewProb3.setTextColor(Color.GREEN);
+            textViewDollar4.setTextColor(Color.GREEN);
+            textViewProb4.setTextColor(Color.GREEN);
         }
     }
 

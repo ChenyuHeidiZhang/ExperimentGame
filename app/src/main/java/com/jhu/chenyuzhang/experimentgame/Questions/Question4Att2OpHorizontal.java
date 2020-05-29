@@ -2,6 +2,7 @@ package com.jhu.chenyuzhang.experimentgame.Questions;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -376,14 +377,29 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         am2 = Double.parseDouble(attributes.get(8));
         pm2 = Double.parseDouble(attributes.get(9))*100;
 
-        textViewDollarP1.setText("$" + String.format("%.2f", ap1));
+        textViewDollarP1.setText("$" + String.format("%.2f", Math.abs(ap1)));
         textViewProbP1.setText((int) pp1 + "%");
-        textViewDollarM1.setText("$" + String.format("%.2f", am1));
+        textViewDollarM1.setText("$" + String.format("%.2f", Math.abs(am1)));
         textViewProbM1.setText((int) pm1 + "%");
-        textViewDollarP2.setText("$" + String.format("%.2f", ap2));
+        textViewDollarP2.setText("$" + String.format("%.2f", Math.abs(ap2)));
         textViewProbP2.setText((int) pp2 + "%");
-        textViewDollarM2.setText("$" + String.format("%.2f", am2));
+        textViewDollarM2.setText("$" + String.format("%.2f", Math.abs(am2)));
         textViewProbM2.setText((int) pm2 + "%");
+
+
+        setAttributeTextColor();
+    }
+
+    private void setAttributeTextColor() {
+        textViewDollarP1.setTextColor(Color.GREEN);
+        textViewProbP1.setTextColor(Color.GREEN);
+        textViewDollarP2.setTextColor(Color.GREEN);
+        textViewProbP2.setTextColor(Color.GREEN);
+
+        textViewDollarM1.setTextColor(Color.RED);
+        textViewProbM1.setTextColor(Color.RED);
+        textViewDollarM2.setTextColor(Color.RED);
+        textViewProbM2.setTextColor(Color.RED);
     }
 
     //get current time in milliseconds

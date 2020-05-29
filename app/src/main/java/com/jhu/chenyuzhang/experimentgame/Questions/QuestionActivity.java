@@ -2,6 +2,7 @@ package com.jhu.chenyuzhang.experimentgame.Questions;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -351,10 +352,12 @@ public class QuestionActivity extends AppCompatActivity {
         p2 = Double.parseDouble(attributes.get(5))*100;
         textViewProbability1.setText((int) p1 + "%");
         textViewProbability2.setText((int) p2 + "%");
-        textViewDollar1.setText("$" + String.format("%.2f", a1));
-        textViewDollar2.setText("$" + String.format("%.2f", a2));
+        textViewDollar1.setText("$" + String.format("%.2f", Math.abs(a1)));
+        textViewDollar2.setText("$" + String.format("%.2f", Math.abs(a2)));
 
-        if (a1 < 0) {   // if the two dollar amounts are negative, set icons to losing
+        setAttributeTextColor();
+
+        if (a1 < 0) {   // if the two dollar amounts are negative, set icons to losing (default is winning icons)
             ImageView img_dollar1 = findViewById(R.id.image_view_dollar1);
             ImageView img_prob1 = findViewById(R.id.image_view_probability1);
             ImageView img_dollar2 = findViewById(R.id.image_view_dollar2);
@@ -363,6 +366,20 @@ public class QuestionActivity extends AppCompatActivity {
             img_dollar2.setImageResource(R.drawable.dollar_lose);
             img_prob1.setImageResource(R.drawable.probability_lose);
             img_prob2.setImageResource(R.drawable.probability_lose);
+        }
+    }
+
+    private void setAttributeTextColor() {  // default text color: white
+        if (a1 < 0) {
+            textViewDollar1.setTextColor(Color.RED);
+            textViewProbability1.setTextColor(Color.RED);
+            textViewDollar2.setTextColor(Color.RED);
+            textViewProbability2.setTextColor(Color.RED);
+        } else {
+            textViewDollar1.setTextColor(Color.GREEN);
+            textViewProbability1.setTextColor(Color.GREEN);
+            textViewDollar2.setTextColor(Color.GREEN);
+            textViewProbability2.setTextColor(Color.GREEN);
         }
     }
 
