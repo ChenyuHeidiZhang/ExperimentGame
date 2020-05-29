@@ -28,6 +28,7 @@ public class ResultActivity extends AppCompatActivity {
     private final double PERCENT_WIN = 0.1;
 
     private double amountWon;
+    private Trial prevTrial;
     private ImageView imageViewCongrats;
     private TextView textViewSorry;
     private TextView textViewAmount;
@@ -88,6 +89,9 @@ public class ResultActivity extends AppCompatActivity {
 
         //bluetooth = new Bluetooth(timeRecordDb);
 
+        // get the trial whose result is shown
+        prevTrial = trialInfoDb.getTrial(trialCounter);
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -100,19 +104,7 @@ public class ResultActivity extends AppCompatActivity {
                 } catch (IOException e) {}
                 */
                 buttonNextTrial.setVisibility(View.VISIBLE);
-                if (amountWon <= 0) {
-                    imageViewCongrats.setVisibility(View.GONE);
-                    textViewSorry.setVisibility(View.VISIBLE);
-                    if (amountWon == 0) {
-                        textViewAmount.setText("You didn't win / lose any money.");
-                    } else {
-                        textViewAmount.setText("You lost $" + String.format("%.2f",-amountWon) + ".");
-                    }
-                } else {
-                    imageViewCongrats.setVisibility(View.VISIBLE);
-                    textViewSorry.setVisibility(View.GONE);
-                    textViewAmount.setText("You won $" + String.format("%.2f",amountWon) + "!");
-                }
+                displayResult();
             }
         }, 1000);
 
@@ -135,6 +127,45 @@ public class ResultActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void displayResult() {
+        if (prevTrial.getType().equals("1") || prevTrial.getType().equals("3")) {   // 2 att trial
+            String firstAmount = prevTrial.getAttributes().get(2);
+            if (Double.parseDouble(firstAmount) > 0) {  // if this trial is gain domain
+                if (amountWon != 0) {
+                    imageViewCongrats.setVisibility(View.VISIBLE);
+                    textViewAmount.setText("You won $" + String.format("%.2f", amountWon) + "!");
+                } else {
+                    textViewSorry.setVisibility(View.VISIBLE);
+                    textViewSorry.setText("Sorry.");
+                    textViewAmount.setText("You didn't win any money.");
+                }
+            } else {    // if this trial is loss domain
+                if (amountWon != 0) {
+                    textViewSorry.setVisibility(View.VISIBLE);
+                    textViewSorry.setText("Oh no!");
+                    textViewAmount.setText("You lost $" + String.format("%.2f",-amountWon) + ".");
+                } else {
+                    textViewSorry.setVisibility(View.VISIBLE);
+                    textViewSorry.setText("Phew!");
+                    textViewAmount.setText("You didn’t lose any money.");
+                }
+            }
+        } else {    // 4 att trial
+            if (amountWon > 0) {
+                imageViewCongrats.setVisibility(View.VISIBLE);
+                textViewAmount.setText("You won $" + String.format("%.2f", amountWon) + "!");
+            } else if (amountWon < 0) {
+                textViewSorry.setVisibility(View.VISIBLE);
+                textViewSorry.setText("Oh no!");
+                textViewAmount.setText("You lost $" + String.format("%.2f",-amountWon) + ".");
+            } else {
+                textViewSorry.setVisibility(View.VISIBLE);
+                textViewSorry.setText("");
+                textViewAmount.setText("You didn't win or lose any money.");
+            }
+        }
     }
 
     private void incrementTrialCounter() {  // increment trial counter
