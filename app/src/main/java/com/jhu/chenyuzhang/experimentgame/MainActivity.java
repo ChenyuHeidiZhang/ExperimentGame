@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,16 +38,14 @@ import java.util.Random;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "BluetoothActivity2";
+    private static final String TAG = "Bluetooth_Main";
+    private final String BluetoothName = "J205";    //HC-06
 
     private static boolean isSignedIn;
     private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
     private SharedPreferences prefSignedIn;
 
     private TimeDbHelper timeRecordDb;
-
-    private boolean isDemo;
-    private static final String KEY_DO_DEMO = "keyDoDemo";
 
     TrialDbHelper trialInfoDb;
 
@@ -57,18 +58,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        timeRecordDb = new TimeDbHelper(this);
+
+        // hide the status bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
+
+        timeRecordDb = new TimeDbHelper(this);
 
         Button playGame = findViewById(R.id.button_playGame);
 
         Button signOut = findViewById(R.id.button_signOut);
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
-
-        SharedPreferences demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
-        isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
 
         trialInfoDb = new TrialDbHelper(this);
 
@@ -81,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Context context = getApplicationContext();
                 try {
-                    //bluetooth.findBT();
                     findBT();
                     Toast toast = Toast.makeText(context, "bluetooth connected", Toast.LENGTH_SHORT);
                     toast.show();
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     private Trial getNextTrial() {
         SharedPreferences counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
-        // start with trial 1 (default) if first access training; otherwise, start with trialCounter
+        // always start with the shared trialCounter, which is initiated to 1 in Login and updated in ResultActivity
 
         return trialInfoDb.getTrial(trialCounter);
     }
@@ -174,18 +176,20 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "pairedDevices>0");
             for(BluetoothDevice device : pairedDevices)
             {
-                if(device.getName().equals("HC-06"))
+                if(device.getName().equals(BluetoothName))
                 {
                     bluetooth.mmDevice = device;
 
                     ParcelUuid[] uuids = device.getUuids();
-                    bluetooth.openBT(uuids);
+                    bluetooth.openBT(uuids);    // call openBT method in bluetooth class
 
+                    /*
                     try {
                         bluetooth.openBT(uuids);
                     } catch (IOException e) {
                         Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
                     }
+                    */
 
                     break;
                 }
