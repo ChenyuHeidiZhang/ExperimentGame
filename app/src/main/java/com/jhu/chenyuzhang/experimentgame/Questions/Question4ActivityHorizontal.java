@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
@@ -182,17 +183,26 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
         setupTrial();
 
+        // change spatial configuration if random_config = 1
+        int random_config = new Random().nextInt(2);
+        if (random_config == 1) {
+            changePositions(viewAnimatorDollarM1, viewAnimatorProbP1);
+            changePositions(viewAnimatorDollarM2, viewAnimatorProbP2);
+            changePositions(viewAnimatorDollarM3, viewAnimatorProbP3);
+            changePositions(viewAnimatorDollarM4, viewAnimatorProbP4);
+        }
+
         if (isDemo) {
             timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A+=" + ap1 + " P+=" + pp1 + " A-=" + am1 + " P-=" + pm1 +
                     "; Option2: A+=" + ap2 + " P+=" + pp2 + " A-=" + am2 + " P-=" + pm2 +
                     "; Option3: A+=" + ap3 + " P+=" + pp3 + " A-=" + am3 + " P-=" + pm3 +
-                    "; Option4: A+=" + ap4 + " P+=" + pp4 + " A-=" + am4 + " P-=" + pm4 + "; Orientation: horizontal");
+                    "; Option4: A+=" + ap4 + " P+=" + pp4 + " A-=" + am4 + " P-=" + pm4 + "; Orientation: horizontal; Config " + random_config);
 
         } else {
             timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A+=" + ap1 + " P+=" + pp1 + " A-=" + am1 + " P-=" + pm1 +
                     "; Option2: A+=" + ap2 + " P+=" + pp2 + " A-=" + am2 + " P-=" + pm2 +
                     "; Option3: A+=" + ap3 + " P+=" + pp3 + " A-=" + am3 + " P-=" + pm3 +
-                    "; Option4: A+=" + ap4 + " P+=" + pp4 + " A-=" + am4 + " P-=" + pm4 + "; Orientation: horizontal");
+                    "; Option4: A+=" + ap4 + " P+=" + pp4 + " A-=" + am4 + " P-=" + pm4 + "; Orientation: horizontal; Config " + random_config);
         }
 
         //bluetooth = new Bluetooth(timeRecordDb);
@@ -562,6 +572,16 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
         textViewProbM4.setTextColor(Color.RED);
     }
 
+    // change spatial configuration from win, lose (config 0) to amount, prob (config 1)
+    // essentially, exchange prob win with amount lose
+    private void changePositions(ViewAnimator viewAnimatorDollarM, ViewAnimator viewAnimatorProbP) {
+        RelativeLayout.LayoutParams lp_dollarM = (RelativeLayout.LayoutParams) viewAnimatorDollarM.getLayoutParams();
+        RelativeLayout.LayoutParams lp_probP = (RelativeLayout.LayoutParams) viewAnimatorProbP.getLayoutParams();
+
+        int margin_dollarM = lp_dollarM.getMarginStart();
+        lp_dollarM.setMarginStart(lp_probP.getMarginStart());
+        lp_probP.setMarginStart(margin_dollarM);
+    }
 
     //get current time in milliseconds
     private String getCurrentTime() {

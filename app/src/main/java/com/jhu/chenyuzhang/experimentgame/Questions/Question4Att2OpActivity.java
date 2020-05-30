@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -170,13 +171,20 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
         setupTrial();
 
+        // change spatial configuration if random_config = 1
+        int random_config = new Random().nextInt(2);
+        if (random_config == 1) {
+            changePositions(viewAnimatorDollarM1, viewAnimatorProbP1);
+            changePositions(viewAnimatorDollarM2, viewAnimatorProbP2);
+        }
+
         if (isDemo) {
             timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A+=" + ap1 + " P+=" + pp1 + " A-=" + am1 + " P-=" + pm1 +
-                    "; Option2: A+=" + ap2 + " P+=" + pp2 + " A-=" + am2 + " P-=" + pm2 + "; Orientation: vertical");
+                    "; Option2: A+=" + ap2 + " P+=" + pp2 + " A-=" + am2 + " P-=" + pm2 + "; Orientation: vertical; Config " + random_config);
 
         } else {
             timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A+=" + ap1 + " P+=" + pp1 + " A-=" + am1 + " P-=" + pm1 +
-                    "; Option2: A+=" + ap2 + " P+=" + pp2 + " A-=" + am2 + " P-=" + pm2 + "; Orientation: vertical");
+                    "; Option2: A+=" + ap2 + " P+=" + pp2 + " A-=" + am2 + " P-=" + pm2 + "; Orientation: vertical; Config " + random_config);
         }
 
 
@@ -402,6 +410,18 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         textViewProbM1.setTextColor(Color.RED);
         textViewDollarM2.setTextColor(Color.RED);
         textViewProbM2.setTextColor(Color.RED);
+    }
+
+    // change spatial configuration from win, lose (config 0) to amount, prob (config 1)
+    // essentially, exchange prob win with amount lose
+    private void changePositions(ViewAnimator viewAnimatorDollarM, ViewAnimator viewAnimatorProbP) {
+        ViewGroup parent = (ViewGroup) viewAnimatorDollarM.getParent();
+        int indexDollarM = parent.indexOfChild(viewAnimatorDollarM);
+        int indexProbP = parent.indexOfChild(viewAnimatorProbP);
+        parent.removeView(viewAnimatorDollarM);
+        parent.addView(viewAnimatorDollarM, indexProbP);
+        parent.removeView(viewAnimatorProbP);
+        parent.addView(viewAnimatorProbP, indexDollarM);
     }
 
     //get current time in milliseconds

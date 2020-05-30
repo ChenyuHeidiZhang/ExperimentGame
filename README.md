@@ -2,6 +2,17 @@
 
 App developed for a multi-attribute decision making experiment.
 
+May 30, 2020
+
+Notes:
+
+To enable bluetooth on a tablet, please go to settings and connect to the bluetooth device. Then in the app, tap on the BLUETOOTH button.
+
+Options with 4 attributes now have two spatial configurations (randomized)
+- amount win, prob win, amount lose, prob lose (recorded as config 0 in database)
+- amount win, amount lose, prob win, prob lose (recorded as config 1 in database)
+
+
 May 21, 2020
 
 Notes:
