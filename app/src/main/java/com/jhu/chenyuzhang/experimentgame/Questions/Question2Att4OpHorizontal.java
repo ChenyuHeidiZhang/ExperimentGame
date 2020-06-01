@@ -171,12 +171,22 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         setupTrial();
 
         if (isDemo) {
-            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A1=" + a1 + " P1=" + p1 + ", Option2: A2=" + a2 + " P2=" + p2 +
-                    "; Option3: A3=" + a3 + " P3=" + p3 + ", Option4: A4=" + a4 + " P4=" + p4 + "; Orientation: horizontal");
+            if (a1 >= 0) {
+                timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A+=" + a1 + " P+=" + p1 + ", Option2: A+=" + a2 + " P+=" + p2 +
+                        "; Option3: A+=" + a3 + " P+=" + p3 + ", Option+: A+=" + a4 + " P+=" + p4 + "; Orientation: horizontal");
+            } else {
+                timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A-=" + a1 + " P-=" + p1 + ", Option2: A-=" + a2 + " P-=" + p2 +
+                        "; Option3: A-=" + a3 + " P-=" + p3 + ", Option4: A-=" + a4 + " P-=" + p4 + "; Orientation: horizontal");
+            }
 
         } else {
-            timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A1=" + a1 + " P1=" + p1 + ", Option2: A2=" + a2 + " P2=" + p2 +
-                    "; Option3: A3=" + a3 + " P3=" + p3 + ", Option4: A4=" + a4 + " P4=" + p4 + "; Orientation: horizontal");
+            if (a1 >= 0) {
+                timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A+=" + a1 + " P+=" + p1 + ", Option2: A+=" + a2 + " P+=" + p2 +
+                        "; Option3: A+=" + a3 + " P+=" + p3 + ", Option4: A+=" + a4 + " P+=" + p4 + "; Orientation: horizontal");
+            } else {
+                timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A-=" + a1 + " P-=" + p1 + ", Option2: A-=" + a2 + " P-=" + p2 +
+                        "; Option3: A-=" + a3 + " P-=" + p3 + ", Option4: A-=" + a4 + " P-=" + p4 + "; Orientation: horizontal");
+            }
         }
 
         //bluetooth = new Bluetooth(timeRecordDb);

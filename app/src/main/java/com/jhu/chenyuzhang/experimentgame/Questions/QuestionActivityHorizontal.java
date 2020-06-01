@@ -146,7 +146,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         }.start();
 
 
-        String position = "A1P1,A2P2";
+        // String position = "A1P1,A2P2";
         /*
         int random_position = new Random().nextInt(2);
         Log.d("Random QH", Integer.toString(random_position));
@@ -164,10 +164,17 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         setupTrial();
 
         if (isDemo) {
-            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A1=" + a1 + " P1=" + p1 + ", Option2: A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal; " + position);
-
+            if (a1 >= 0) {
+                timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A+=" + a1 + " P+=" + p1 + ", Option2: A+=" + a2 + " P+=" + p2 + "; Orientation: horizontal;");
+            } else {
+                timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A-=" + a1 + " P-=" + p1 + ", Option2: A-=" + a2 + " P-=" + p2 + "; Orientation: horizontal;");
+            }
         } else {
-            timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A1=" + a1 + " P1=" + p1 + ", Option2: A2=" + a2 + " P2=" + p2 + "; Orientation: horizontal; " + position);
+            if (a1 >= 0) {
+                timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A+=" + a1 + " P+=" + p1 + ", Option2: A+=" + a2 + " P+=" + p2 + "; Orientation: horizontal;");
+            } else {
+                timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A-=" + a1 + " P-=" + p1 + ", Option2: A-=" + a2 + " P-=" + p2 + "; Orientation: horizontal;");
+            }
         }
 
 
