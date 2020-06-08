@@ -77,7 +77,7 @@ public class ResultActivity extends AppCompatActivity {
             totalAmountWon = totalAmountWon + amountWon;
             prefs.edit().putFloat(KEY_TOTAL_AMOUNT, (float) totalAmountWon).apply();
 
-            Log.d("TAG_total_amount", Double.toString(totalAmountWon));
+            Log.d("TAG-total_amount", Double.toString(totalAmountWon));
         }
 
         timeRecordDb = new TimeDbHelper(this);
@@ -131,12 +131,14 @@ public class ResultActivity extends AppCompatActivity {
 
     private void displayResult() {
         if (prevTrial.getType().equals("1") || prevTrial.getType().equals("3")) {   // 2 att trial
-            String firstAmount = prevTrial.getAttributes().get(2);
-            if (Double.parseDouble(firstAmount) > 0) {  // if this trial is gain domain
+            String firstAttType = prevTrial.getAttributes().get(0);
+
+            // if the first Attribute is A+1 or P+1, then this trial is in gain domain
+            if (firstAttType.equals("A+1") || firstAttType.equals("P+1")) {
                 if (amountWon != 0) {
                     imageViewCongrats.setVisibility(View.VISIBLE);
                     textViewAmount.setText("You won $" + String.format("%.2f", amountWon) + "!");
-                } else {
+                } else {  // if is A-1 or P-1
                     textViewSorry.setVisibility(View.VISIBLE);
                     textViewSorry.setText("Sorry.");
                     textViewAmount.setText("You didn't win any money.");
@@ -193,36 +195,32 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private Intent getNextIntent() {
-        // Random int decides the orientation. 0: vertical, 1: horizontal
-        int random = new Random().nextInt(2);
         Intent intent;
 
         Trial currentTrial = getNextTrial();
-        if (currentTrial.getType().equals("1")) {   // 2Opt2Attr
-            if (random == 0) {
-                intent = new Intent(ResultActivity.this, QuestionActivity.class);
-            } else {
+
+        if (currentTrial.getOrient().equals("0")) {  // 0: Horizontal, 1: Vertical
+            if (currentTrial.getType().equals("1")) {  // 2Opt2Attr
                 intent = new Intent(ResultActivity.this, QuestionActivityHorizontal.class);
-            }
-        } else if (currentTrial.getType().equals("2")) {    // 2Opt4Attr
-            if (random == 0) {
-                intent = new Intent(ResultActivity.this, Question4Att2OpActivity.class);
-            } else {
+            } else if (currentTrial.getType().equals("2")) {  // 2Opt4Attr
                 intent = new Intent(ResultActivity.this, Question4Att2OpHorizontal.class);
-            }
-        } else if (currentTrial.getType().equals("3")) {    // 4Opt2Attr
-            if (random == 0) {
-                intent = new Intent(ResultActivity.this, Question2Att4OpActivity.class);
-            } else {
+            } else if (currentTrial.getType().equals("3")) {  // 4Opt2Attr
                 intent = new Intent(ResultActivity.this, Question2Att4OpHorizontal.class);
-            }
-        } else {   // 4Opt4Attr
-            if (random == 0) {
-                intent = new Intent(ResultActivity.this, Question4Activity.class);
-            } else {
+            } else {  // 4Opt4Attr
                 intent = new Intent(ResultActivity.this, Question4ActivityHorizontal.class);
             }
+        } else {
+            if (currentTrial.getType().equals("1")) {  // 2Opt2Attr
+                intent = new Intent(ResultActivity.this, QuestionActivity.class);
+            } else if (currentTrial.getType().equals("2")) {  // 2Opt4Attr
+                intent = new Intent(ResultActivity.this, Question4Att2OpActivity.class);
+            } else if (currentTrial.getType().equals("3")) {  // 4Opt2Attr
+                intent = new Intent(ResultActivity.this, Question2Att4OpActivity.class);
+            } else {  // 4Opt4Attr
+                intent = new Intent(ResultActivity.this, Question4Activity.class);
+            }
         }
+
         return intent;
     }
 }

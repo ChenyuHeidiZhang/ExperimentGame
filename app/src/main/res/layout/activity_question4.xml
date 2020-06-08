@@ -55,20 +55,20 @@
             android:background="@color/gray">
 
             <ViewAnimator
-                android:id="@+id/view_animator_dollar1_win"
+                android:id="@+id/view_animator_11"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_dollar1_win"
+                    android:id="@+id/image_view_11"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dollar_win"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_dollar1_win"
+                    android:id="@+id/text_view_11"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -81,20 +81,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_probability1_win"
+                android:id="@+id/view_animator_12"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_probability1_win"
+                    android:id="@+id/image_view_12"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/probability_win"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_probability1_win"
+                    android:id="@+id/text_view_12"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -107,20 +107,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_dollar1_lose"
+                android:id="@+id/view_animator_13"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_dollar1_lose"
+                    android:id="@+id/image_view_13"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dollar_lose"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_dollar1_lose"
+                    android:id="@+id/text_view_13"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -133,20 +133,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_probability1_lose"
+                android:id="@+id/view_animator_14"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_probability1_lose"
+                    android:id="@+id/image_view_14"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/probability_lose"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_probability1_lose"
+                    android:id="@+id/text_view_14"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -185,20 +185,20 @@
             android:background="@color/gray">
 
             <ViewAnimator
-                android:id="@+id/view_animator_dollar2_win"
+                android:id="@+id/view_animator_21"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_dollar2_win"
+                    android:id="@+id/image_view_21"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dollar_win"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_dollar2_win"
+                    android:id="@+id/text_view_21"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -211,20 +211,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_probability2_win"
+                android:id="@+id/view_animator_22"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_probability2_win"
+                    android:id="@+id/image_view_22"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/probability_win"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_probability2_win"
+                    android:id="@+id/text_view_22"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -237,20 +237,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_dollar2_lose"
+                android:id="@+id/view_animator_23"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_dollar2_lose"
+                    android:id="@+id/image_view_23"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dollar_lose"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_dollar2_lose"
+                    android:id="@+id/text_view_23"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -263,20 +263,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_probability2_lose"
+                android:id="@+id/view_animator_24"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_probability2_lose"
+                    android:id="@+id/image_view_24"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/probability_lose"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_probability2_lose"
+                    android:id="@+id/text_view_24"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -314,20 +314,20 @@
             android:background="@color/gray">
 
             <ViewAnimator
-                android:id="@+id/view_animator_dollar3_win"
+                android:id="@+id/view_animator_31"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_dollar3_win"
+                    android:id="@+id/image_view_31"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dollar_win"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_dollar3_win"
+                    android:id="@+id/text_view_31"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -340,20 +340,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_probability3_win"
+                android:id="@+id/view_animator_32"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_probability3_win"
+                    android:id="@+id/image_view_32"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/probability_win"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_probability3_win"
+                    android:id="@+id/text_view_32"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -366,20 +366,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_dollar3_lose"
+                android:id="@+id/view_animator_33"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_dollar3_lose"
+                    android:id="@+id/image_view_33"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dollar_lose"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_dollar3_lose"
+                    android:id="@+id/text_view_33"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -392,20 +392,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_probability3_lose"
+                android:id="@+id/view_animator_34"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_probability3_lose"
+                    android:id="@+id/image_view_34"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/probability_lose"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_probability3_lose"
+                    android:id="@+id/text_view_34"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -443,20 +443,20 @@
             android:background="@color/gray">
 
             <ViewAnimator
-                android:id="@+id/view_animator_dollar4_win"
+                android:id="@+id/view_animator_41"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_dollar4_win"
+                    android:id="@+id/image_view_41"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dollar_win"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_dollar4_win"
+                    android:id="@+id/text_view_41"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -469,20 +469,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_probability4_win"
+                android:id="@+id/view_animator_42"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_probability4_win"
+                    android:id="@+id/image_view_42"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/probability_win"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_probability4_win"
+                    android:id="@+id/text_view_42"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -495,20 +495,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_dollar4_lose"
+                android:id="@+id/view_animator_43"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_dollar4_lose"
+                    android:id="@+id/image_view_43"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dollar_lose"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_dollar4_lose"
+                    android:id="@+id/text_view_43"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -521,20 +521,20 @@
             </ViewAnimator>
 
             <ViewAnimator
-                android:id="@+id/view_animator_probability4_lose"
+                android:id="@+id/view_animator_44"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="50dp">
 
                 <ImageView
-                    android:id="@+id/image_view_probability4_lose"
+                    android:id="@+id/image_view_44"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/probability_lose"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/text_view_probability4_lose"
+                    android:id="@+id/text_view_44"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"

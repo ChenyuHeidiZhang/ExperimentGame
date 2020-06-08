@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
@@ -56,15 +57,10 @@ public class Question4Activity extends AppCompatActivity {
 
     private TimeDbHelper timeRecordDb;
 
-    private TextView textViewDollarP1, textViewProbP1, textViewDollarM1, textViewProbM1;
-    private TextView textViewDollarP2, textViewProbP2, textViewDollarM2, textViewProbM2;
-    private TextView textViewDollarP3, textViewProbP3, textViewDollarM3, textViewProbM3;
-    private TextView textViewDollarP4, textViewProbP4, textViewDollarM4, textViewProbM4;
-
-    private ViewAnimator viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorDollarM1, viewAnimatorProbM1;
-    private ViewAnimator viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2;
-    private ViewAnimator viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3;
-    private ViewAnimator viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4;
+    private ViewAnimator viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14;
+    private ViewAnimator viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24;
+    private ViewAnimator viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34;
+    private ViewAnimator viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44;
 
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
@@ -94,61 +90,44 @@ public class Question4Activity extends AppCompatActivity {
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
         // TODO: modify the codes
-        identifiers.put(R.id.view_animator_dollar1_win, new String[]{"3", "7", "A+1"});
-        identifiers.put(R.id.view_animator_probability1_win, new String[]{"4", "8", "P+1"});
-        identifiers.put(R.id.view_animator_dollar1_lose, new String[]{"5", "9", "A-1"});
-        identifiers.put(R.id.view_animator_probability1_lose, new String[]{"6", "10", "P-1"});
-        identifiers.put(R.id.view_animator_dollar2_win, new String[]{"3", "7", "A+2"});
-        identifiers.put(R.id.view_animator_probability2_win, new String[]{"4", "8", "P+2"});
-        identifiers.put(R.id.view_animator_dollar2_lose, new String[]{"5", "9", "A-2"});
-        identifiers.put(R.id.view_animator_probability2_lose, new String[]{"6", "10", "P-2"});
-        identifiers.put(R.id.view_animator_dollar3_win, new String[]{"3", "7", "A+1"});
-        identifiers.put(R.id.view_animator_probability3_win, new String[]{"4", "8", "P+1"});
-        identifiers.put(R.id.view_animator_dollar3_lose, new String[]{"5", "9", "A-1"});
-        identifiers.put(R.id.view_animator_probability3_lose, new String[]{"6", "10", "P-1"});
-        identifiers.put(R.id.view_animator_dollar4_win, new String[]{"3", "7", "A+2"});
-        identifiers.put(R.id.view_animator_probability4_win, new String[]{"4", "8", "P+2"});
-        identifiers.put(R.id.view_animator_dollar4_lose, new String[]{"5", "9", "A-2"});
-        identifiers.put(R.id.view_animator_probability4_lose, new String[]{"6", "10", "P-2"});
-
-        textViewDollarP1 = findViewById(R.id.text_view_dollar1_win);
-        textViewProbP1 = findViewById(R.id.text_view_probability1_win);
-        textViewDollarM1 = findViewById(R.id.text_view_dollar1_lose);
-        textViewProbM1 = findViewById(R.id.text_view_probability1_lose);
-        textViewDollarP2 = findViewById(R.id.text_view_dollar2_win);
-        textViewProbP2 = findViewById(R.id.text_view_probability2_win);
-        textViewDollarM2 = findViewById(R.id.text_view_dollar2_lose);
-        textViewProbM2 = findViewById(R.id.text_view_probability2_lose);
-        textViewDollarP3 = findViewById(R.id.text_view_dollar3_win);
-        textViewProbP3 = findViewById(R.id.text_view_probability3_win);
-        textViewDollarM3 = findViewById(R.id.text_view_dollar3_lose);
-        textViewProbM3 = findViewById(R.id.text_view_probability3_lose);
-        textViewDollarP4 = findViewById(R.id.text_view_dollar4_win);
-        textViewProbP4 = findViewById(R.id.text_view_probability4_win);
-        textViewDollarM4 = findViewById(R.id.text_view_dollar4_lose);
-        textViewProbM4 = findViewById(R.id.text_view_probability4_lose);
+        identifiers.put(R.id.view_animator_11, new String[]{"3", "7", "A+1"});
+        identifiers.put(R.id.view_animator_12, new String[]{"4", "8", "P+1"});
+        identifiers.put(R.id.view_animator_13, new String[]{"5", "9", "A-1"});
+        identifiers.put(R.id.view_animator_14, new String[]{"6", "10", "P-1"});
+        identifiers.put(R.id.view_animator_21, new String[]{"3", "7", "A+2"});
+        identifiers.put(R.id.view_animator_22, new String[]{"4", "8", "P+2"});
+        identifiers.put(R.id.view_animator_23, new String[]{"5", "9", "A-2"});
+        identifiers.put(R.id.view_animator_24, new String[]{"6", "10", "P-2"});
+        identifiers.put(R.id.view_animator_31, new String[]{"3", "7", "A+1"});
+        identifiers.put(R.id.view_animator_32, new String[]{"4", "8", "P+1"});
+        identifiers.put(R.id.view_animator_33, new String[]{"5", "9", "A-1"});
+        identifiers.put(R.id.view_animator_34, new String[]{"6", "10", "P-1"});
+        identifiers.put(R.id.view_animator_41, new String[]{"3", "7", "A+2"});
+        identifiers.put(R.id.view_animator_42, new String[]{"4", "8", "P+2"});
+        identifiers.put(R.id.view_animator_43, new String[]{"5", "9", "A-2"});
+        identifiers.put(R.id.view_animator_44, new String[]{"6", "10", "P-2"});
 
         Button buttonSelect1 = findViewById(R.id.button_select1);
         Button buttonSelect2 = findViewById(R.id.button_select2);
         Button buttonSelect3 = findViewById(R.id.button_select3);
         Button buttonSelect4 = findViewById(R.id.button_select4);
 
-        viewAnimatorDollarP1 = findViewById(R.id.view_animator_dollar1_win);
-        viewAnimatorProbP1 = findViewById(R.id.view_animator_probability1_win);
-        viewAnimatorDollarM1 = findViewById(R.id.view_animator_dollar1_lose);
-        viewAnimatorProbM1 = findViewById(R.id.view_animator_probability1_lose);
-        viewAnimatorDollarP2 = findViewById(R.id.view_animator_dollar2_win);
-        viewAnimatorProbP2 = findViewById(R.id.view_animator_probability2_win);
-        viewAnimatorDollarM2 = findViewById(R.id.view_animator_dollar2_lose);
-        viewAnimatorProbM2 = findViewById(R.id.view_animator_probability2_lose);
-        viewAnimatorDollarP3 = findViewById(R.id.view_animator_dollar3_win);
-        viewAnimatorProbP3 = findViewById(R.id.view_animator_probability3_win);
-        viewAnimatorDollarM3 = findViewById(R.id.view_animator_dollar3_lose);
-        viewAnimatorProbM3 = findViewById(R.id.view_animator_probability3_lose);
-        viewAnimatorDollarP4 = findViewById(R.id.view_animator_dollar4_win);
-        viewAnimatorProbP4 = findViewById(R.id.view_animator_probability4_win);
-        viewAnimatorDollarM4 = findViewById(R.id.view_animator_dollar4_lose);
-        viewAnimatorProbM4 = findViewById(R.id.view_animator_probability4_lose);
+        viewAnimator11 = findViewById(R.id.view_animator_11);
+        viewAnimator12 = findViewById(R.id.view_animator_12);
+        viewAnimator13 = findViewById(R.id.view_animator_13);
+        viewAnimator14 = findViewById(R.id.view_animator_14);
+        viewAnimator21 = findViewById(R.id.view_animator_21);
+        viewAnimator22 = findViewById(R.id.view_animator_22);
+        viewAnimator23 = findViewById(R.id.view_animator_23);
+        viewAnimator24 = findViewById(R.id.view_animator_24);
+        viewAnimator31 = findViewById(R.id.view_animator_31);
+        viewAnimator32 = findViewById(R.id.view_animator_32);
+        viewAnimator33 = findViewById(R.id.view_animator_33);
+        viewAnimator34 = findViewById(R.id.view_animator_34);
+        viewAnimator41 = findViewById(R.id.view_animator_41);
+        viewAnimator42 = findViewById(R.id.view_animator_42);
+        viewAnimator43 = findViewById(R.id.view_animator_43);
+        viewAnimator44 = findViewById(R.id.view_animator_44);
 
         // if is in training part, display "training" and the "end training" button
         if (isDemo) {
@@ -182,27 +161,11 @@ public class Question4Activity extends AppCompatActivity {
         trialInfoDb = new TrialDbHelper(this);
 
         setupTrial();
-
-        // change spatial configuration if random_config = 1
-        int random_config = new Random().nextInt(2);
-        if (random_config == 1) {
-            changePositions(viewAnimatorDollarM1, viewAnimatorProbP1);
-            changePositions(viewAnimatorDollarM2, viewAnimatorProbP2);
-            changePositions(viewAnimatorDollarM3, viewAnimatorProbP3);
-            changePositions(viewAnimatorDollarM4, viewAnimatorProbP4);
-        }
-
+        
         if (isDemo) {
-            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A+=" + ap1 + " P+=" + pp1 + " A-=" + am1 + " P-=" + pm1 +
-                    "; Option2: A+=" + ap2 + " P+=" + pp2 + " A-=" + am2 + " P-=" + pm2 +
-                    "; Option3: A+=" + ap3 + " P+=" + pp3 + " A-=" + am3 + " P-=" + pm3 +
-                    "; Option4: A+=" + ap4 + " P+=" + pp4 + " A-=" + am4 + " P-=" + pm4 + "; Orientation: vertical; Config " + random_config);
-
+            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial " + trialCounter);
         } else {
-            timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A+=" + ap1 + " P+=" + pp1 + " A-=" + am1 + " P-=" + pm1 +
-                    "; Option2: A+=" + ap2 + " P+=" + pp2 + " A-=" + am2 + " P-=" + pm2 +
-                    "; Option3: A+=" + ap3 + " P+=" + pp3 + " A-=" + am3 + " P-=" + pm3 +
-                    "; Option4: A+=" + ap4 + " P+=" + pp4 + " A-=" + am4 + " P-=" + pm4 + "; Orientation: vertical; Config " + random_config);
+            timeRecordDb.insertData(getCurrentTime(), "startTrial " + trialCounter);
         }
 
         //bluetooth = new Bluetooth(timeRecordDb);
@@ -223,165 +186,165 @@ public class Question4Activity extends AppCompatActivity {
         }
         */
 
-        viewAnimatorDollarP1.setOnClickListener(new View.OnClickListener() {
+        viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollarP1,
-                        new ViewAnimator[]{viewAnimatorProbP1, viewAnimatorDollarM1, viewAnimatorProbM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator11,
+                        new ViewAnimator[]{viewAnimator12, viewAnimator13, viewAnimator14,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
             }
         });
 
-        viewAnimatorProbP1.setOnClickListener(new View.OnClickListener() {
+        viewAnimator12.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbP1,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorDollarM1, viewAnimatorProbM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
-
-            }
-        });
-
-        viewAnimatorDollarM1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollarM1,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
-            }
-        });
-
-        viewAnimatorProbM1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbM1,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
-            }
-        });
-
-        viewAnimatorDollarP2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollarP2,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
-            }
-        });
-
-        viewAnimatorProbP2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbP2,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator12,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator13, viewAnimator14,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
 
             }
         });
 
-        viewAnimatorDollarM2.setOnClickListener(new View.OnClickListener() {
+        viewAnimator13.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollarM2,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator13,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
             }
         });
 
-        viewAnimatorProbM2.setOnClickListener(new View.OnClickListener() {
+        viewAnimator14.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbM2,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator14,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
             }
         });
 
-        viewAnimatorDollarP3.setOnClickListener(new View.OnClickListener() {
+        viewAnimator21.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollarP3,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator21,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
             }
         });
 
-        viewAnimatorProbP3.setOnClickListener(new View.OnClickListener() {
+        viewAnimator22.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbP3,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator22,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
+
             }
         });
 
-        viewAnimatorDollarM3.setOnClickListener(new View.OnClickListener() {
+        viewAnimator23.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollarM3,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator23,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
             }
         });
 
-        viewAnimatorProbM3.setOnClickListener(new View.OnClickListener() {
+        viewAnimator24.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbM3,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator24,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
             }
         });
 
-        viewAnimatorDollarP4.setOnClickListener(new View.OnClickListener() {
+        viewAnimator31.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollarP4,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorProbP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator31,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
             }
         });
 
-        viewAnimatorProbP4.setOnClickListener(new View.OnClickListener() {
+        viewAnimator32.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbP4,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorDollarM4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator32,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
             }
         });
 
-        viewAnimatorDollarM4.setOnClickListener(new View.OnClickListener() {
+        viewAnimator33.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollarM4,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorProbM4});
+                attributeOnClick(viewAnimator33,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
             }
         });
 
-        viewAnimatorProbM4.setOnClickListener(new View.OnClickListener() {
+        viewAnimator34.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbM4,
-                        new ViewAnimator[]{viewAnimatorDollarP1, viewAnimatorProbP1, viewAnimatorProbM1, viewAnimatorDollarM1,
-                                viewAnimatorDollarP2, viewAnimatorProbP2, viewAnimatorDollarM2, viewAnimatorProbM2,
-                                viewAnimatorDollarP3, viewAnimatorProbP3, viewAnimatorDollarM3, viewAnimatorProbM3,
-                                viewAnimatorDollarP4, viewAnimatorProbP4, viewAnimatorDollarM4});
+                attributeOnClick(viewAnimator34,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33,
+                                viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
+            }
+        });
+
+        viewAnimator41.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                attributeOnClick(viewAnimator41,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator42, viewAnimator43, viewAnimator44});
+            }
+        });
+
+        viewAnimator42.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                attributeOnClick(viewAnimator42,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator43, viewAnimator44});
+            }
+        });
+
+        viewAnimator43.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                attributeOnClick(viewAnimator43,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator44});
+            }
+        });
+
+        viewAnimator44.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                attributeOnClick(viewAnimator44,
+                        new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                                viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                                viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                                viewAnimator41, viewAnimator42, viewAnimator43});
             }
         });
 
@@ -515,73 +478,92 @@ public class Question4Activity extends AppCompatActivity {
 
     private void getAttributes(){
         ArrayList<String> attributes = currentTrial.getAttributes();
-        ap1 = Double.parseDouble(attributes.get(2));
-        pp1 = Double.parseDouble(attributes.get(3))*100;
-        am1 = Double.parseDouble(attributes.get(4));
-        pm1 = Double.parseDouble(attributes.get(5))*100;
-        ap2 = Double.parseDouble(attributes.get(6));
-        pp2 = Double.parseDouble(attributes.get(7))*100;
-        am2 = Double.parseDouble(attributes.get(8));
-        pm2 = Double.parseDouble(attributes.get(9))*100;
-        ap3 = Double.parseDouble(attributes.get(10));
-        pp3 = Double.parseDouble(attributes.get(11))*100;
-        am3 = Double.parseDouble(attributes.get(12));
-        pm3 = Double.parseDouble(attributes.get(13))*100;
-        ap4 = Double.parseDouble(attributes.get(14));
-        pp4 = Double.parseDouble(attributes.get(15))*100;
-        am4 = Double.parseDouble(attributes.get(16));
-        pm4 = Double.parseDouble(attributes.get(17))*100;
 
-        textViewDollarP1.setText("$" + String.format("%.2f", Math.abs(ap1)));
-        textViewProbP1.setText((int) pp1 + "%");
-        textViewDollarM1.setText("$" + String.format("%.2f", Math.abs(am1)));
-        textViewProbM1.setText((int) pm1 + "%");
-        textViewDollarP2.setText("$" + String.format("%.2f", Math.abs(ap2)));
-        textViewProbP2.setText((int) pp2 + "%");
-        textViewDollarM2.setText("$" + String.format("%.2f", Math.abs(am2)));
-        textViewProbM2.setText((int) pm2 + "%");
-        textViewDollarP3.setText("$" + String.format("%.2f", Math.abs(ap3)));
-        textViewProbP3.setText((int) pp3 + "%");
-        textViewDollarM3.setText("$" + String.format("%.2f", Math.abs(am3)));
-        textViewProbM3.setText((int) pm3 + "%");
-        textViewDollarP4.setText("$" + String.format("%.2f", Math.abs(ap4)));
-        textViewProbP4.setText((int) pp4 + "%");
-        textViewDollarM4.setText("$" + String.format("%.2f", Math.abs(am4)));
-        textViewProbM4.setText((int) pm4 + "%");
-
-        setAttributeTextColor();
+        setAttributesForOneVA(viewAnimator11, attributes.get(0), attributes.get(1));
+        setAttributesForOneVA(viewAnimator12, attributes.get(2), attributes.get(3));
+        setAttributesForOneVA(viewAnimator13, attributes.get(4), attributes.get(5));
+        setAttributesForOneVA(viewAnimator14, attributes.get(6), attributes.get(7));
+        setAttributesForOneVA(viewAnimator21, attributes.get(8), attributes.get(9));
+        setAttributesForOneVA(viewAnimator22, attributes.get(10), attributes.get(11));
+        setAttributesForOneVA(viewAnimator23, attributes.get(12), attributes.get(13));
+        setAttributesForOneVA(viewAnimator24, attributes.get(14), attributes.get(15));
+        setAttributesForOneVA(viewAnimator31, attributes.get(16), attributes.get(17));
+        setAttributesForOneVA(viewAnimator32, attributes.get(18), attributes.get(19));
+        setAttributesForOneVA(viewAnimator33, attributes.get(20), attributes.get(21));
+        setAttributesForOneVA(viewAnimator34, attributes.get(22), attributes.get(23));
+        setAttributesForOneVA(viewAnimator41, attributes.get(24), attributes.get(25));
+        setAttributesForOneVA(viewAnimator42, attributes.get(26), attributes.get(27));
+        setAttributesForOneVA(viewAnimator43, attributes.get(28), attributes.get(29));
+        setAttributesForOneVA(viewAnimator44, attributes.get(30), attributes.get(31));
     }
 
-    private void setAttributeTextColor() {
-        textViewDollarP1.setTextColor(Color.GREEN);
-        textViewProbP1.setTextColor(Color.GREEN);
-        textViewDollarP2.setTextColor(Color.GREEN);
-        textViewProbP2.setTextColor(Color.GREEN);
-        textViewDollarP3.setTextColor(Color.GREEN);
-        textViewProbP3.setTextColor(Color.GREEN);
-        textViewDollarP4.setTextColor(Color.GREEN);
-        textViewProbP4.setTextColor(Color.GREEN);
+    private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
+        ImageView imgView = (ImageView) va.getChildAt(0);
+        TextView tv = (TextView) va.getChildAt(1);
 
-        textViewDollarM1.setTextColor(Color.RED);
-        textViewProbM1.setTextColor(Color.RED);
-        textViewDollarM2.setTextColor(Color.RED);
-        textViewProbM2.setTextColor(Color.RED);
-        textViewDollarM3.setTextColor(Color.RED);
-        textViewProbM3.setTextColor(Color.RED);
-        textViewDollarM4.setTextColor(Color.RED);
-        textViewProbM4.setTextColor(Color.RED);
-    }
+        if (attType.equals("A+1")) {
+            ap1 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(ap1)));
+        } else if (attType.equals("P+1")) {
+            pp1 = Double.parseDouble(att);
+            tv.setText((int) (pp1 * 100) + "%");
+        } else if (attType.equals("A-1")) {
+            am1 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(am1)));
+        } else if (attType.equals("P-1")) {
+            pm1 = Double.parseDouble(att);
+            tv.setText((int) (pm1 * 100) + "%");
+        } else if (attType.equals("A+2")) {
+            ap2 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(ap2)));
+        } else if (attType.equals("P+2")) {
+            pp2 = Double.parseDouble(att);
+            tv.setText((int) (pp2 * 100) + "%");
+        } else if (attType.equals("A-2")) {
+            am2 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(am2)));
+        } else if (attType.equals("P-2")) {
+            pm2 = Double.parseDouble(att);
+            tv.setText((int) (pm2 * 100) + "%");
+        } else if (attType.equals("A+3")) {
+            ap3 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(ap3)));
+        } else if (attType.equals("P+3")) {
+            pp3 = Double.parseDouble(att);
+            tv.setText((int) (pp3 * 100) + "%");
+        } else if (attType.equals("A-3")) {
+            am3 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(am3)));
+        } else if (attType.equals("P-3")) {
+            pm1 = Double.parseDouble(att);
+            tv.setText((int) (pm1 * 100) + "%");
+        } else if (attType.equals("A+4")) {
+            ap4 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(ap4)));
+        } else if (attType.equals("P+4")) {
+            pp4 = Double.parseDouble(att);
+            tv.setText((int) (pp4 * 100) + "%");
+        } else if (attType.equals("A-4")) {
+            am4 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(am4)));
+        } else if (attType.equals("P-4")) {
+            pm4 = Double.parseDouble(att);
+            tv.setText((int) (pm4 * 100) + "%");
+        }
 
-    // change spatial configuration from win, lose (config 0) to amount, prob (config 1)
-    // essentially, exchange prob win with amount lose
-    private void changePositions(ViewAnimator viewAnimatorDollarM, ViewAnimator viewAnimatorProbP) {
-        ViewGroup parent = (ViewGroup) viewAnimatorDollarM.getParent();
-        int indexDollarM = parent.indexOfChild(viewAnimatorDollarM);
-        int indexProbP = parent.indexOfChild(viewAnimatorProbP);
-        parent.removeView(viewAnimatorDollarM);
-        parent.addView(viewAnimatorDollarM, indexProbP);
-        parent.removeView(viewAnimatorProbP);
-        parent.addView(viewAnimatorProbP, indexDollarM);
+        if (attType.substring(0, 2).equals("A+")) {
+            imgView.setImageResource(R.drawable.dollar_win);
+            tv.setTextColor(Color.GREEN);
+        } else if (attType.substring(0, 2).equals("A-")){
+            imgView.setImageResource(R.drawable.dollar_lose);
+            tv.setTextColor(Color.RED);
+        } else if (attType.substring(0, 2).equals("P+")) {
+            imgView.setImageResource(R.drawable.probability_win);
+            tv.setTextColor(Color.GREEN);
+        } else if (attType.substring(0, 2).equals("P-")) {
+            imgView.setImageResource(R.drawable.probability_lose);
+            tv.setTextColor(Color.RED);
+        }
     }
 
     //get current time in milliseconds
@@ -601,7 +583,7 @@ public class Question4Activity extends AppCompatActivity {
     }
 
     private void showResult(double pp, double ap, double pm, double am, String option){
-        double random = new Random().nextDouble()*100;
+        double random = new Random().nextDouble();
         if (random < pp) {  // if random less than probability win, then win
             amountWon = ap;
         } else if (random < pp + pm) {   // if random is between prob win and prob win + prob lose, then lose

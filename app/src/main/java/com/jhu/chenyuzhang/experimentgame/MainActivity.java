@@ -119,36 +119,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Intent getNextIntent() {
-        // Random int decides the orientation. 0: vertical, 1: horizontal
-        int random = new Random().nextInt(2);
         Intent intent;
 
         Trial currentTrial = getNextTrial();
-        if (currentTrial.getType().equals("1")) {   // 2Opt2Attr
-            if (random == 0) {
-                intent = new Intent(MainActivity.this, QuestionActivity.class);
-            } else {
+        if (currentTrial.getOrient().equals("0")) {  // 0: Horizontal, 1: Vertical
+            if (currentTrial.getType().equals("1")) {  // 2Opt2Attr
                 intent = new Intent(MainActivity.this, QuestionActivityHorizontal.class);
-            }
-        } else if (currentTrial.getType().equals("2")) {    // 2Opt4Attr
-            if (random == 0) {
-                intent = new Intent(MainActivity.this, Question4Att2OpActivity.class);
-            } else {
+            } else if (currentTrial.getType().equals("2")) {  // 2Opt4Attr
                 intent = new Intent(MainActivity.this, Question4Att2OpHorizontal.class);
-            }
-        } else if (currentTrial.getType().equals("3")) {    // 4Opt2Attr
-            if (random == 0) {
-                intent = new Intent(MainActivity.this, Question2Att4OpActivity.class);
-            } else {
+            } else if (currentTrial.getType().equals("3")) {  // 4Opt2Attr
                 intent = new Intent(MainActivity.this, Question2Att4OpHorizontal.class);
-            }
-        } else {   // 4Opt4Attr
-            if (random == 0) {
-                intent = new Intent(MainActivity.this, Question4Activity.class);
-            } else {
+            } else {  // 4Opt4Attr
                 intent = new Intent(MainActivity.this, Question4ActivityHorizontal.class);
             }
+        } else {
+            if (currentTrial.getType().equals("1")) {  // 2Opt2Attr
+                intent = new Intent(MainActivity.this, QuestionActivity.class);
+            } else if (currentTrial.getType().equals("2")) {  // 2Opt4Attr
+                intent = new Intent(MainActivity.this, Question4Att2OpActivity.class);
+            } else if (currentTrial.getType().equals("3")) {  // 4Opt2Attr
+                intent = new Intent(MainActivity.this, Question2Att4OpActivity.class);
+            } else {  // 4Opt4Attr
+                intent = new Intent(MainActivity.this, Question4Activity.class);
+            }
         }
+
         return intent;
     }
 

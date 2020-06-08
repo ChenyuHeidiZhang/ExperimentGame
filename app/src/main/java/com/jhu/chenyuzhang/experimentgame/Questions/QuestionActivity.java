@@ -27,6 +27,8 @@ import com.jhu.chenyuzhang.experimentgame.TimeDbHelper;
 import com.jhu.chenyuzhang.experimentgame.Trial;
 import com.jhu.chenyuzhang.experimentgame.TrialDbHelper;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,23 +54,19 @@ public class QuestionActivity extends AppCompatActivity {
     private SharedPreferences counter_prefs;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
     private double amountWon;
-    private double p1;
-    private double p2;
     private double a1;
+    private double p1;
     private double a2;
+    private double p2;
 
     private TimeDbHelper timeRecordDb;
 
-    private TextView textViewDollar1;
-    private TextView textViewProbability1;
-    private TextView textViewDollar2;
-    private TextView textViewProbability2;
     private TextView textViewTest;
 
-    private ViewAnimator viewAnimatorDollar1;
-    private ViewAnimator viewAnimatorDollar2;
-    private ViewAnimator viewAnimatorProbability1;
-    private ViewAnimator viewAnimatorProbability2;
+    private ViewAnimator viewAnimator11;  // 11: 1st of first option (top left here)
+    private ViewAnimator viewAnimator12;  // 12: 2nd of first option (bottom left)
+    private ViewAnimator viewAnimator21;  // 21: 1st of second option (top right)
+    private ViewAnimator viewAnimator22;  // 22: 2nd of second option (bottom right)
 
     private Choreographer.FrameCallback frameCallbackA1 = null;
     private boolean frameCallbackPendingA1 = false;
@@ -110,25 +108,22 @@ public class QuestionActivity extends AppCompatActivity {
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
-        identifiers.put(R.id.view_animator_dollar1, new String[] {"3", "7", "A1"});
-        identifiers.put(R.id.view_animator_dollar2, new String[] {"5", "9", "A2"});
-        identifiers.put(R.id.view_animator_probability1, new String[] {"4", "8", "P1"});
-        identifiers.put(R.id.view_animator_probability2, new String[] {"6", "10", "P2"});
-
-        textViewDollar1 = findViewById(R.id.text_view_dollar1);
-        textViewDollar2 = findViewById(R.id.text_view_dollar2);
-        textViewProbability1 = findViewById(R.id.text_view_probability1);
-        textViewProbability2 = findViewById(R.id.text_view_probability2);
+        // TODO: note the change of identifier names to 11, 12, 21, 22, etc;
+        // TODO: do we want codes to represent location or attribute type? The current structure works with location.
+        identifiers.put(R.id.view_animator_11, new String[] {"3", "7", "11"});
+        identifiers.put(R.id.view_animator_12, new String[] {"5", "9", "12"});
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "8", "21"});
+        identifiers.put(R.id.view_animator_22, new String[] {"6", "10", "22"});
 
         textViewTest = findViewById(R.id.text_view_test);
 
         Button buttonSelect1 = findViewById(R.id.button_select1);
         Button buttonSelect2 = findViewById(R.id.button_select2);
 
-        viewAnimatorDollar1 = findViewById(R.id.view_animator_dollar1);
-        viewAnimatorDollar2 = findViewById(R.id.view_animator_dollar2);
-        viewAnimatorProbability1 = findViewById(R.id.view_animator_probability1);
-        viewAnimatorProbability2 = findViewById(R.id.view_animator_probability2);
+        viewAnimator11 = findViewById(R.id.view_animator_11);
+        viewAnimator12 = findViewById(R.id.view_animator_12);
+        viewAnimator21 = findViewById(R.id.view_animator_21);
+        viewAnimator22 = findViewById(R.id.view_animator_22);
 
         // if is in training part, display "training" and the "end training" button
         if (isDemo) {
@@ -179,17 +174,9 @@ public class QuestionActivity extends AppCompatActivity {
         setupTrial();
 
         if (isDemo) {
-            if (a1 >= 0) {
-                timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A+=" + a1 + " P+=" + p1 + ", Option2: A+=" + a2 + " P+=" + p2 + "; Orientation: vertical;");
-            } else {
-                timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial" + trialCounter + "; Option1: A-=" + a1 + " P-=" + p1 + ", Option2: A-=" + a2 + " P-=" + p2 + "; Orientation: vertical;");
-            }
+            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial " + trialCounter);
         } else {
-            if (a1 >= 0) {
-                timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A+=" + a1 + " P+=" + p1 + ", Option2: A+=" + a2 + " P+=" + p2 + "; Orientation: vertical;");
-            } else {
-                timeRecordDb.insertData(getCurrentTime(), "startTrial" + trialCounter + "; Option1: A-=" + a1 + " P-=" + p1 + ", Option2: A-=" + a2 + " P-=" + p2 + "; Orientation: vertical;");
-            }
+            timeRecordDb.insertData(getCurrentTime(), "startTrial " + trialCounter);
         }
 
         //bluetooth = new Bluetooth(timeRecordDb);
@@ -211,32 +198,32 @@ public class QuestionActivity extends AppCompatActivity {
         }
         */
 
-        viewAnimatorDollar1.setOnClickListener(new View.OnClickListener() {
+        viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollar1,
-                        new ViewAnimator[] {viewAnimatorDollar2, viewAnimatorProbability1, viewAnimatorProbability2});
+                attributeOnClick(viewAnimator11,
+                        new ViewAnimator[] {viewAnimator21, viewAnimator12, viewAnimator22});
             }
         });
 
-        viewAnimatorDollar2.setOnClickListener(new View.OnClickListener() {
+        viewAnimator21.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorDollar2,
-                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorProbability1, viewAnimatorProbability2});
+                attributeOnClick(viewAnimator21,
+                        new ViewAnimator[] {viewAnimator11, viewAnimator12, viewAnimator22});
 
             }
         });
 
-        viewAnimatorProbability1.setOnClickListener(new View.OnClickListener() {
+        viewAnimator12.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbability1,
-                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorDollar2, viewAnimatorProbability2});
+                attributeOnClick(viewAnimator12,
+                        new ViewAnimator[] {viewAnimator11, viewAnimator21, viewAnimator22});
             }
         });
 
-        viewAnimatorProbability2.setOnClickListener(new View.OnClickListener() {
+        viewAnimator22.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attributeOnClick(viewAnimatorProbability2,
-                        new ViewAnimator[] {viewAnimatorDollar1, viewAnimatorDollar2, viewAnimatorProbability1});
+                attributeOnClick(viewAnimator22,
+                        new ViewAnimator[] {viewAnimator11, viewAnimator21, viewAnimator12});
             }
         });
 
@@ -353,40 +340,43 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void getAttributes(){
         ArrayList<String> attributes = currentTrial.getAttributes();
-        a1 = Double.parseDouble(attributes.get(2));
-        p1 = Double.parseDouble(attributes.get(3))*100;
-        a2 = Double.parseDouble(attributes.get(4));
-        p2 = Double.parseDouble(attributes.get(5))*100;
-        textViewProbability1.setText((int) p1 + "%");
-        textViewProbability2.setText((int) p2 + "%");
-        textViewDollar1.setText("$" + String.format("%.2f", Math.abs(a1)));
-        textViewDollar2.setText("$" + String.format("%.2f", Math.abs(a2)));
 
-        setAttributeTextColor();
-
-        if (a1 < 0) {   // if the two dollar amounts are negative, set icons to losing (default is winning icons)
-            ImageView img_dollar1 = findViewById(R.id.image_view_dollar1);
-            ImageView img_prob1 = findViewById(R.id.image_view_probability1);
-            ImageView img_dollar2 = findViewById(R.id.image_view_dollar2);
-            ImageView img_prob2 = findViewById(R.id.image_view_probability2);
-            img_dollar1.setImageResource(R.drawable.dollar_lose);
-            img_dollar2.setImageResource(R.drawable.dollar_lose);
-            img_prob1.setImageResource(R.drawable.probability_lose);
-            img_prob2.setImageResource(R.drawable.probability_lose);
-        }
+        setAttributesForOneVA(viewAnimator11, attributes.get(0), attributes.get(1));
+        setAttributesForOneVA(viewAnimator12, attributes.get(2), attributes.get(3));
+        setAttributesForOneVA(viewAnimator21, attributes.get(4), attributes.get(5));
+        setAttributesForOneVA(viewAnimator22, attributes.get(6), attributes.get(7));
     }
 
-    private void setAttributeTextColor() {  // default text color: white
-        if (a1 < 0) {
-            textViewDollar1.setTextColor(Color.RED);
-            textViewProbability1.setTextColor(Color.RED);
-            textViewDollar2.setTextColor(Color.RED);
-            textViewProbability2.setTextColor(Color.RED);
-        } else {
-            textViewDollar1.setTextColor(Color.GREEN);
-            textViewProbability1.setTextColor(Color.GREEN);
-            textViewDollar2.setTextColor(Color.GREEN);
-            textViewProbability2.setTextColor(Color.GREEN);
+    private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
+        ImageView imgView = (ImageView) va.getChildAt(0);
+        TextView tv = (TextView) va.getChildAt(1);
+
+        if (attType.equals("A+1") || attType.equals("A-1")) {
+            a1 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(a1)));
+        } else if (attType.equals("P+1") || attType.equals("P-1")) {
+            p1 = Double.parseDouble(att);
+            tv.setText((int) (p1 * 100) + "%");
+        } else if (attType.equals("A+2") || attType.equals("A-2")) {
+            a2 = Double.parseDouble(att);
+            tv.setText("$" + String.format("%.2f", Math.abs(a2)));
+        } else if (attType.equals("P+2") || attType.equals("P-2")) {
+            p2 = Double.parseDouble(att);
+            tv.setText((int) (p2 * 100) + "%");
+        }
+
+        if (attType.substring(0, 2).equals("A+")) {
+            imgView.setImageResource(R.drawable.dollar_win);
+            tv.setTextColor(Color.GREEN);
+        } else if (attType.substring(0, 2).equals("A-")){
+            imgView.setImageResource(R.drawable.dollar_lose);
+            tv.setTextColor(Color.RED);
+        } else if (attType.substring(0, 2).equals("P+")) {
+            imgView.setImageResource(R.drawable.probability_win);
+            tv.setTextColor(Color.GREEN);
+        } else if (attType.substring(0, 2).equals("P-")) {
+            imgView.setImageResource(R.drawable.probability_lose);
+            tv.setTextColor(Color.RED);
         }
     }
 
@@ -407,7 +397,8 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void showResult(double p, double a, String option){
-        double random = new Random().nextDouble()*100;
+        // TODO: remember to remove * 100 everywhere
+        double random = new Random().nextDouble();
         if (random < p) {
             amountWon = a;
         } else {
@@ -421,26 +412,6 @@ public class QuestionActivity extends AppCompatActivity {
         intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
         startActivity(intent);
         finish();
-    }
-
-    private void exchangeA1P1(){
-        ViewGroup parent = (ViewGroup) viewAnimatorDollar1.getParent();
-        int indexDollar1 = parent.indexOfChild(viewAnimatorDollar1);
-        int indexProbability1 = parent.indexOfChild(viewAnimatorProbability1);
-        parent.removeView(viewAnimatorDollar1);
-        parent.addView(viewAnimatorDollar1, indexProbability1);
-        parent.removeView(viewAnimatorProbability1);
-        parent.addView(viewAnimatorProbability1, indexDollar1);
-    }
-
-    private void exchangeA2P2(){
-        ViewGroup parent = (ViewGroup) viewAnimatorDollar2.getParent();
-        int indexDollar2 = parent.indexOfChild(viewAnimatorDollar2);
-        int indexProbability2 = parent.indexOfChild(viewAnimatorProbability2);
-        parent.removeView(viewAnimatorDollar2);
-        parent.addView(viewAnimatorDollar2,indexProbability2);
-        parent.removeView(viewAnimatorProbability2);
-        parent.addView(viewAnimatorProbability2,indexDollar2);
     }
 
     @Override
