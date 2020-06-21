@@ -23,9 +23,9 @@ public class TrialDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 2;
     private static final String TABLE_NAME = "trialnfo_table";
     private static final String COL_0 = "ID";
-    private static final String COL_1 = "Orientation";
-    private static final String COL_2 = "Type";
-    private static final String COL_3 = "Dominance";
+    private static final String COL_5 = "Orientation";
+    private static final String COL_6 = "Type";
+    private static final String COL_7 = "Dominance";
 
     private SQLiteDatabase db;
     Context context;
@@ -42,13 +42,19 @@ public class TrialDbHelper extends SQLiteOpenHelper {
         StringBuilder commandBuilder = new StringBuilder(800);
 
         commandBuilder.append("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-                COL_0 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_1 + " TEXT, " +
-                COL_2 + " TEXT, " + COL_3 + " TEXT, ");
+                COL_0 + " INTEGER PRIMARY KEY AUTOINCREMENT, ");
 
-        for (int i = 4; i <= 34; i++) {
-            commandBuilder.append("Col" + i + " TEXT, ");
+        for (int i = 1; i <= 4; i++) {
+            commandBuilder.append("Option" + i + "Outcome").append(" TEXT, ");
         }
-        commandBuilder.append("Col35 TEXT)");
+
+        commandBuilder.append(COL_5 + " TEXT, " +
+                COL_6 + " TEXT, " + COL_7 + " TEXT, ");
+
+        for (int i = 8; i <= 38; i++) {
+            commandBuilder.append("Col" + i).append(" TEXT, ");
+        }
+        commandBuilder.append("Col39 TEXT)");
 
         db.execSQL(commandBuilder.toString());
 
@@ -77,13 +83,13 @@ public class TrialDbHelper extends SQLiteOpenHelper {
         String line;
         try {
             while ((line = buffer.readLine()) != null) {
-                String[] columns = line.split(",");  // This ignores empty string between delimiters.
-                if (columns.length > 35) {
+                String[] columns = line.split(",");  // Default removes trailing empty strings from the result array.
+                if (columns.length > 39) {
                     Log.d("CSVParser", "Skipping Bad CSV Row");
                     continue;
                 }
 
-                Trial trial = new Trial(columns);  // columns.length == 11 or 19 or 35
+                Trial trial = new Trial(columns);  // columns.length == 15 or 23 or 39
                 arrayList.add(trial);
             }
         } catch (IOException e) {
@@ -97,21 +103,25 @@ public class TrialDbHelper extends SQLiteOpenHelper {
     private void addAllTrials(ArrayList<Trial> allTrials){
         ContentValues cv = new ContentValues();
         for (Trial trial : allTrials) {
-            cv.put(COL_1, trial.getOrient());
-            cv.put(COL_2, trial.getType());
-            cv.put(COL_3, trial.getDominance());
+            String[] outcomes = trial.getOutcomes();
+            for (int i = 1; i <= 4; i++) {
+                cv.put("Option" + i + "Outcome", outcomes[i-1]);
+            }
+            cv.put(COL_5, trial.getOrient());
+            cv.put(COL_6, trial.getType());
+            cv.put(COL_7, trial.getDominance());
 
             ArrayList<String> attrs = trial.getAttributes();
-            for (int i = 4; i <= 11; i++) {
-                cv.put("Col" + i, attrs.get(i - 4));
+            for (int i = 8; i <= 15; i++) {
+                cv.put("Col" + i, attrs.get(i - 8));
             }
             if (attrs.size() >= 16) {   // if there are 8 or 16 attributes
-                for (int i = 12; i <= 19; i++) {
-                    cv.put("Col" + i, attrs.get(i - 4));
+                for (int i = 16; i <= 23; i++) {
+                    cv.put("Col" + i, attrs.get(i - 8));
                 }
                 if (attrs.size() == 32) {    // if there are 16 attributes
-                    for (int i = 20; i<= 35; i++) {
-                        cv.put("Col" + i, attrs.get(i - 4));
+                    for (int i = 24; i<= 39; i++) {
+                        cv.put("Col" + i, attrs.get(i - 8));
                     }
                 }
             }
@@ -134,12 +144,17 @@ public class TrialDbHelper extends SQLiteOpenHelper {
         Trial trial = new Trial();
         String[] columnNames = cursor.getColumnNames();
         if (cursor.moveToFirst()) {
-            trial.setOrient(cursor.getString(cursor.getColumnIndex(COL_1)));  // Set the trial orientation
-            trial.setType(cursor.getString(cursor.getColumnIndex(COL_2)));
-            trial.setDominance(cursor.getString(cursor.getColumnIndex(COL_3)));
+            String[] outcomes = new String[4];
+            for (int i = 1; i <= 4; i++) {
+                outcomes[i-1] = cursor.getString(cursor.getColumnIndex(columnNames[i]));
+            }
+            trial.setOutcomes(outcomes);
+            trial.setOrient(cursor.getString(cursor.getColumnIndex(COL_5)));  // Set the trial orientation
+            trial.setType(cursor.getString(cursor.getColumnIndex(COL_6)));
+            trial.setDominance(cursor.getString(cursor.getColumnIndex(COL_7)));
 
             ArrayList<String> attributes = new ArrayList<>();
-            for (int i = 4; i < columnNames.length; i++) {
+            for (int i = 8; i < columnNames.length; i++) {
                 attributes.add(cursor.getString(cursor.getColumnIndex(columnNames[i])));  // get attributes from Col4 to the end
             }
             trial.setAttributes(attributes);

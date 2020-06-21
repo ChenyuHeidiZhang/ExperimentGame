@@ -357,7 +357,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
                     bluetooth.timeStamper( "12", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(pp1, ap1, pm1, am1, "Option1");
+                showResult(ap1, am1, 1);
             }
         });
 
@@ -369,7 +369,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
                     bluetooth.timeStamper( "13", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(pp2, ap2, pm2, am2, "Option2");
+                showResult(ap2, am2, 2);
             }
         });
 
@@ -381,7 +381,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
                     bluetooth.timeStamper( "12", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(pp3, ap3, pm3, am3, "Option3");
+                showResult(ap3, am3, 3);
             }
         });
 
@@ -393,7 +393,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
                     bluetooth.timeStamper( "13", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(pp4, ap4, pm4, am4, "Option4");
+                showResult(ap4, am4, 4);
             }
         });
     }
@@ -581,16 +581,18 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
         timeRecordDb.insertData(timeString, event);
     }
 
-    private void showResult(double pp, double ap, double pm, double am, String option){
-        double random = new Random().nextDouble();
-        if (random < pp) {  // if random less than probability win, then win
+    private void showResult(double ap, double am, int option){
+        String outcomes[] = currentTrial.getOutcomes();
+        String outcome = outcomes[option-1];
+        if ("win".equals(outcome)) {
             amountWon = ap;
-        } else if (random < pp + pm) {   // if random is between prob win and prob win + prob lose, then lose
+        } else if ("lose".equals(outcome)) {
             amountWon = am;
-        } else { amountWon = 0; }
+        } else {  // "no outcome".equals(outcome)
+            amountWon = 0;
+        }
 
-        recordEvent(option+" selected, $"+amountWon+" won");
-
+        recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
 
         Intent intent = new Intent(Question4ActivityHorizontal.this, ResultActivity.class);

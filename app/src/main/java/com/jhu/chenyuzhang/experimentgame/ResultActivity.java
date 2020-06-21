@@ -185,6 +185,7 @@ public class ResultActivity extends AppCompatActivity {
             //int trial_num = new Random().nextInt((int)trialInfoDb.getNumRows()); // random integer in [0, table_size)
             int trial_num = new Random().nextInt(160);  // get one of the first 160 trials
             trial_num++;    // need to be in [1, size]
+            Log.d("TAG-trial", "TrialNumber" + trial_num);
 
             counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trial_num).apply();  // set shared trialCounter to trial_num
 

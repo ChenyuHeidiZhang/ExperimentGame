@@ -235,7 +235,7 @@ public class QuestionActivity extends AppCompatActivity {
                     bluetooth.timeStamper( "12", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(p1, a1,"Option1");
+                showResult(a1,1);
             }
         });
 
@@ -247,7 +247,7 @@ public class QuestionActivity extends AppCompatActivity {
                     bluetooth.timeStamper( "13", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(p2, a2,"Option2");
+                showResult(a2,2);
             }
         });
 
@@ -396,16 +396,16 @@ public class QuestionActivity extends AppCompatActivity {
         timeRecordDb.insertData(timeString, event);
     }
 
-    private void showResult(double p, double a, String option){
-        // TODO: remember to remove * 100 everywhere
-        double random = new Random().nextDouble();
-        if (random < p) {
-            amountWon = a;
-        } else {
+    private void showResult(double a, int option){
+        String outcomes[] = currentTrial.getOutcomes();
+        String outcome = outcomes[option-1];
+        if ("win".equals(outcome) || "lose".equals(outcome)) {
+            amountWon = a;  // This can be either positive or negative.
+        } else {  // "no outcome".equals(outcome)
             amountWon = 0;
         }
 
-        recordEvent(option+" selected, $"+amountWon+" won");
+        recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
 
         Intent intent = new Intent(QuestionActivity.this, ResultActivity.class);
