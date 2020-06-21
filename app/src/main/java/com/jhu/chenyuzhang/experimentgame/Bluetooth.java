@@ -33,8 +33,7 @@ public class Bluetooth {
     }
 
 
-    public void openBT(ParcelUuid[] uuids) throws IOException
-    {
+    public void openBT(ParcelUuid[] uuids) throws IOException {
         //UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
         mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());
         Log.d(TAG, "createRfcommSocketToServiceRecord" + uuids[0].getUuid());
@@ -59,8 +58,7 @@ public class Bluetooth {
         }
     }
 
-    public void sendData(String msg) throws IOException
-    {
+    public void sendData(String msg) throws IOException {
         try {
             mmOutputStream = mmSocket.getOutputStream();
         } catch (IOException e) {
@@ -72,8 +70,7 @@ public class Bluetooth {
     }
 
 
-    public void beginListenForData()
-    {
+    public void beginListenForData() {
         final Handler handler = new Handler();
         final byte delimiter = 10; //This is the ASCII code for a newline character
 

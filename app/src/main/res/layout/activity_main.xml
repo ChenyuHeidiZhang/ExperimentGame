@@ -20,15 +20,16 @@
             android:text="@string/sign_out"
             android:textSize="20sp"/>
 
-        <Button
-            android:id="@+id/button_bluetooth"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
+        <Spinner
+            android:id="@+id/spinner_bluetooth"
+            android:layout_width="170dp"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="50dp"
             android:layout_marginRight="50dp"
-            android:layout_alignParentRight="true"
-            android:text="@string/BTonOff"
-            android:textSize="20sp"/>
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

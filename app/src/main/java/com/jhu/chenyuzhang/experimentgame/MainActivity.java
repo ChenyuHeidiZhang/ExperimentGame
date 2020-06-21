@@ -17,8 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpActivity;
@@ -33,13 +36,15 @@ import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Bluetooth_Main";
-    private final String BluetoothName = "J205";    //HC-06
+    //private final String BluetoothName = "J205";    //HC-06
 
     private static boolean isSignedIn;
     private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
@@ -52,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
     public static int trialCounter;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
 
-    private Button btnBT;
-    Bluetooth bluetooth;
+    private static final String SPINNER_DEFAULT = "- Bluetooth -";
+    private Spinner spnBT;
+    private Bluetooth bluetooth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,20 +83,37 @@ public class MainActivity extends AppCompatActivity {
 
         // bluetooth set up
         bluetooth = new Bluetooth(timeRecordDb);
-        btnBT = findViewById(R.id.button_bluetooth);
+        spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
 
-        btnBT.setOnClickListener(new View.OnClickListener() {
+        final Context context = getApplicationContext();
+        if (!initiateBT()) {
+            Toast toast = Toast.makeText(context, "No bluetooth adapter available", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        List<String> spnBluetoothItems = getBluetoothItems();
+
+        ArrayAdapter<String> btItemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spnBluetoothItems);
+        btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnBT.setAdapter(btItemsAdapter);
+
+        spnBT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Context context = getApplicationContext();
-                try {
-                    findBT();
-                    Toast toast = Toast.makeText(context, "bluetooth connected", Toast.LENGTH_SHORT);
-                    toast.show();
-                } catch (IOException e) {
-                    Toast toast = Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT);
-                    toast.show();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemSelected = spnBT.getSelectedItem().toString();
+                if (!SPINNER_DEFAULT.equals(itemSelected)) {
+                    try {
+                        findBT(itemSelected);
+                        Toast toast = Toast.makeText(context, "bluetooth connected", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } catch (IOException e) {
+                        Toast toast = Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
@@ -147,47 +170,56 @@ public class MainActivity extends AppCompatActivity {
         return intent;
     }
 
-    public void findBT() throws IOException {
+    /* Returns true if bluetooth adapter is successfully initiated or false otherwise. */
+    public boolean initiateBT() {
         bluetooth.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(bluetooth.mBluetoothAdapter == null)
-        {
+        if(bluetooth.mBluetoothAdapter == null) {
             Log.d(TAG,"No bluetooth adapter available");
-            return;
+            return false;
         } else {
             Log.d(TAG, "Bluetooth adapter is not null");
         }
-
 
         if(!bluetooth.mBluetoothAdapter.isEnabled())
         {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBluetooth, 0);
         }
+        return true;
+    }
 
-
+    /* Returns a list of Bluetooth items to be shown in the dropdown. */
+    public List<String> getBluetoothItems() {
         Set<BluetoothDevice> pairedDevices = bluetooth.mBluetoothAdapter.getBondedDevices();
-        if(pairedDevices.size() > 0)
-        {
+        List<String> bluetoothItems = new ArrayList<>();
+        bluetoothItems.add(SPINNER_DEFAULT);
+        if(pairedDevices.size() > 0) {
             Log.d(TAG, "pairedDevices>0");
-            for(BluetoothDevice device : pairedDevices)
-            {
-                if(device.getName().equals(BluetoothName))
-                {
-                    bluetooth.mmDevice = device;
+            for(BluetoothDevice device : pairedDevices) {
+                bluetoothItems.add(device.getName());
+            }
+        }
+        return bluetoothItems;
+    }
 
-                    ParcelUuid[] uuids = device.getUuids();
-                    bluetooth.openBT(uuids);    // call openBT method in bluetooth class
+    public void findBT(String bluetoothName) throws IOException {
+        Set<BluetoothDevice> pairedDevices = bluetooth.mBluetoothAdapter.getBondedDevices();
+        for(BluetoothDevice device : pairedDevices) {
+            if(device.getName().equals(bluetoothName)) {
+                bluetooth.mmDevice = device;
 
-                    /*
-                    try {
-                        bluetooth.openBT(uuids);
-                    } catch (IOException e) {
-                        Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
-                    }
-                    */
+                ParcelUuid[] uuids = device.getUuids();
+                bluetooth.openBT(uuids);    // call openBT method in bluetooth class
 
-                    break;
+                /*
+                try {
+                    bluetooth.openBT(uuids);
+                } catch (IOException e) {
+                    Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
                 }
+                */
+
+                break;
             }
         }
         Log.d(TAG,"Bluetooth Device Found");
