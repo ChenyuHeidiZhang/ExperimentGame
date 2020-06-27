@@ -24,11 +24,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Bluetooth.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Bluetooth.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,13 +44,13 @@
     <session id="258567741">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="58" />
+          <entry key="project.closed" value="61" />
           <entry key="project.open.time.0" value="6" />
           <entry key="project.open.time.1" value="15" />
           <entry key="project.open.time.3" value="12" />
-          <entry key="project.open.time.4" value="19" />
-          <entry key="project.open.time.5" value="7" />
-          <entry key="project.opened" value="59" />
+          <entry key="project.open.time.4" value="20" />
+          <entry key="project.open.time.5" value="9" />
+          <entry key="project.opened" value="62" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -62,7 +59,7 @@
           <entry key="csv" value="25" />
           <entry key="db" value="35" />
           <entry key="db-shm" value="3" />
-          <entry key="gradle" value="11" />
+          <entry key="gradle" value="13" />
           <entry key="java" value="327" />
           <entry key="jpg" value="5" />
           <entry key="png" value="12" />
@@ -73,7 +70,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="APK" value="1" />
-          <entry key="Groovy" value="11" />
+          <entry key="Groovy" value="13" />
           <entry key="Image" value="17" />
           <entry key="JAVA" value="327" />
           <entry key="PLAIN_TEXT" value="63" />
@@ -85,7 +82,7 @@
         <counts>
           <entry key="csv" value="2" />
           <entry key="gradle" value="6" />
-          <entry key="java" value="23610" />
+          <entry key="java" value="23951" />
           <entry key="txt" value="3" />
           <entry key="xml" value="1470" />
         </counts>
@@ -94,7 +91,7 @@
         <counts>
           <entry key="Android Room SQL" value="1" />
           <entry key="Groovy" value="6" />
-          <entry key="JAVA" value="23609" />
+          <entry key="JAVA" value="23950" />
           <entry key="PLAIN_TEXT" value="5" />
           <entry key="XML" value="1470" />
         </counts>
@@ -106,7 +103,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Activity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
+            <state relative-caret-position="2882">
               <caret line="593" column="9" selection-start-line="593" selection-start-column="9" selection-end-line="593" selection-end-column="9" />
             </state>
           </provider>
@@ -115,18 +112,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="218" column="17" lean-forward="true" selection-start-line="218" selection-start-column="17" selection-end-line="218" selection-end-column="17" />
+            <state relative-caret-position="648">
+              <caret line="117" lean-forward="true" selection-start-line="117" selection-end-line="117" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3939#4143#0" expanded="true" />
-                <element signature="e#4142#4143#0" expanded="true" />
-                <element signature="e#3941#4096#0" expanded="true" />
-                <element signature="e#4095#4096#0" expanded="true" />
-                <element signature="e#8919#9964#0" expanded="true" />
-                <element signature="e#9963#9964#0" expanded="true" />
-                <element signature="e#10015#10262#0" expanded="true" />
-                <element signature="e#10261#10262#0" expanded="true" />
+                <element signature="e#4929#5133#0" expanded="true" />
+                <element signature="e#5132#5133#0" expanded="true" />
+                <element signature="e#5172#5327#0" expanded="true" />
+                <element signature="e#5326#5327#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -135,8 +128,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Bluetooth.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+            <state relative-caret-position="-510">
+              <caret line="48" selection-start-line="48" selection-end-line="48" />
             </state>
           </provider>
         </entry>
@@ -153,8 +146,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isDemo</find>
-      <find>textViewTest</find>
       <find>pink</find>
       <find>viewAn</find>
       <find>random</find>
@@ -183,6 +174,8 @@
       <find>ProbP2</find>
       <find>Log</find>
       <find>ProbM4</find>
+      <find>getBinar</find>
+      <find>Bluetoothadapter</find>
     </findStrings>
     <replaceStrings>
       <replace>bluetooth.time</replace>
@@ -257,8 +250,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-25" />
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="822" />
@@ -268,8 +260,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -312,25 +302,12 @@
               <item name="chenyuzhang" type="462c0819:PsiDirectoryNode" />
               <item name="experimentgame" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ExperimentGame" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="ExperimentGame" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="ExperimentGame" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -346,7 +323,7 @@
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="android.recentlyUsedThemes" value="android:Theme.NoTitleBar.Fullscreen" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
-    <property name="device.picker.selection" value="G0011J05942407M4" />
+    <property name="device.picker.selection" value="10.1_WXGA_Tablet_API_25" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
@@ -457,8 +434,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-25" y="23" width="1440" height="822" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1440" height="822" extended-state="6" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.18454936" />
@@ -469,11 +445,11 @@
       <window_info id="Designer" order="6" />
       <window_info id="Capture Tool" order="7" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32876712" />
-      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49570817" weight="0.26712328" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49570817" weight="0.32739726" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32876712" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.4995579" weight="0.23287672" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" sideWeight="0.4995579" visible="true" weight="0.35753426" />
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50429183" side_tool="true" weight="0.370068" />
-      <window_info anchor="bottom" id="Build" order="5" sideWeight="0.49336872" weight="0.26575342" />
+      <window_info anchor="bottom" id="Build" order="5" sideWeight="0.49336872" weight="0.23013699" />
       <window_info anchor="bottom" id="Android Profiler" order="6" />
       <window_info anchor="bottom" id="Run" order="7" weight="0.32876712" />
       <window_info anchor="bottom" id="Debug" order="8" weight="0.32876712" />
@@ -591,21 +567,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="13" column="34" lean-forward="true" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -708,12 +674,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="433">
           <caret line="59" selection-start-line="59" selection-end-line="59" />
-          <folding>
-            <element signature="e#1572#1573#0" expanded="true" />
-            <element signature="e#1603#1604#0" expanded="true" />
-            <element signature="e#1653#1654#0" expanded="true" />
-            <element signature="e#1693#1694#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -804,13 +764,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="593" column="9" selection-start-line="593" selection-start-column="9" selection-end-line="593" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -819,27 +772,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Questions/Question4Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2882">
+          <caret line="593" column="9" selection-start-line="593" selection-start-column="9" selection-end-line="593" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/Bluetooth.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+        <state relative-caret-position="-510">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jhu/chenyuzhang/experimentgame/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="218" column="17" lean-forward="true" selection-start-line="218" selection-start-column="17" selection-end-line="218" selection-end-column="17" />
+        <state relative-caret-position="648">
+          <caret line="117" lean-forward="true" selection-start-line="117" selection-end-line="117" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3939#4143#0" expanded="true" />
-            <element signature="e#4142#4143#0" expanded="true" />
-            <element signature="e#3941#4096#0" expanded="true" />
-            <element signature="e#4095#4096#0" expanded="true" />
-            <element signature="e#8919#9964#0" expanded="true" />
-            <element signature="e#9963#9964#0" expanded="true" />
-            <element signature="e#10015#10262#0" expanded="true" />
-            <element signature="e#10261#10262#0" expanded="true" />
+            <element signature="e#4929#5133#0" expanded="true" />
+            <element signature="e#5132#5133#0" expanded="true" />
+            <element signature="e#5172#5327#0" expanded="true" />
+            <element signature="e#5326#5327#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -87,26 +87,30 @@ public class MainActivity extends AppCompatActivity {
 
         final Context context = getApplicationContext();
         if (!initiateBT()) {
-            Toast toast = Toast.makeText(context, "No bluetooth adapter available", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(context, "No bluetooth adapter available. Cannot connect to Bluetooth.", Toast.LENGTH_SHORT);
             toast.show();
-        }
-        List<String> spnBluetoothItems = getBluetoothItems();
+        } else {
+            List<String> spnBluetoothItems = getBluetoothItems();
 
-        ArrayAdapter<String> btItemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spnBluetoothItems);
-        btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnBT.setAdapter(btItemsAdapter);
+            ArrayAdapter<String> btItemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spnBluetoothItems);
+            btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnBT.setAdapter(btItemsAdapter);
+        }
 
         spnBT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String itemSelected = spnBT.getSelectedItem().toString();
+                // If a Bluetooth module is selected, connect to it.
                 if (!SPINNER_DEFAULT.equals(itemSelected)) {
                     try {
+                        Toast toast = Toast.makeText(context, "Trying to connect to Bluetooth...", Toast.LENGTH_SHORT);
+                        toast.show();
                         findBT(itemSelected);
-                        Toast toast = Toast.makeText(context, "bluetooth connected", Toast.LENGTH_SHORT);
+                        toast = Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT);
                         toast.show();
                     } catch (IOException e) {
-                        Toast toast = Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(context, "Bluetooth not connected", Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }
@@ -180,16 +184,18 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Bluetooth adapter is not null");
         }
 
-        if(!bluetooth.mBluetoothAdapter.isEnabled())
-        {
+        if(!bluetooth.mBluetoothAdapter.isEnabled()) {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBluetooth, 0);
         }
         return true;
     }
 
-    /* Returns a list of Bluetooth items to be shown in the dropdown. */
-    public List<String> getBluetoothItems() {
+    /*
+     * Returns a list of Bluetooth items to be shown in the dropdown.
+     * Throws NullPointerException if the mBluetoothAdapter is null.
+     */
+    public List<String> getBluetoothItems() throws NullPointerException {
         Set<BluetoothDevice> pairedDevices = bluetooth.mBluetoothAdapter.getBondedDevices();
         List<String> bluetoothItems = new ArrayList<>();
         bluetoothItems.add(SPINNER_DEFAULT);
