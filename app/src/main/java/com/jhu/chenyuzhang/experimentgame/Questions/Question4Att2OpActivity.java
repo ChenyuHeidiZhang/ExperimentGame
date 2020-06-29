@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+import java.io.IOException;
 
 public class Question4Att2OpActivity extends AppCompatActivity {
     private static final String TAG = "bluetooth";
@@ -102,11 +103,11 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         identifiers.put(R.id.view_animator_11, new String[] {"3", "7", "A+1"});
         identifiers.put(R.id.view_animator_12, new String[] {"4", "8", "P+1"});
         identifiers.put(R.id.view_animator_13, new String[] {"5", "9", "A-1"});
-        identifiers.put(R.id.view_animator_14, new String[] {"6", "10", "P-1"});
+        identifiers.put(R.id.view_animator_14, new String[] {"6", "10","P-1"});
         identifiers.put(R.id.view_animator_21, new String[] {"3", "7", "A+2"});
         identifiers.put(R.id.view_animator_22, new String[] {"4", "8", "P+2"});
         identifiers.put(R.id.view_animator_23, new String[] {"5", "9", "A-2"});
-        identifiers.put(R.id.view_animator_24, new String[] {"6", "10", "P-2"});
+        identifiers.put(R.id.view_animator_24, new String[] {"6", "10","P-2"});
 
         Button buttonSelect1 = findViewById(R.id.button_select1);
         Button buttonSelect2 = findViewById(R.id.button_select2);
@@ -162,8 +163,13 @@ public class Question4Att2OpActivity extends AppCompatActivity {
             timeRecordDb.insertData(getCurrentTime(), "startTrial " + trialCounter);
         }
 
-        //bluetooth = new Bluetooth(timeRecordDb);
-
+        bluetooth = new Bluetooth(timeRecordDb);
+        try {
+            // send trial number
+            bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // TODO: setup this for all layouts
         /*
         try {

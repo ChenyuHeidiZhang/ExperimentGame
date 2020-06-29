@@ -58,6 +58,15 @@ public class Bluetooth {
         }
     }
 
+    public void timeStamperJustID(String identity) throws IOException {
+        try {
+            sendData(identity);
+            Log.d(TAG, "ID sent");
+
+        } catch (IOException e) {
+            Log.d(TAG, "timestamper exceptions");
+        }
+    }
     public void sendData(String msg) throws IOException {
         try {
             mmOutputStream = mmSocket.getOutputStream();

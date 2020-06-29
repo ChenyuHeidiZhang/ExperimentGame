@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+import java.io.IOException;
 
 public class QuestionActivityHorizontal extends AppCompatActivity {
     private boolean isDemo;
@@ -76,7 +77,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
     // the code sent when an attribute view is covered after 1s
-    private String identifier_cover = "16";
+    private String identifier_cover = "34";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,11 +92,18 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
-        // TODO: note the change of identifier names to 11, 12, 21, 22, etc
+        /* TODO: note the change of identifier names to 11, 12, 21, 22, etc
         identifiers.put(R.id.view_animator_11, new String[] {"3", "7", "11"});
         identifiers.put(R.id.view_animator_12, new String[] {"5", "9", "12"});
         identifiers.put(R.id.view_animator_21, new String[] {"4", "8", "21"});
         identifiers.put(R.id.view_animator_22, new String[] {"6", "10", "22"});
+        */
+        // TODO: do we want codes to represent location or attribute type? The current structure works with location.
+        identifiers.put(R.id.view_animator_11, new String[] {"3", "7", "O1A1"});
+        identifiers.put(R.id.view_animator_12, new String[] {"5", "9", "O1P1"});
+
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "8", "O2A1"});
+        identifiers.put(R.id.view_animator_22, new String[] {"6", "10","O2P1"});
 
         textViewTest = findViewById(R.id.text_view_test);
 
@@ -150,8 +158,13 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             timeRecordDb.insertData(getCurrentTime(), "startTrial " + trialCounter);
         }
 
-        //bluetooth = new Bluetooth(timeRecordDb);
-
+        bluetooth = new Bluetooth(timeRecordDb);
+        try {
+            // send trial number
+            bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         /*
         try {
             // send trial number
@@ -198,24 +211,24 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "12", getCurrentTime());
+                    bluetooth.timeStamperJustID( "35");
                 } catch (IOException e) {e.printStackTrace();}
-                */
+
                 showResult(a1,1);
             }
         });
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "13", getCurrentTime());
+                    bluetooth.timeStamper( "35", getCurrentTime());
                 } catch (IOException e) {e.printStackTrace();}
-                */
+
                 showResult(a2,2);
             }
         });
@@ -234,20 +247,19 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId());
 
-            /*
             try {
                 // send identifier and timestamp
-                bluetooth.timeStamper( codes[0], getCurrentTime());
+                bluetooth.timeStamperJustID( codes[0]);
             } catch (IOException e) {}
-            */
+
             //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
-            /*
+
             try {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}
-            */
+
             recordEvent(codes[2] + " " + eventClick);
 
             /* automatically re-cover after 1000ms */
@@ -256,11 +268,11 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
-                        /*
+
                         try {
                             bluetooth.timeStamper( identifier_cover, getCurrentTime());
                         } catch (IOException e) {}
-                        */
+
 
                         tappedView.showNext();
                         recordEvent(codes[2] + " " + eventTimeOut);
@@ -271,11 +283,11 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
-                    /*
+
                     try {
                         bluetooth.timeStamper( identifier_cover, getCurrentTime());
                     } catch (IOException e) {}
-                    */
+
                     v.showNext();
                 }
             }

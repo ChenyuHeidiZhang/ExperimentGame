@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+import java.io.IOException;
 
 public class Question2Att4OpHorizontal extends AppCompatActivity {
     private static final String TAG = "bluetooth";
@@ -83,7 +84,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
     // TODO: the code sent when an attribute view is covered after 1s
-    private String identifier_cover = "16";
+    private String identifier_cover = "34";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,8 +165,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         }
 
-        //bluetooth = new Bluetooth(timeRecordDb);
-
+        bluetooth = new Bluetooth(timeRecordDb);
+        try {
+            // send trial number
+            bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // TODO: setup this for all layouts
         /*
         try {
@@ -252,48 +258,48 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         // TODO: modify the codes
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "12", getCurrentTime());
+                    bluetooth.timeStamper( "35", getCurrentTime());
                 } catch (IOException e) {}
-                */
+
                 showResult(a1,1);
             }
         });
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "13", getCurrentTime());
+                    bluetooth.timeStamper( "35", getCurrentTime());
                 } catch (IOException e) {}
-                */
+
                 showResult(a2,2);
             }
         });
 
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "??", getCurrentTime());
+                    bluetooth.timeStamper( "35", getCurrentTime());
                 } catch (IOException e) {}
-                */
+
                 showResult(a3,3);
             }
         });
 
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "??", getCurrentTime());
+                    bluetooth.timeStamper( "35", getCurrentTime());
                 } catch (IOException e) {}
-                */
+
                 showResult(a4,4);
             }
         });
@@ -305,20 +311,20 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
 
-            /*
+
             try {
                 // send identifier and timestamp
-                bluetooth.timeStamper( codes[0], getCurrentTime());
+                bluetooth.timeStamperJustID( codes[0]);
             } catch (IOException e) {}
-            */
+
             //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
-            /*
+
             try {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}
-            */
+
             recordEvent(codes[2] + " " + eventClick);
 
             /* automatically re-cover after 1000ms */
@@ -327,11 +333,11 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
-                        /*
+
                         try {
                             bluetooth.timeStamper( identifier_cover, getCurrentTime());
                         } catch (IOException e) {}
-                        */
+
 
                         tappedView.showNext();
                         recordEvent(codes[2] + " " + eventTimeOut);
@@ -342,11 +348,11 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
-                    /*
+
                     try {
                         bluetooth.timeStamper( identifier_cover, getCurrentTime());
                     } catch (IOException e) {}
-                    */
+
                     v.showNext();
                 }
             }

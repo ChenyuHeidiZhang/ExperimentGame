@@ -23,6 +23,7 @@ import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
 
 import java.util.Random;
+import java.io.IOException;
 
 public class ResultActivity extends AppCompatActivity {
     private double amountWon;
@@ -87,7 +88,7 @@ public class ResultActivity extends AppCompatActivity {
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
 
-        //bluetooth = new Bluetooth(timeRecordDb);
+        bluetooth = new Bluetooth(timeRecordDb);
 
         // get the trial whose result is shown
         prevTrial = trialInfoDb.getTrial(trialCounter);
@@ -96,13 +97,13 @@ public class ResultActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                /*
+
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "14", MainActivity.getCurrentTime());
-                    bluetooth.sendData(String.format ("%.2f",amountWon));
+                    bluetooth.timeStamper( "36", MainActivity.getCurrentTime());
+                    //bluetooth.sendData(String.format ("%.2f",amountWon));
                 } catch (IOException e) {}
-                */
+
                 buttonNextTrial.setVisibility(View.VISIBLE);
                 displayResult();
             }
