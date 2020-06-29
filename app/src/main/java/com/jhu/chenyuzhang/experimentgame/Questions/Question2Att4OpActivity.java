@@ -100,14 +100,18 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
         // TODO: modify the codes
-        identifiers.put(R.id.view_animator_11, new String[] {"3", "7", "11"});
-        identifiers.put(R.id.view_animator_12, new String[] {"4", "8", "12"});
-        identifiers.put(R.id.view_animator_21, new String[] {"5", "9", "21"});
-        identifiers.put(R.id.view_animator_22, new String[] {"6", "10", "22"});
-        identifiers.put(R.id.view_animator_31, new String[] {"3", "7", "31"});
-        identifiers.put(R.id.view_animator_32, new String[] {"4", "8", "32"});
-        identifiers.put(R.id.view_animator_41, new String[] {"5", "9", "41"});
-        identifiers.put(R.id.view_animator_42, new String[] {"6", "10", "42"});
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "O1A1"});
+        identifiers.put(R.id.view_animator_21, new String[] {"3", "19", "O1P1"});
+
+        identifiers.put(R.id.view_animator_12, new String[] {"6", "22", "O2A1"});
+        identifiers.put(R.id.view_animator_22, new String[] {"7", "23",  "O2P1"});
+
+        identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "O3A1"});
+        identifiers.put(R.id.view_animator_41, new String[] {"11", "27", "O3P1"});
+
+        identifiers.put(R.id.view_animator_32, new String[] {"14", "30", "O4A1"});
+        identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "O4P1"});
+
 
         Button buttonSelect1 = findViewById(R.id.button_select1);
         Button buttonSelect2 = findViewById(R.id.button_select2);

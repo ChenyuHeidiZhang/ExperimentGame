@@ -99,11 +99,13 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         identifiers.put(R.id.view_animator_22, new String[] {"6", "10", "22"});
         */
         // TODO: do we want codes to represent location or attribute type? The current structure works with location.
-        identifiers.put(R.id.view_animator_11, new String[] {"3", "7", "O1A1"});
-        identifiers.put(R.id.view_animator_12, new String[] {"5", "9", "O1P1"});
+        // 1st 2 items in the string are the event codes sent to the arduino
+        // 3rd item is stored in the database along with the timestamp
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "O1A1"});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "O1P1"});
 
-        identifiers.put(R.id.view_animator_21, new String[] {"4", "8", "O2A1"});
-        identifiers.put(R.id.view_animator_22, new String[] {"6", "10","O2P1"});
+        identifiers.put(R.id.view_animator_21, new String[] {"6", "22", "O2A1"});
+        identifiers.put(R.id.view_animator_22, new String[] {"7", "23", "O2P1"});
 
         textViewTest = findViewById(R.id.text_view_test);
 
@@ -160,6 +162,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         bluetooth = new Bluetooth(timeRecordDb);
         try {
+            // send trial start event
+            bluetooth.timeStamper("1",getCurrentTime());
             // send trial number
             bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
         } catch (IOException e) {
