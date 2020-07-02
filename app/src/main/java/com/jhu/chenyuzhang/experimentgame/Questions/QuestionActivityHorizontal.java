@@ -78,6 +78,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
     // the code sent when an attribute view is covered after 1s
     private String identifier_cover = "34";
+    private String identifier_coverEarly = "35";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,7 +290,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 if (v.getDisplayedChild() == 1) {
 
                     try {
-                        bluetooth.timeStamper( identifier_cover, getCurrentTime());
+                        bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
                     } catch (IOException e) {}
 
                     v.showNext();
@@ -400,6 +401,11 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         Intent intent = new Intent(QuestionActivityHorizontal.this, ResultActivity.class);
         intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
+        try {
+            // send identifier and timestamp
+            bluetooth.timeStamper( "resultID", getCurrentTime());
+            //bluetooth.sendData(String.format ("%.2f",amountWon));
+        } catch (IOException e) {}
         startActivity(intent);
         finish();
     }

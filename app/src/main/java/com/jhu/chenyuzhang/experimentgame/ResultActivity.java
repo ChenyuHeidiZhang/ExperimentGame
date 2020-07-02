@@ -22,10 +22,15 @@ import com.jhu.chenyuzhang.experimentgame.Questions.Question4Att2OpHorizontal;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.io.IOException;
 
 public class ResultActivity extends AppCompatActivity {
+    private final double PERCENT_WIN = 1;
+
     private double amountWon;
     private Trial prevTrial;
     private ImageView imageViewCongrats;
@@ -46,6 +51,7 @@ public class ResultActivity extends AppCompatActivity {
 
     TimeDbHelper timeRecordDb;
     Bluetooth bluetooth;
+    private String resultID = "37";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +74,8 @@ public class ResultActivity extends AppCompatActivity {
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
 
         // update total amount won; only add to totalAmountWon with some probability and if is not in training
-        int rewardPercentage = getResources().getInteger(R.integer.reward_percentage);
         double random = new Random().nextDouble();
-
-        if (random <= rewardPercentage/100 && !isDemo) {
+        if (random <= PERCENT_WIN && !isDemo) {
             SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
             double totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
 
@@ -98,14 +102,14 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( "36", MainActivity.getCurrentTime());
-                    //bluetooth.sendData(String.format ("%.2f",amountWon));
-                } catch (IOException e) {}
+            try {
+                // send identifier and timestamp
+                bluetooth.timeStamper( "resultID", getCurrentTime());
+                //bluetooth.sendData(String.format ("%.2f",amountWon));
+            } catch (IOException e) {}
 
-                buttonNextTrial.setVisibility(View.VISIBLE);
-                displayResult();
+            buttonNextTrial.setVisibility(View.VISIBLE);
+            displayResult();
             }
         }, 1000);
 
@@ -224,5 +228,13 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         return intent;
+    }
+
+    //get current time in milliseconds
+    private String getCurrentTime() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
+        String formattedDate= dateFormat.format(date);
+        return formattedDate;
     }
 }

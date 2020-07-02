@@ -85,6 +85,8 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
     // TODO: the code sent when an attribute view is covered after 1s
     private String identifier_cover = "34";
+    private String identifier_coverEarly = "35";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -353,7 +355,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 if (v.getDisplayedChild() == 1) {
 
                     try {
-                        bluetooth.timeStamper( identifier_cover, getCurrentTime());
+                        bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
                     } catch (IOException e) {}
 
                     v.showNext();

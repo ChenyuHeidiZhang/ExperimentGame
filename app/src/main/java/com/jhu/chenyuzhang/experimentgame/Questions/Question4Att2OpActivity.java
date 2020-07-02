@@ -84,7 +84,8 @@ public class Question4Att2OpActivity extends AppCompatActivity {
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
     // TODO: the code sent when an attribute view is covered after 1s
-    private String identifier_cover = "16";
+    private String identifier_cover = "34";
+    private String identifier_coverEarly = "35";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,11 +323,11 @@ public class Question4Att2OpActivity extends AppCompatActivity {
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
-                    /*
+
                     try {
-                        bluetooth.timeStamper( identifier_cover, getCurrentTime());
+                        bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
                     } catch (IOException e) {}
-                    */
+
                     v.showNext();
                 }
             }
