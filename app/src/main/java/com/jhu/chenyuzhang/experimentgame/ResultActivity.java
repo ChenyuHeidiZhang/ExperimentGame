@@ -25,8 +25,6 @@ import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
 import java.util.Random;
 
 public class ResultActivity extends AppCompatActivity {
-    private final double PERCENT_WIN = 0.1;
-
     private double amountWon;
     private Trial prevTrial;
     private ImageView imageViewCongrats;
@@ -69,8 +67,10 @@ public class ResultActivity extends AppCompatActivity {
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
 
         // update total amount won; only add to totalAmountWon with some probability and if is not in training
+        int rewardPercentage = getResources().getInteger(R.integer.reward_percentage);
         double random = new Random().nextDouble();
-        if (random <= PERCENT_WIN && !isDemo) {
+
+        if (random <= rewardPercentage/100 && !isDemo) {
             SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
             double totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
 

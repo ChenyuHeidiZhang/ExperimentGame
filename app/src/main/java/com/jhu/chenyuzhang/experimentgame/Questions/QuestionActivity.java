@@ -85,6 +85,7 @@ public class QuestionActivity extends AppCompatActivity {
     private String eventTimeOut = "TimeOut, Covered";
 
     private long backPressedTime;
+    private long startTime;
 
     Bluetooth bluetooth;
 
@@ -142,9 +143,11 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
         //startTime = System.nanoTime();    // get relative start time in nanoseconds; not used for now
+        startTime = System.currentTimeMillis();
 
         //finish activity after 1 minute of inactivity
-        countDownTimer = new CountDownTimer(60000,1000) {
+        int timeoutLength = getResources().getInteger(R.integer.trial_timeout_millis);
+        countDownTimer = new CountDownTimer(timeoutLength,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
             }
@@ -154,19 +157,6 @@ public class QuestionActivity extends AppCompatActivity {
                 finish();
             }
         }.start();
-
-
-        // String position = "A1P1,A2P2";      // NOTE: dis-enabled random positions
-        /*
-        int random_position = new Random().nextInt(2);
-        Log.d("Random QH", Integer.toString(random_position));
-        if (random_position==1){
-            Log.d("Random QH", Integer.toString(random_position));
-            position = "P1A1,P2A2";
-            exchangeA1P1();
-            exchangeA2P2();
-        }
-        */
 
         timeRecordDb = new TimeDbHelper(this);
         trialInfoDb = new TrialDbHelper(this);
@@ -397,8 +387,14 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void showResult(double a, int option){
+        if (System.currentTimeMillis() - startTime <
+                getResources().getInteger(R.integer.min_time_millis_2Att2Opt)) {
+            Toast.makeText(this, getString(R.string.stay_longer), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String outcomes[] = currentTrial.getOutcomes();
-        String outcome = outcomes[option-1];
+        String outcome = outcomes[option - 1];
         if ("win".equals(outcome) || "lose".equals(outcome)) {
             amountWon = a;  // This can be either positive or negative.
         } else {  // "no outcome".equals(outcome)

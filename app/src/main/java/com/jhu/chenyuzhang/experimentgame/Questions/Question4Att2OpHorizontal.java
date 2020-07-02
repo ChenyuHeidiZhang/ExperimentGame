@@ -75,6 +75,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
     private String eventTimeOut = "TimeOut, Covered";
 
     private long backPressedTime;
+    private long startTime;
 
     Bluetooth bluetooth;
 
@@ -136,8 +137,11 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
             });
         }
 
+        startTime = System.currentTimeMillis();
+
         //finish activity after 1 minute of inactivity
-        countDownTimer = new CountDownTimer(60000,1000) {
+        int timeoutLength = getResources().getInteger(R.integer.trial_timeout_millis);
+        countDownTimer = new CountDownTimer(timeoutLength,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
             }
@@ -422,6 +426,12 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
     }
 
     private void showResult(double ap, double am, int option){
+        if (System.currentTimeMillis() - startTime <
+                getResources().getInteger(R.integer.min_time_millis_4Att2Opt)) {
+            Toast.makeText(this, getString(R.string.stay_longer), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String outcomes[] = currentTrial.getOutcomes();
         String outcome = outcomes[option-1];
         if ("win".equals(outcome)) {

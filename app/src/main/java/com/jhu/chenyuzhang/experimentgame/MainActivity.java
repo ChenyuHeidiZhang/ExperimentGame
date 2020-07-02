@@ -92,10 +92,8 @@ public class MainActivity extends AppCompatActivity {
         bluetooth = new Bluetooth(timeRecordDb);
         spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
 
-        final Context context = getApplicationContext();
         if (!initiateBT()) {
-            Toast toast = Toast.makeText(context, "No bluetooth adapter available. Cannot connect to Bluetooth.", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(this, "No bluetooth adapter available. Cannot connect to Bluetooth.", Toast.LENGTH_SHORT).show();
         } else {
             List<String> spnBluetoothItems = getBluetoothItems();
 
@@ -112,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        final Context context = getApplicationContext();
         spnBT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -119,11 +118,9 @@ public class MainActivity extends AppCompatActivity {
                 // If a Bluetooth module is selected, connect to it.
                 if (!SPINNER_DEFAULT.equals(itemSelected)) {
                     try {
-                        Toast toast = Toast.makeText(context, "Trying to connect to Bluetooth...", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(context, "Trying to connect to Bluetooth...", Toast.LENGTH_SHORT).show();
                         findBT(itemSelected);
-                        toast = Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         Toast toast = Toast.makeText(context, "Bluetooth not connected", Toast.LENGTH_SHORT);
                         toast.show();
@@ -311,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
             prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, "").apply();
             finish();
         } else {
-            Toast.makeText(this, "Press back again to exit the app", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Press back again to exit the app", Toast.LENGTH_SHORT).show();
         }
 
         backPressedTime = System.currentTimeMillis();
