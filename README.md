@@ -4,7 +4,7 @@ App developed for a multi-attribute decision making experiment.
 
 Instructions for changing experiment settings:
 
-**1. Constant strings (including password, displayed messages, etc)*
+**1. Constant strings (including password, displayed messages, etc)**
 
 Go to **app/src/main/res/values/strings.xml** and change the embedded values.
 
