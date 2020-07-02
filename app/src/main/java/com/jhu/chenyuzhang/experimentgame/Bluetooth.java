@@ -134,4 +134,23 @@ public class Bluetooth {
         });
         workerThread.start();
     }
+
+    /**
+     * Reset input and output streams and make sure socket is closed.
+     * This method will be used when app is quit to ensure that the connection is properly closed during a shutdown.
+     */
+    public void resetConnection() {
+        if (mmInputStream != null) {
+            try {mmInputStream.close();} catch(Exception e) {}
+            mmInputStream = null;
+        }
+        if (mmOutputStream != null) {
+            try {mmOutputStream.close();} catch (Exception e) {}
+            mmOutputStream = null;
+        }
+        if (mmSocket != null) {
+            try {mmSocket.close();} catch (Exception e) {}
+            mmSocket = null;
+        }
+    }
 }

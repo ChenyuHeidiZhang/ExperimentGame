@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private static boolean isSignedIn;
     private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
     private SharedPreferences prefSignedIn;
+    private static final String KEY_CONNECTED_BLUETOOTH = "keyConnectedBluetooth";
+    private SharedPreferences prefBluetooth;
 
     private TimeDbHelper timeRecordDb;
 
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String SPINNER_DEFAULT = "- Bluetooth -";
     private Spinner spnBT;
     private Bluetooth bluetooth;
+
+    private long backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
         trialInfoDb = new TrialDbHelper(this);
 
+        prefBluetooth = getSharedPreferences("connectedBluetooth", MODE_PRIVATE);
+        String connectedBluetooth = prefBluetooth.getString(KEY_CONNECTED_BLUETOOTH, "");
+
         // bluetooth set up
         bluetooth = new Bluetooth(timeRecordDb);
         spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
@@ -95,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
             ArrayAdapter<String> btItemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spnBluetoothItems);
             btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnBT.setAdapter(btItemsAdapter);
+
+            // Set the currently connected device on the spinner so that we don't need to connect again.
+            if (!"".equals(connectedBluetooth)) {
+                int spnPosition = btItemsAdapter.getPosition(connectedBluetooth);
+                if (spnPosition != -1) {
+                    spnBT.setSelection(spnPosition);
+                }
+            }
         }
 
         spnBT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -229,6 +244,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         Log.d(TAG,"Bluetooth Device Found");
+
+        prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, bluetoothName).apply();
     }
 
     public void checkPasswordDialog() {
@@ -283,5 +300,20 @@ public class MainActivity extends AppCompatActivity {
         // 14 characters instead of 32
         binaryTime = time;
         return binaryTime;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Finish the app if the user back presses twice within 2 seconds.
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            // Shutdown bluetooth connection before exiting the app.
+            bluetooth.resetConnection();
+            prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, "").apply();
+            finish();
+        } else {
+            Toast.makeText(this, "Press back again to exit the app", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }

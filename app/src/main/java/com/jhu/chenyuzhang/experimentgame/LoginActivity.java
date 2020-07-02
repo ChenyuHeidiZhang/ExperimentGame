@@ -1,6 +1,5 @@
 package com.jhu.chenyuzhang.experimentgame;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             buttonSignIn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     name = editTextName.getText().toString();
+                    // Check that if the patient id contains special characters, then it is invalid.
                     Pattern pattern = Pattern.compile("[^A-Za-z0-9_]");
                     Matcher matcher = pattern.matcher(name);
                     boolean nameInvalid = matcher.find();
@@ -96,8 +96,6 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences prefLastAmount = getSharedPreferences("lastTotal", MODE_PRIVATE);
         prefLastAmount.edit().putFloat(KEY_LAST_TOTAL, 0).apply();  // total amount 4 blocks ago
-
-        Context context = getApplicationContext();
 
         String tableName = "timeRecord_table_" + name;
 
