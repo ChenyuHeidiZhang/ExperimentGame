@@ -4,11 +4,12 @@ App developed for a multi-attribute decision making experiment.
 
 Instructions for changing experiment settings:
 
-1. Constant strings (including password, displayed messages, etc)
+**1. Constant strings (including password, displayed messages, etc)*
 
 Go to **app/src/main/res/values/strings.xml** and change the embedded values.
 
-2. Constant integers
+
+**2. Constant integers**
 
 Go to **app/src/main/res/values/integers.xml** and change the embedded values.
 
@@ -18,7 +19,8 @@ Go to **app/src/main/res/values/integers.xml** and change the embedded values.
 
 `min_time_millis_xAttxOpt`: the minimum time (in milliseconds) required to stay in a trial with configuration xAttxOpt.
 
-3. Task (/trial) information is given in a **.csv file named "allTrialsMADM_Tablet.csv."**
+
+**3. Trial information is given in a .csv file named "allTrialsMADM_Tablet.csv."**
 
 **To replace this file, go to ExperimentGame/app/src/main/assets, copy the new csv file into the folder. (Need to remove the first line (header) of the file.)**
 
