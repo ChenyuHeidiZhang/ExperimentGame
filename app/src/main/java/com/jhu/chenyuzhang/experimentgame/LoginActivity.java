@@ -1,5 +1,6 @@
 package com.jhu.chenyuzhang.experimentgame;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -59,9 +62,15 @@ public class LoginActivity extends AppCompatActivity {
             buttonSignIn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     name = editTextName.getText().toString();
+                    Pattern pattern = Pattern.compile("[^A-Za-z0-9_]");
+                    Matcher matcher = pattern.matcher(name);
+                    boolean nameInvalid = matcher.find();
+
                     key = editTextKey.getText().toString();
                     if (name.equals("") || key.equals("")) {
                         Toast.makeText(LoginActivity.this, "Please enter patient ID and password", Toast.LENGTH_SHORT).show();
+                    } else if (nameInvalid) {
+                        Toast.makeText(LoginActivity.this, "Invalid patient ID (use only letters, numbers, and underscore(_))", Toast.LENGTH_LONG).show();
                     } else if (!key.equals(getString(R.string.password))) {
                         Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
                     } else {
@@ -88,6 +97,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefLastAmount = getSharedPreferences("lastTotal", MODE_PRIVATE);
         prefLastAmount.edit().putFloat(KEY_LAST_TOTAL, 0).apply();  // total amount 4 blocks ago
 
+        Context context = getApplicationContext();
+
         String tableName = "timeRecord_table_" + name;
 
         TimeDbHelper timeRecordDb = new TimeDbHelper(LoginActivity.this);
@@ -95,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String startTimeWorld = getCurrentTime();
         String notes = editTextNotes.getText().toString();
-        timeRecordDb.insertData(startTimeWorld, "Sign In: Patient ID: "+name+", Password: "+key+", Notes: "+notes);
+        timeRecordDb.insertData(startTimeWorld, "Sign In: Patient ID: " + name + ", Password: " + key + ", Notes: " + notes);
 
         timeRecordDb.close();
 
