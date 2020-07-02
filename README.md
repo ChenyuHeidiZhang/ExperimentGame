@@ -2,7 +2,25 @@
 
 App developed for a multi-attribute decision making experiment.
 
-June 21, 2020
+Instructions for changing experiment settings:
+
+1. Constant strings (including password, displayed messages, etc)
+
+Go to **app/src/main/res/values/strings.xml** and change the embedded values.
+
+2. Constant integers
+
+Go to **app/src/main/res/values/integers.xml** and change the embedded values.
+
+`trial_timeout_millis`: the duration (in milliseconds) of inactivity in a trial after which the app goes back to the main screen
+
+`reward_percentage`: the percentage of trials whose outcomes are counted toward the final reward amount
+
+`min_time_millis_xAttxOpt`: the minimum time (in milliseconds) required to stay in a trial with configuration xAttxOpt.
+
+3. Task (/trial) information is given in a **.csv file named "allTrialsMADM_Tablet.csv."**
+
+**To replace this file, go to ExperimentGame/app/src/main/assets, copy the new csv file into the folder. (Need to remove the first line (header) of the file.)**
 
 Current Trial info file description:
 
@@ -40,24 +58,6 @@ To enable bluetooth on a tablet, please go to settings and connect to the blueto
 ~~Options with 4 attributes now have two spatial configurations (randomized)~~
 ~~- amount win, prob win, amount lose, prob lose (recorded as config 0 in database)~~
 ~~- amount win, amount lose, prob win, prob lose (recorded as config 1 in database)~~
-
-
-May 21, 2020
-
-Notes:
-
-1. To change the percentage (chance) of trials getting counted towards the total:
-
-Go to ResultActivity line 26, change the **PERCENT_WIN** variable.
-
-2. To change the password:
-
-Go to res/values/strings.xml line 11
-
-3. Task (/trial) information is given in a **.csv file named "allTrialsMADM_Tablet.csv."**
-
-**To replace this file, go to ExperimentGame/app/src/main/assets, copy the new csv file into the folder. (Need to remove the first line (header) of the file.)**
-
 
 ------------------------------
 
