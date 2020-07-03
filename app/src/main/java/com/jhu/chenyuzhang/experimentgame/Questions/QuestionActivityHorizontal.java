@@ -69,6 +69,9 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private long backPressedTime;
     private long startTime;
 
+    // A map from viewAnimator ID to their corresponding handlers.
+    private HashMap<Integer, Handler> viewHandlerMap = new HashMap<>();
+
     Bluetooth bluetooth;
 
     // identifers maps the id of a attribute view to the code sent when it is uncovered
@@ -204,7 +207,10 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                     bluetooth.timeStamper( "12", getCurrentTime());
                 } catch (IOException e) {e.printStackTrace();}
                 */
-                showResult(a1,1);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
+                    showResult(a1, 1);
+                }
             }
         });
 
@@ -216,7 +222,10 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                     bluetooth.timeStamper( "13", getCurrentTime());
                 } catch (IOException e) {e.printStackTrace();}
                 */
-                showResult(a2,2);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
+                    showResult(a2, 2);
+                }
             }
         });
     }
@@ -267,6 +276,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                     }
                 }
             }, 1000);
+            viewHandlerMap.put(tappedView.getId(), handler);
 
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
@@ -364,13 +374,26 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         timeRecordDb.insertData(timeString, event);
     }
 
-    private void showResult(double a, int option){
+    private boolean checkMinimumTimePassed() {
         if (System.currentTimeMillis() - startTime <
                 getResources().getInteger(R.integer.min_time_millis_2Att2Opt)) {
             Toast.makeText(this, getString(R.string.stay_longer), Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
+        return true;
+    }
 
+    private void unmaskAttributes(ViewAnimator[] viewAnimators) {
+        for (ViewAnimator v : viewAnimators) {
+            v.setDisplayedChild(1);
+            Handler handler = viewHandlerMap.get(v.getId());
+            if (handler != null) {
+                handler.removeCallbacksAndMessages(null);
+            }
+        }
+    }
+
+    private void showResult(double a, int option){
         String outcomes[] = currentTrial.getOutcomes();
         String outcome = outcomes[option - 1];
         if ("win".equals(outcome) || "lose".equals(outcome)) {
@@ -382,10 +405,17 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
 
-        Intent intent = new Intent(QuestionActivityHorizontal.this, ResultActivity.class);
-        intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
-        startActivity(intent);
-        finish();
+        // Wait for one second during the display of attributes.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(QuestionActivityHorizontal.this, ResultActivity.class);
+                intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
+                startActivity(intent);
+                finish();
+            }
+        }, 1000);
     }
 
     @Override

@@ -68,6 +68,9 @@ public class Question4Activity extends AppCompatActivity {
     private long backPressedTime;
     private long startTime;
 
+    // A map from viewAnimator ID to their corresponding handlers.
+    private HashMap<Integer, Handler> viewHandlerMap = new HashMap<>();
+
     Bluetooth bluetooth;
 
     // identifers maps the id of a attribute view to the code sent when it is uncovered
@@ -361,7 +364,10 @@ public class Question4Activity extends AppCompatActivity {
                     bluetooth.timeStamper( "12", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(ap1, am1, 1);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14});
+                    showResult(ap1, am1, 1);
+                }
             }
         });
 
@@ -373,7 +379,10 @@ public class Question4Activity extends AppCompatActivity {
                     bluetooth.timeStamper( "13", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(ap2, am2, 2);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24});
+                    showResult(ap2, am2, 2);
+                }
             }
         });
 
@@ -385,7 +394,10 @@ public class Question4Activity extends AppCompatActivity {
                     bluetooth.timeStamper( "12", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(ap3, am3, 3);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34});
+                    showResult(ap3, am3, 3);
+                }
             }
         });
 
@@ -397,7 +409,10 @@ public class Question4Activity extends AppCompatActivity {
                     bluetooth.timeStamper( "13", getCurrentTime());
                 } catch (IOException e) {}
                 */
-                showResult(ap4, am4, 4);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
+                    showResult(ap4, am4, 4);
+                }
             }
         });
     }
@@ -441,6 +456,7 @@ public class Question4Activity extends AppCompatActivity {
                     }
                 }
             }, 1000);
+            viewHandlerMap.put(tappedView.getId(), handler);
 
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
@@ -586,13 +602,26 @@ public class Question4Activity extends AppCompatActivity {
         timeRecordDb.insertData(timeString, event);
     }
 
-    private void showResult(double ap, double am, int option){
+    private boolean checkMinimumTimePassed() {
         if (System.currentTimeMillis() - startTime <
                 getResources().getInteger(R.integer.min_time_millis_4Att4Opt)) {
             Toast.makeText(this, getString(R.string.stay_longer), Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
+        return true;
+    }
 
+    private void unmaskAttributes(ViewAnimator[] viewAnimators) {
+        for (ViewAnimator v : viewAnimators) {
+            v.setDisplayedChild(1);
+            Handler handler = viewHandlerMap.get(v.getId());
+            if (handler != null) {
+                handler.removeCallbacksAndMessages(null);
+            }
+        }
+    }
+
+    private void showResult(double ap, double am, int option) {
         String outcomes[] = currentTrial.getOutcomes();
         String outcome = outcomes[option-1];
         if ("win".equals(outcome)) {
@@ -606,10 +635,17 @@ public class Question4Activity extends AppCompatActivity {
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
 
-        Intent intent = new Intent(Question4Activity.this, ResultActivity.class);
-        intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
-        startActivity(intent);
-        finish();
+        // Wait for one second during the display of attributes.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Question4Activity.this, ResultActivity.class);
+                intent.putExtra("EXTRA_AMOUNT_WON",amountWon);
+                startActivity(intent);
+                finish();
+            }
+        }, 1000);
     }
 
     @Override
