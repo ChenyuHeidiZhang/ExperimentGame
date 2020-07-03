@@ -538,8 +538,8 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
             am3 = Double.parseDouble(att);
             tv.setText("$" + String.format("%.2f", Math.abs(am3)));
         } else if (attType.equals("P-3")) {
-            pm1 = Double.parseDouble(att);
-            tv.setText((int) (pm1 * 100) + "%");
+            pm3 = Double.parseDouble(att);
+            tv.setText((int) (pm3 * 100) + "%");
         } else if (attType.equals("A+4")) {
             ap4 = Double.parseDouble(att);
             tv.setText("$" + String.format("%.2f", Math.abs(ap4)));
