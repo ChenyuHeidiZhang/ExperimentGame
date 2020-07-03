@@ -62,8 +62,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private ViewAnimator viewAnimator21;  // 21: 1st of second option (top right)
     private ViewAnimator viewAnimator22;  // 22: 2nd of second option (bottom right)
 
-    //private String startTimeWorld;
-
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
@@ -72,7 +70,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
     Bluetooth bluetooth;
 
-    // identifers maps the id of a attribute view to the code sent when it is uncovered
+    // identifiers maps the id of a attribute view to the code sent when it is uncovered
     // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
@@ -93,12 +91,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
-        /* TODO: note the change of identifier names to 11, 12, 21, 22, etc
-        identifiers.put(R.id.view_animator_11, new String[] {"3", "7", "11"});
-        identifiers.put(R.id.view_animator_12, new String[] {"5", "9", "12"});
-        identifiers.put(R.id.view_animator_21, new String[] {"4", "8", "21"});
-        identifiers.put(R.id.view_animator_22, new String[] {"6", "10", "22"});
-        */
         // TODO: do we want codes to represent location or attribute type? The current structure works with location.
         // 1st 2 items in the string are the event codes sent to the arduino
         // 3rd item is stored in the database along with the timestamp

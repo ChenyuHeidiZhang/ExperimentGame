@@ -35,8 +35,6 @@ import java.util.Random;
 import java.io.IOException;
 
 public class Question4Att2OpActivity extends AppCompatActivity {
-    private static final String TAG = "bluetooth";
-
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
     private SharedPreferences demo_prefs;
@@ -79,7 +77,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
     Bluetooth bluetooth;
 
-    // identifers maps the id of a attribute view to the code sent when it is uncovered
+    // identifiers maps the id of a attribute view to the code sent when it is uncovered
     // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 

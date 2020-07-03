@@ -32,7 +32,6 @@ public class Bluetooth {
         this.timeRecordDb = db;
     }
 
-
     public void openBT(ParcelUuid[] uuids) throws IOException {
         //UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
         mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());
@@ -67,6 +66,7 @@ public class Bluetooth {
             Log.d(TAG, "timestamper exceptions");
         }
     }
+
     public void sendData(String msg) throws IOException {
         try {
             mmOutputStream = mmSocket.getOutputStream();
@@ -77,7 +77,6 @@ public class Bluetooth {
         msg += "\n";
         mmOutputStream.write(msg.getBytes());
     }
-
 
     public void beginListenForData() {
         final Handler handler = new Handler();
