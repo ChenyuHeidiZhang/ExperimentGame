@@ -34,8 +34,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Question4ActivityHorizontal extends AppCompatActivity {
-    private static final String TAG = "bluetooth";
-
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
     private SharedPreferences demo_prefs;
@@ -61,6 +59,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
     private ViewAnimator viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24;
     private ViewAnimator viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34;
     private ViewAnimator viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44;
+    private Button buttonSelect1, buttonSelect2, buttonSelect3, buttonSelect4;
 
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
@@ -111,10 +110,10 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
         identifiers.put(R.id.view_animator_43, new String[]{"5", "9", "A-2"});
         identifiers.put(R.id.view_animator_44, new String[]{"6", "10", "P-2"});
 
-        Button buttonSelect1 = findViewById(R.id.button_select1);
-        Button buttonSelect2 = findViewById(R.id.button_select2);
-        Button buttonSelect3 = findViewById(R.id.button_select3);
-        Button buttonSelect4 = findViewById(R.id.button_select4);
+        buttonSelect1 = findViewById(R.id.button_select1);
+        buttonSelect2 = findViewById(R.id.button_select2);
+        buttonSelect3 = findViewById(R.id.button_select3);
+        buttonSelect4 = findViewById(R.id.button_select4);
 
         viewAnimator11 = findViewById(R.id.view_animator_11);
         viewAnimator12 = findViewById(R.id.view_animator_12);
@@ -619,6 +618,11 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
+
+        buttonSelect1.setEnabled(false);
+        buttonSelect2.setEnabled(false);
+        buttonSelect3.setEnabled(false);
+        buttonSelect4.setEnabled(false);
     }
 
     private void showResult(double ap, double am, int option){

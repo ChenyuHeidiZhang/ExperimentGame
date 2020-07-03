@@ -34,8 +34,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Question2Att4OpHorizontal extends AppCompatActivity {
-    private static final String TAG = "bluetooth";
-
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
     private SharedPreferences demo_prefs;
@@ -50,25 +48,16 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
     private double amountWon;
 
-    private double a1;
-    private double p1;
-    private double a2;
-    private double p2;
-    private double a3;
-    private double p3;
-    private double a4;
-    private double p4;
+    private double a1, a2, a3, a4;
+    private double p1, p2, p3, p4;
 
     private TimeDbHelper timeRecordDb;
 
-    private ViewAnimator viewAnimator11;
-    private ViewAnimator viewAnimator21;
-    private ViewAnimator viewAnimator12;
-    private ViewAnimator viewAnimator22;
-    private ViewAnimator viewAnimator31;
-    private ViewAnimator viewAnimator41;
-    private ViewAnimator viewAnimator32;
-    private ViewAnimator viewAnimator42;
+    private ViewAnimator viewAnimator11, viewAnimator12;
+    private ViewAnimator viewAnimator21, viewAnimator22;
+    private ViewAnimator viewAnimator31, viewAnimator32;
+    private ViewAnimator viewAnimator41, viewAnimator42;
+    private Button buttonSelect1, buttonSelect2, buttonSelect3, buttonSelect4;
 
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
@@ -110,10 +99,10 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         identifiers.put(R.id.view_animator_41, new String[] {"5", "9", "41"});
         identifiers.put(R.id.view_animator_42, new String[] {"6", "10", "42"});
 
-        Button buttonSelect1 = findViewById(R.id.button_select1);
-        Button buttonSelect2 = findViewById(R.id.button_select2);
-        Button buttonSelect3 = findViewById(R.id.button_select3);
-        Button buttonSelect4 = findViewById(R.id.button_select4);
+        buttonSelect1 = findViewById(R.id.button_select1);
+        buttonSelect2 = findViewById(R.id.button_select2);
+        buttonSelect3 = findViewById(R.id.button_select3);
+        buttonSelect4 = findViewById(R.id.button_select4);
 
         viewAnimator11 = findViewById(R.id.view_animator_11);
         viewAnimator21 = findViewById(R.id.view_animator_21);
@@ -485,6 +474,11 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
+
+        buttonSelect1.setEnabled(false);
+        buttonSelect2.setEnabled(false);
+        buttonSelect3.setEnabled(false);
+        buttonSelect4.setEnabled(false);
     }
 
     private void showResult(double a, int option){

@@ -60,6 +60,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private ViewAnimator viewAnimator12;  // 12: 2nd of first option (bottom left)
     private ViewAnimator viewAnimator21;  // 21: 1st of second option (top right)
     private ViewAnimator viewAnimator22;  // 22: 2nd of second option (bottom right)
+    private Button buttonSelect1, buttonSelect2;
 
     //private String startTimeWorld;
 
@@ -102,8 +103,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         textViewTest = findViewById(R.id.text_view_test);
 
-        Button buttonSelect1 = findViewById(R.id.button_select1);
-        Button buttonSelect2 = findViewById(R.id.button_select2);
+        buttonSelect1 = findViewById(R.id.button_select1);
+        buttonSelect2 = findViewById(R.id.button_select2);
 
         viewAnimator11 = findViewById(R.id.view_animator_11);
         viewAnimator12 = findViewById(R.id.view_animator_12);
@@ -391,6 +392,9 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
+
+        buttonSelect1.setEnabled(false);
+        buttonSelect2.setEnabled(false);
     }
 
     private void showResult(double a, int option){
