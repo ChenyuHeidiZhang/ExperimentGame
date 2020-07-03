@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private static boolean isSignedIn;
     private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
     private SharedPreferences prefSignedIn;
+    private static final String KEY_CONNECTED_BLUETOOTH = "keyConnectedBluetooth";
+    private SharedPreferences prefBluetooth;
 
     private TimeDbHelper timeRecordDb;
 
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String SPINNER_DEFAULT = "- Bluetooth -";
     private Spinner spnBT;
     private Bluetooth bluetooth;
+
+    private long backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,33 +85,44 @@ public class MainActivity extends AppCompatActivity {
 
         trialInfoDb = new TrialDbHelper(this);
 
+        prefBluetooth = getSharedPreferences("connectedBluetooth", MODE_PRIVATE);
+        String connectedBluetooth = prefBluetooth.getString(KEY_CONNECTED_BLUETOOTH, "");
+
         // bluetooth set up
         bluetooth = new Bluetooth(timeRecordDb);
         spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
 
-        final Context context = getApplicationContext();
         if (!initiateBT()) {
-            Toast toast = Toast.makeText(context, "No bluetooth adapter available", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(this, "No bluetooth adapter available. Cannot connect to Bluetooth.", Toast.LENGTH_SHORT).show();
+        } else {
+            List<String> spnBluetoothItems = getBluetoothItems();
+
+            ArrayAdapter<String> btItemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spnBluetoothItems);
+            btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnBT.setAdapter(btItemsAdapter);
+
+            // Set the currently connected device on the spinner so that we don't need to connect again.
+            if (!"".equals(connectedBluetooth)) {
+                int spnPosition = btItemsAdapter.getPosition(connectedBluetooth);
+                if (spnPosition != -1) {
+                    spnBT.setSelection(spnPosition);
+                }
+            }
         }
-        List<String> spnBluetoothItems = getBluetoothItems();
 
-        ArrayAdapter<String> btItemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spnBluetoothItems);
-        btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnBT.setAdapter(btItemsAdapter);
-
+        final Context context = getApplicationContext();
         spnBT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String itemSelected = spnBT.getSelectedItem().toString();
+                // If a Bluetooth module is selected, connect to it.
                 if (!SPINNER_DEFAULT.equals(itemSelected)) {
                     try {
+                        Toast.makeText(context, "Trying to connect to Bluetooth...", Toast.LENGTH_SHORT).show();
                         findBT(itemSelected);
-                        Toast toast = Toast.makeText(context, "bluetooth connected", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
-                        Toast toast = Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -180,16 +195,18 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Bluetooth adapter is not null");
         }
 
-        if(!bluetooth.mBluetoothAdapter.isEnabled())
-        {
+        if(!bluetooth.mBluetoothAdapter.isEnabled()) {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBluetooth, 0);
         }
         return true;
     }
 
-    /* Returns a list of Bluetooth items to be shown in the dropdown. */
-    public List<String> getBluetoothItems() {
+    /*
+     * Returns a list of Bluetooth items to be shown in the dropdown.
+     * Throws NullPointerException if the mBluetoothAdapter is null.
+     */
+    public List<String> getBluetoothItems() throws NullPointerException {
         Set<BluetoothDevice> pairedDevices = bluetooth.mBluetoothAdapter.getBondedDevices();
         List<String> bluetoothItems = new ArrayList<>();
         bluetoothItems.add(SPINNER_DEFAULT);
@@ -223,6 +240,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         Log.d(TAG,"Bluetooth Device Found");
+
+        prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, bluetoothName).apply();
     }
 
     public void checkPasswordDialog() {
@@ -277,5 +296,20 @@ public class MainActivity extends AppCompatActivity {
         // 14 characters instead of 32
         binaryTime = time;
         return binaryTime;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Finish the app if the user back presses twice within 2 seconds.
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            // Shutdown bluetooth connection before exiting the app.
+            bluetooth.resetConnection();
+            prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, "").apply();
+            finish();
+        } else {
+            Toast.makeText(MainActivity.this, "Press back again to exit the app", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }
