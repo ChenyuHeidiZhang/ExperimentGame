@@ -75,6 +75,9 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     private long backPressedTime;
     private long startTime;
 
+    // A map from viewAnimator ID to their corresponding handlers.
+    private HashMap<Integer, Handler> viewHandlerMap = new HashMap<>();
+
     Bluetooth bluetooth;
 
     // identifiers maps the id of a attribute view to the code sent when it is uncovered
@@ -261,49 +264,57 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         // TODO: modify the codes
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( "35", getCurrentTime());
                 } catch (IOException e) {}
 
-                showResult(a1,1);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
+                    showResult(a1, 1);
+                }
             }
         });
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( "35", getCurrentTime());
                 } catch (IOException e) {}
 
-                showResult(a2,2);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
+                    showResult(a2, 2);
+                }
             }
         });
 
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( "35", getCurrentTime());
                 } catch (IOException e) {}
 
-                showResult(a3,3);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32});
+                    showResult(a3, 3);
+                }
             }
         });
 
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( "35", getCurrentTime());
                 } catch (IOException e) {}
 
-                showResult(a4,4);
+                if (checkMinimumTimePassed()) {
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42});
+                    showResult(a4, 4);
+                }
             }
         });
     }
@@ -347,6 +358,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                     }
                 }
             }, 1000);
+            viewHandlerMap.put(tappedView.getId(), handler);
 
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
@@ -460,13 +472,27 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         timeRecordDb.insertData(timeString, event);
     }
 
-    private void showResult(double a, int option){
+    private boolean checkMinimumTimePassed() {
         if (System.currentTimeMillis() - startTime <
                 getResources().getInteger(R.integer.min_time_millis_2Att4Opt)) {
             Toast.makeText(this, getString(R.string.stay_longer), Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
+        return true;
+    }
 
+    private void unmaskAttributes(ViewAnimator[] viewAnimators) {
+        for (ViewAnimator v : viewAnimators) {
+            v.setDisplayedChild(1);
+            // Disable the handler (if one exists for the current view) that sets a 1s cover time.
+            Handler handler = viewHandlerMap.get(v.getId());
+            if (handler != null) {
+                handler.removeCallbacksAndMessages(null);
+            }
+        }
+    }
+
+    private void showResult(double a, int option){
         String outcomes[] = currentTrial.getOutcomes();
         String outcome = outcomes[option-1];
         if ("win".equals(outcome) || "lose".equals(outcome)) {
@@ -478,10 +504,17 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
 
-        Intent intent = new Intent(Question2Att4OpActivity.this, ResultActivity.class);
-        intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
-        startActivity(intent);
-        finish();
+        // Wait for one second during the display of attributes.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Question2Att4OpActivity.this, ResultActivity.class);
+                intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
+                startActivity(intent);
+                finish();
+            }
+        }, 1000);
     }
 
     @Override

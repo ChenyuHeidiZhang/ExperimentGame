@@ -2,7 +2,11 @@
     <string name="app_name">Experiment Game</string>
     <string name="title_activity_question">QuestionActivity</string>
 
-    <string name="intro">You will see a screen with options as shown above. Each rectangle corresponds to one choice you can make. To learn more about the options, tap on the $ sign for the virtual money it may earn you and the dice for the probability that you actually receive this virtual money. You can tap on the symbols as much as you want. When you have decided, tap on the select button.</string>
+    <string name="intro">You will see a screen with options as shown above.
+        Each rectangle corresponds to one choice you can make. To learn more about the options,
+        tap on the $ sign for the virtual money you may win (green) or lose (red).
+        Tap on the dice for the probability of winning (green) or losing (red) this virtual money.
+        You can tap on the symbols as much as you want. When you have decided, tap on the select button.</string>
 
     <string name="play_game">Play Game</string>
     <string name="quit">Quit</string>
