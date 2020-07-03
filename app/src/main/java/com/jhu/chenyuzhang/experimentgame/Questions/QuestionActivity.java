@@ -41,8 +41,6 @@ import java.io.IOException;
 // Vertical display of two options; either 2 or 4 attributes in each option
 // attributes not present are set to be 'gone'
 public class QuestionActivity extends AppCompatActivity {
-    private static final String TAG = "bluetooth";
-
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
     private SharedPreferences demo_prefs;
@@ -68,6 +66,7 @@ public class QuestionActivity extends AppCompatActivity {
     private ViewAnimator viewAnimator12;  // 12: 2nd of first option (bottom left)
     private ViewAnimator viewAnimator21;  // 21: 1st of second option (top right)
     private ViewAnimator viewAnimator22;  // 22: 2nd of second option (bottom right)
+    private Button buttonSelect1, buttonSelect2;
 
     private Choreographer.FrameCallback frameCallbackA1 = null;
     private boolean frameCallbackPendingA1 = false;
@@ -121,8 +120,8 @@ public class QuestionActivity extends AppCompatActivity {
 
         textViewTest = findViewById(R.id.text_view_test);
 
-        Button buttonSelect1 = findViewById(R.id.button_select1);
-        Button buttonSelect2 = findViewById(R.id.button_select2);
+        buttonSelect1 = findViewById(R.id.button_select1);
+        buttonSelect2 = findViewById(R.id.button_select2);
 
         viewAnimator11 = findViewById(R.id.view_animator_11);
         viewAnimator12 = findViewById(R.id.view_animator_12);
@@ -235,6 +234,7 @@ public class QuestionActivity extends AppCompatActivity {
 
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
+                    buttonSelect2.setEnabled(false);
                     showResult(a1, 1);
                 }
             }
@@ -249,6 +249,7 @@ public class QuestionActivity extends AppCompatActivity {
 
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
+                    buttonSelect1.setEnabled(false);
                     showResult(a2, 2);
                 }
             }
@@ -416,6 +417,9 @@ public class QuestionActivity extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
+
+        buttonSelect1.setEnabled(false);
+        buttonSelect2.setEnabled(false);
     }
 
     // If enough time is spent on this trial, show results after one second display of chosen attributes.

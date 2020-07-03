@@ -50,25 +50,14 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
 
     private double amountWon;
 
-    private double ap1;     // amount plus, option 1
-    private double pp1;
-    private double am1;     // amount minus, option 1
-    private double pm1;
-    private double ap2;
-    private double pp2;
-    private double am2;
-    private double pm2;
+    private double ap1, pp1, am1, pm1;     // option 1: amount plus, prob plus, amount minus, prob minus
+    private double ap2, pp2, am2, pm2;
 
     private TimeDbHelper timeRecordDb;
 
-    private ViewAnimator viewAnimator11;
-    private ViewAnimator viewAnimator12;
-    private ViewAnimator viewAnimator13;
-    private ViewAnimator viewAnimator14;
-    private ViewAnimator viewAnimator21;
-    private ViewAnimator viewAnimator22;
-    private ViewAnimator viewAnimator23;
-    private ViewAnimator viewAnimator24;
+    private ViewAnimator viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14;
+    private ViewAnimator viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24;
+    private Button buttonSelect1, buttonSelect2;
 
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
@@ -114,8 +103,8 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         identifiers.put(R.id.view_animator_24, new String[] {"9", "25","O2P2"});
 
 
-        Button buttonSelect1 = findViewById(R.id.button_select1);
-        Button buttonSelect2 = findViewById(R.id.button_select2);
+        buttonSelect1 = findViewById(R.id.button_select1);
+        buttonSelect2 = findViewById(R.id.button_select2);
 
         viewAnimator11 = findViewById(R.id.view_animator_11);
         viewAnimator12 = findViewById(R.id.view_animator_12);
@@ -456,6 +445,9 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
+
+        buttonSelect1.setEnabled(false);
+        buttonSelect2.setEnabled(false);
     }
 
     private void showResult(double ap, double am, int option){
