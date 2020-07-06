@@ -93,27 +93,33 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
+        /*
+        private double ap1, pp1, am1, pm1;  // option 1: amount plus, prob plus, amount minus, prob minus
+        private double ap2, pp2, am2, pm2;
+        private double ap3, pp3, am3, pm3;
+        private double ap4, pp4, am4, pm4;
+         */
 
         // TODO: modify the codes
-        identifiers.put(R.id.view_animator_11, new String[]{"2", "18", "O1A1"});
-        identifiers.put(R.id.view_animator_12, new String[]{"3", "19", "O1P1"});
-        identifiers.put(R.id.view_animator_13, new String[]{"4", "20", "O1A2"});
-        identifiers.put(R.id.view_animator_14, new String[]{"5", "21", "O1P2"});
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
+        identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "A-1"});
+        identifiers.put(R.id.view_animator_14, new String[] {"7", "23", "P-1"});
 
-        identifiers.put(R.id.view_animator_21, new String[]{"6", "22", "O2A1"});
-        identifiers.put(R.id.view_animator_22, new String[]{"7", "23",  "O2P1"});
-        identifiers.put(R.id.view_animator_23, new String[]{"8", "24",  "O2A2"});
-        identifiers.put(R.id.view_animator_24, new String[]{"9", "25", "O2P2"});
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "A-2"});
+        identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "P-2"});
 
-        identifiers.put(R.id.view_animator_31, new String[]{"10", "26", "O3A1"});
-        identifiers.put(R.id.view_animator_32, new String[]{"11", "27", "O3P1"});
-        identifiers.put(R.id.view_animator_33, new String[]{"12", "28", "O3A2"});
-        identifiers.put(R.id.view_animator_34, new String[]{"13", "29", "O3P2"});
+        identifiers.put(R.id.view_animator_31, new String[]{"10", "26", "A+3"});
+        identifiers.put(R.id.view_animator_32, new String[]{"11", "27", "P+3"});
+        identifiers.put(R.id.view_animator_33, new String[]{"12", "28", "A-3"});
+        identifiers.put(R.id.view_animator_34, new String[]{"13", "29", "P-3"});
 
-        identifiers.put(R.id.view_animator_41, new String[]{"14", "30", "O4A1"});
-        identifiers.put(R.id.view_animator_42, new String[]{"15", "31", "O4P1"});
-        identifiers.put(R.id.view_animator_43, new String[]{"16", "32", "O4A2"});
-        identifiers.put(R.id.view_animator_44, new String[]{"17", "33", "O4P2"});
+        identifiers.put(R.id.view_animator_41, new String[]{"14", "30", "A+4"});
+        identifiers.put(R.id.view_animator_42, new String[]{"15", "31", "P+4"});
+        identifiers.put(R.id.view_animator_43, new String[]{"16", "32", "A-4"});
+        identifiers.put(R.id.view_animator_44, new String[]{"17", "33", "P-4"});
 
         buttonSelect1 = findViewById(R.id.button_select1);
         buttonSelect2 = findViewById(R.id.button_select2);
