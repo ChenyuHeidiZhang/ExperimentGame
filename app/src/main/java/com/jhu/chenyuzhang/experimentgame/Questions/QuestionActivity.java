@@ -113,11 +113,30 @@ public class QuestionActivity extends AppCompatActivity {
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
         // TODO: do we want codes to represent location or attribute type? The current structure works with location.
-        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "O1A1"});
-        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "O1P1"});
+        // 1st 2 items in the string are the event codes sent to the arduino
+        // 3rd item is stored in the database along with the timestamp
+        if(a1>0) {
+            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        }else{
+            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
+        }
+        if(p1>0) {
+            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
+        }else{
+            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
+        }
 
-        identifiers.put(R.id.view_animator_21, new String[] {"6", "22", "O2A1"});
-        identifiers.put(R.id.view_animator_22, new String[] {"7", "23", "O2P1"});
+        if(a2>0) {
+            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
+        }else{
+            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
+        }
+        if(p2>0) {
+            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        }else{
+            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
+        }
+
 
         textViewTest = findViewById(R.id.text_view_test);
 
