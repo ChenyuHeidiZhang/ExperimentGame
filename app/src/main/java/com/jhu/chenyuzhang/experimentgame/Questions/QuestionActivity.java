@@ -60,8 +60,6 @@ public class QuestionActivity extends AppCompatActivity {
 
     private TimeDbHelper timeRecordDb;
 
-    private TextView textViewTest;
-
     private ViewAnimator viewAnimator11;  // 11: 1st of first option (top left here)
     private ViewAnimator viewAnimator12;  // 12: 2nd of first option (bottom left)
     private ViewAnimator viewAnimator21;  // 21: 1st of second option (top right)
@@ -135,9 +133,6 @@ public class QuestionActivity extends AppCompatActivity {
         }else{
             identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
         }
-
-
-        textViewTest = findViewById(R.id.text_view_test);
 
         buttonSelect1 = findViewById(R.id.button_select1);
         buttonSelect2 = findViewById(R.id.button_select2);
@@ -277,13 +272,6 @@ public class QuestionActivity extends AppCompatActivity {
 
     // called when each attribute is clicked
     private void attributeOnClick(final ViewAnimator tappedView, ViewAnimator[] otherViews) {
-        //for testing purposes
-        if (textViewTest.getVisibility() == View.VISIBLE) {
-            textViewTest.setVisibility(View.GONE);
-        } else {
-            textViewTest.setVisibility(View.VISIBLE);
-        }
-
         /* on tap, if the attribute view is covered, uncover it for 1s and cover other attributes */
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
