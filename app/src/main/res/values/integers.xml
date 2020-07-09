@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="trial_timeout_millis">60000</integer>
-    <integer name="reward_percentage">10</integer>
+    <integer name="reward_percentage">100</integer>
     <integer name="min_time_millis_2Att2Opt">2000</integer>
     <integer name="min_time_millis_4Att2Opt">4000</integer>
     <integer name="min_time_millis_2Att4Opt">4000</integer>
