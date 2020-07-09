@@ -76,6 +76,8 @@ public class Question4Att2OpActivity extends AppCompatActivity {
     // TODO: the code sent when an attribute view is covered after 1s
     private String identifier_cover = "34";
     private String identifier_coverEarly = "35";
+    private String choice = "36";
+    private String resultID = "37";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,12 +261,12 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         // TODO: modify the codes
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "12", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
-                */
+
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14});
                     showResult(ap1, am1, 1);
@@ -274,12 +276,12 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "13", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
-                */
+
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24});
                     showResult(ap2, am2, 2);
@@ -476,7 +478,11 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
-
+        try {
+            // send identifier and timestamp
+            bluetooth.timeStamper( resultID, getCurrentTime());
+            //bluetooth.sendData(String.format ("%.2f",amountWon));
+        } catch (IOException e) {}
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

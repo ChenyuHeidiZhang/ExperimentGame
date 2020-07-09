@@ -78,6 +78,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     // TODO: the code sent when an attribute view is covered after 1s
     private String identifier_cover = "34";
     private String identifier_coverEarly = "35";
+    private String choice = "36";
+    private String resultID = "37";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,14 +101,14 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
         }
         if(p1>0) {
-            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
+            identifiers.put(R.id.view_animator_21, new String[] {"3", "19", "P+1"});
         }else{
-            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
+            identifiers.put(R.id.view_animator_21, new String[] {"7", "23", "P-1"});
         }
         if(a2>0) {
-            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
+            identifiers.put(R.id.view_animator_12, new String[] {"4", "20", "A+2"});
         }else{
-            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
+            identifiers.put(R.id.view_animator_12, new String[] {"8", "24", "A-2"});
         }
         if(p2>0) {
             identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
@@ -115,25 +117,25 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         }
 
         if(a3>0) {
-            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"2", "18", "A+3"});
         }else{
-            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"6", "22", "A-3"});
         }
         if(p3>0) {
-            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"3", "19", "P+3"});
         }else{
-            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"7", "23", "P-3"});
         }
 
         if(a4>0) {
-            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"4", "20", "A+4"});
         }else{
-            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"8", "24", "A-4"});
         }
         if(p4>0) {
-            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"5", "21", "P+4"});
         }else{
-            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"9", "25", "P-4"});
         }
 
 
@@ -288,7 +290,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "35", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
 
                 if (checkMinimumTimePassed()) {
@@ -302,7 +304,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "35", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
 
                 if (checkMinimumTimePassed()) {
@@ -316,7 +318,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "35", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
 
                 if (checkMinimumTimePassed()) {
@@ -330,7 +332,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "35", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
 
                 if (checkMinimumTimePassed()) {
@@ -530,6 +532,11 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
+        try {
+            // send identifier and timestamp
+            bluetooth.timeStamper( resultID, getCurrentTime());
+            //bluetooth.sendData(String.format ("%.2f",amountWon));
+        } catch (IOException e) {}
 
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();

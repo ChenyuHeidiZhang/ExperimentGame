@@ -80,6 +80,8 @@ public class Question4Activity extends AppCompatActivity {
     // TODO: the code sent when an attribute view is covered after 1s
     private String identifier_cover = "34";
     private String identifier_coverEarly = "35";
+    private String choice = "36";
+    private String resultID = "37";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -369,7 +371,7 @@ public class Question4Activity extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "35", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
 
                 if (checkMinimumTimePassed()) {
@@ -383,7 +385,7 @@ public class Question4Activity extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "35", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
 
                 if (checkMinimumTimePassed()) {
@@ -397,7 +399,7 @@ public class Question4Activity extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "35", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
 
                 if (checkMinimumTimePassed()) {
@@ -411,7 +413,7 @@ public class Question4Activity extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "35", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
 
                 if (checkMinimumTimePassed()) {
@@ -643,6 +645,11 @@ public class Question4Activity extends AppCompatActivity {
 
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
+        try {
+            // send identifier and timestamp
+            bluetooth.timeStamper( resultID, getCurrentTime());
+            //bluetooth.sendData(String.format ("%.2f",amountWon));
+        } catch (IOException e) {}
 
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();

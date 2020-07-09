@@ -79,6 +79,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     // the code sent when an attribute view is covered after 1s
     private String identifier_cover = "34";
     private String identifier_coverEarly = "35";
+    private String choice = "36";
+    private String resultID = "37";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,7 +228,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamperJustID( "35");
+                    bluetooth.timeStamperJustID( choice);
                 } catch (IOException e) {e.printStackTrace();}
 
                 if (checkMinimumTimePassed()) {
@@ -240,7 +242,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             public void onClick(View V) {
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "35", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {e.printStackTrace();}
 
                 if (checkMinimumTimePassed()) {
@@ -431,7 +433,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "resultID", getCurrentTime());
+                    bluetooth.timeStamper( resultID, getCurrentTime());
                     //bluetooth.sendData(String.format ("%.2f",amountWon));
                 } catch (IOException e) {}
 
