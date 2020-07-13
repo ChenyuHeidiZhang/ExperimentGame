@@ -104,7 +104,8 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         private double pm2;
         */
 
-        // TODO: modify the codes
+        // Event codes sent via bluetooth (1st 2 strings are for tap and displayed respectively)
+        // last string is the one inserted into the sqlite database
         identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
         identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "A-1"});
@@ -261,12 +262,10 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         // TODO: modify the codes
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
-
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14});
                     showResult(ap1, am1, 1);
@@ -276,12 +275,10 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
-
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24});
                     showResult(ap2, am2, 2);
@@ -296,20 +293,20 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
 
-            /*
+
             try {
                 // send identifier and timestamp
                 bluetooth.timeStamper( codes[0], getCurrentTime());
             } catch (IOException e) {}
-            */
+
             //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
-            /*
+
             try {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}
-            */
+
             recordEvent(codes[2] + " " + eventClick);
 
             /* automatically re-cover after 1000ms */
@@ -318,12 +315,9 @@ public class Question4Att2OpActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
-                        /*
                         try {
                             bluetooth.timeStamper( identifier_cover, getCurrentTime());
                         } catch (IOException e) {}
-                        */
-
                         tappedView.showNext();
                         recordEvent(codes[2] + " " + eventTimeOut);
                     }
@@ -334,11 +328,9 @@ public class Question4Att2OpActivity extends AppCompatActivity {
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
-
                     try {
                         bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
                     } catch (IOException e) {}
-
                     v.showNext();
                 }
             }
@@ -350,7 +342,6 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
     private void endDemo(){
         demo_prefs.edit().putBoolean(KEY_DO_DEMO, false).apply();    // change shared "prefs" for do_demo to false
-
         // set trialCounter back to 1
         counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, 1).apply();
 
@@ -425,6 +416,18 @@ public class Question4Att2OpActivity extends AppCompatActivity {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
         }
+
+        // Event codes sent via bluetooth (1st 2 strings are for tap and displayed respectively)
+        // last string is the one inserted into the sqlite database
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
+        identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "A-1"});
+        identifiers.put(R.id.view_animator_14, new String[] {"7", "23", "P-1"});
+
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "A-2"});
+        identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "P-2"});
     }
 
     //get current time in milliseconds

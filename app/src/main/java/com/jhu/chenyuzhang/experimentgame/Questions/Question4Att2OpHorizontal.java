@@ -74,7 +74,9 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
     // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
-    // TODO: the code sent when an attribute view is covered after 1s
+    // Event codes for remasking after timeout,
+    // when another attribute is tapped before timeout,
+    // when the choice is made, and the result is presented
     private String identifier_cover = "34";
     private String identifier_coverEarly = "35";
     private String choice = "36";
@@ -92,19 +94,9 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
 
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
-        /*
-        private double ap1;     // amount plus, option 1
-        private double pp1;
-        private double am1;     // amount minus, option 1
-        private double pm1;
 
-        private double ap2;
-        private double pp2;
-        private double am2;
-        private double pm2;
-        */
-
-        // TODO: modify the codes
+        // Event codes sent via bluetooth (1st 2 strings are for tap and displayed respectively)
+        // last string is the one inserted into the sqlite database
         identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
         identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "A-1"});
@@ -114,7 +106,6 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
         identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "A-2"});
         identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "P-2"});
-
 
         buttonSelect1 = findViewById(R.id.button_select1);
         buttonSelect2 = findViewById(R.id.button_select2);
@@ -259,7 +250,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
             }
         });
 
-        // TODO: modify the codes
+        // Display chosen option on button click
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 try {
@@ -294,16 +285,14 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         /* on tap, if the attribute view is covered, uncover it for 1s and cover other attributes */
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
-
+            // send on tap event code
             try {
                 // send identifier and timestamp
                 bluetooth.timeStamperJustID( codes[0]);
             } catch (IOException e) {}
 
-            //armVSyncHandlerA1();
-
             tappedView.showNext();  /* uncover */
-
+            // send event code for attribute displayed
             try {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}
@@ -316,11 +305,9 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
-
-                        try {
+                        try { //event code and time attribute is remasked after time up
                             bluetooth.timeStamper( identifier_cover, getCurrentTime());
                         } catch (IOException e) {}
-
 
                         tappedView.showNext();
                         recordEvent(codes[2] + " " + eventTimeOut);
@@ -332,8 +319,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
-
-                    try {
+                    try { // event code and timestamp if another attribute is tapped before time up
                         bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
                     } catch (IOException e) {}
 
@@ -423,6 +409,18 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
         }
+
+        // Event codes sent via bluetooth (1st 2 strings are for tap and displayed respectively)
+        // last string is the one inserted into the sqlite database
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
+        identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "A-1"});
+        identifiers.put(R.id.view_animator_14, new String[] {"7", "23", "P-1"});
+
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "A-2"});
+        identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "P-2"});
     }
 
     //get current time in milliseconds

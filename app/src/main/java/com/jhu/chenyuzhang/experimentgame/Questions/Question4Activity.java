@@ -590,6 +590,25 @@ public class Question4Activity extends AppCompatActivity {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
         }
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
+        identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "A-1"});
+        identifiers.put(R.id.view_animator_14, new String[] {"7", "23", "P-1"});
+
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "A-2"});
+        identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "P-2"});
+
+        identifiers.put(R.id.view_animator_31, new String[]{"10", "26", "A+3"});
+        identifiers.put(R.id.view_animator_32, new String[]{"11", "27", "P+3"});
+        identifiers.put(R.id.view_animator_33, new String[]{"12", "28", "A-3"});
+        identifiers.put(R.id.view_animator_34, new String[]{"13", "29", "P-3"});
+
+        identifiers.put(R.id.view_animator_41, new String[]{"14", "30", "A+4"});
+        identifiers.put(R.id.view_animator_42, new String[]{"15", "31", "P+4"});
+        identifiers.put(R.id.view_animator_43, new String[]{"16", "32", "A-4"});
+        identifiers.put(R.id.view_animator_44, new String[]{"17", "33", "P-4"});
     }
 
     //get current time in milliseconds

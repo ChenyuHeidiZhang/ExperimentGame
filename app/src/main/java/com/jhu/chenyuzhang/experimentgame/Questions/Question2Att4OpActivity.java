@@ -478,6 +478,50 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
         }
+        // 1st 2 items in the string are the event codes sent to the arduino
+        // 3rd item is stored in the database along with the timestamp
+        if(a1>0) {
+            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        }else{
+            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
+        }
+        if(p1>0) {
+            identifiers.put(R.id.view_animator_21, new String[] {"3", "19", "P+1"});
+        }else{
+            identifiers.put(R.id.view_animator_21, new String[] {"7", "23", "P-1"});
+        }
+        if(a2>0) {
+            identifiers.put(R.id.view_animator_12, new String[] {"4", "20", "A+2"});
+        }else{
+            identifiers.put(R.id.view_animator_12, new String[] {"8", "24", "A-2"});
+        }
+        if(p2>0) {
+            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        }else{
+            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
+        }
+
+        if(a3>0) {
+            identifiers.put(R.id.view_animator_31, new String[] {"2", "18", "A+3"});
+        }else{
+            identifiers.put(R.id.view_animator_31, new String[] {"6", "22", "A-3"});
+        }
+        if(p3>0) {
+            identifiers.put(R.id.view_animator_41, new String[] {"3", "19", "P+3"});
+        }else{
+            identifiers.put(R.id.view_animator_41, new String[] {"7", "23", "P-3"});
+        }
+
+        if(a4>0) {
+            identifiers.put(R.id.view_animator_32, new String[] {"4", "20", "A+4"});
+        }else{
+            identifiers.put(R.id.view_animator_32, new String[] {"8", "24", "A-4"});
+        }
+        if(p4>0) {
+            identifiers.put(R.id.view_animator_42, new String[] {"5", "21", "P+4"});
+        }else{
+            identifiers.put(R.id.view_animator_42, new String[] {"9", "25", "P-4"});
+        }
     }
 
     //get current time in milliseconds
