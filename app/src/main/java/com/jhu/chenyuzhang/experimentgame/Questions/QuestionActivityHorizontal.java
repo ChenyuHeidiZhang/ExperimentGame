@@ -196,6 +196,12 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         } else {
             timeRecordDb.insertData(getCurrentTime(), "startTrial " + trialCounter);
         }
+        // store trial parameters in database
+        ArrayList<String> attributes = currentTrial.getAttributes();
+        timeRecordDb.insertData(getCurrentTime(),attributes.get(0) + " " + attributes.get(1)
+                + ", " + attributes.get(2) + " " + attributes.get(3)
+                + ", " + attributes.get(4) + " " + attributes.get(5)
+                + ", " + attributes.get(6) + " " + attributes.get(7));
 
         bluetooth = new Bluetooth(timeRecordDb);
         try {
