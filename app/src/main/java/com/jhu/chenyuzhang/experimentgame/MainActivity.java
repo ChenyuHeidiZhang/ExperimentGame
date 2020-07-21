@@ -227,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
 
                 ParcelUuid[] uuids = device.getUuids();
                 bluetooth.openBT(uuids);    // call openBT method in bluetooth class
-
                 /*
                 try {
                     bluetooth.openBT(uuids);
@@ -235,7 +234,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
                 }
                 */
-
                 break;
             }
         }

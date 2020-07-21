@@ -74,8 +74,12 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     // identifiers maps the id of a attribute view to the code sent when it is uncovered
     // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
-
-    // TODO: the code sent when an attribute view is covered after 1s
+    /*
+    The codes sent when an attribute view is covered after 1s
+    when another attribute is tapped before 1s
+    when an option is selected
+    when the result is displayed
+    */
     private String identifier_cover = "34";
     private String identifier_coverEarly = "35";
     private String choice = "36";
@@ -94,7 +98,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
-        // TODO: modify the codes
+        // first 2 strings are the event codes sent on tap, display,
+        // 3rd string is inserted into the sqlite database
         if(a1>0) {
             identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         }else{
