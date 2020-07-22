@@ -172,27 +172,26 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 + ", " + attributes.get(14) + " " + attributes.get(15));
 
         bluetooth = new Bluetooth(timeRecordDb);
+        // send trial number + 100 followed by trial parameters followed by 0
         try {
             // send trial number
             bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // TODO: setup this for all layouts
-        /*
-        try {
-            // send trial number
-            bluetooth.timeStamper(Integer.toString(trialCounter +200),getCurrentTime());
-            // send attribute magnitudes
-            bluetooth.timeStamper(Integer.toString(16),String.format ("%.0f",a1*100));
-            bluetooth.timeStamper(Integer.toString(18),String.format ("%.0f",p1));
-            bluetooth.timeStamper(Integer.toString(17),String.format ("%.0f",a2*100));
-            bluetooth.timeStamper(Integer.toString(19),String.format ("%.0f",p2));
 
+            // send attribute magnitudes
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(9))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(11))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(13))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(15))*10.0+50.0)));
+
+            // end the stream with the identifier 0
+            bluetooth.timeStamperJustID(Integer.toString(0));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
 
         viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

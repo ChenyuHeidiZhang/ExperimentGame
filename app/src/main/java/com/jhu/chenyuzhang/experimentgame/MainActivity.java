@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
+                        //TODO: don't let the app procede if bluetooth is not connected
                     }
                 }
             }
