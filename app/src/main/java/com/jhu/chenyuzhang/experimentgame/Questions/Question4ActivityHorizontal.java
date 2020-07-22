@@ -77,7 +77,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
     // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
-    // TODO: the code sent when an attribute view is covered after 1s
+    // The code sent when an attribute view is covered after 1s
     private String identifier_cover = "34";
     private String identifier_coverEarly = "35";
     private String choice = "36";
@@ -102,7 +102,6 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
         private double ap4, pp4, am4, pm4;
          */
 
-        // TODO: modify the codes
         identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
         identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "A-1"});
@@ -397,7 +396,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
             }
         });
 
-        // TODO: modify the codes
+
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 try {

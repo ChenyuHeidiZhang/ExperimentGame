@@ -114,8 +114,10 @@ public class QuestionActivity extends AppCompatActivity {
         buttonSelect1 = findViewById(R.id.button_select1);
         buttonSelect2 = findViewById(R.id.button_select2);
 
-        // 1st 2 items in the string are the event codes sent to the arduino
-        // 3rd item is stored in the database along with the timestamp
+        /*
+         1st 2 items in the string are the event codes sent to the arduino
+         3rd item is stored in the database along with the timestamp
+        */
         if(a1>0) {
             identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         }else{
@@ -389,8 +391,10 @@ public class QuestionActivity extends AppCompatActivity {
             tv.setTextColor(Color.RED);
         }
 
-        // 1st 2 items in the string are the event codes sent to the arduino
-        // 3rd item is stored in the database along with the timestamp
+        /*
+         1st 2 items in the string are the event codes sent to the arduino
+         3rd item is stored in the database along with the timestamp
+        */
         if(a1>0) {
             identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         }else{

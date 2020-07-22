@@ -11,6 +11,9 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 public class Bluetooth {
@@ -121,7 +124,8 @@ public class Bluetooth {
                                         public void run()
                                         {
                                             // put event in SQL LITE TABLE
-                                            timeRecordDb.insertData(data, "received");
+                                            // timeRecordDb.insertData(data, "received");
+                                            timeRecordDb.insertData(getCurrentTime(),data);
                                             // tvReceived.setText(data);
                                         }
                                     });
@@ -160,5 +164,13 @@ public class Bluetooth {
             try {mmSocket.close();} catch (Exception e) {}
             mmSocket = null;
         }
+    }
+
+    //get current time in milliseconds
+    private String getCurrentTime() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
+        String formattedDate= dateFormat.format(date);
+        return formattedDate;
     }
 }

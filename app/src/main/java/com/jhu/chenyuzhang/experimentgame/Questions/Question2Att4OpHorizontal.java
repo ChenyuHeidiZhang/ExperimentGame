@@ -75,7 +75,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
     // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
-    // TODO: the code sent when an attribute view is covered after 1s
+    // the code sent when an attribute view is covered after 1s
     private String identifier_cover = "34";
     private String identifier_coverEarly = "35";
     private String choice = "36";
@@ -105,7 +105,8 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         private double p4;
         */
 
-        // TODO: modify the codes
+        // 1st 2 items in the string are the event codes sent to the arduino
+        // 3rd item is stored in the database along with the timestamp
         if(a1>0) {
             identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         }else{
@@ -128,25 +129,25 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         }
 
         if(a3>0) {
-            identifiers.put(R.id.view_animator_31, new String[] {"2", "18", "A+3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "A+3"});
         }else{
-            identifiers.put(R.id.view_animator_31, new String[] {"6", "22", "A-3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"12", "28", "A-3"});
         }
         if(p3>0) {
-            identifiers.put(R.id.view_animator_41, new String[] {"3", "19", "P+3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"11", "27", "P+3"});
         }else{
-            identifiers.put(R.id.view_animator_41, new String[] {"7", "23", "P-3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"13", "29", "P-3"});
         }
 
         if(a4>0) {
-            identifiers.put(R.id.view_animator_32, new String[] {"4", "20", "A+4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"14", "30", "A+4"});
         }else{
-            identifiers.put(R.id.view_animator_32, new String[] {"8", "24", "A-4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"16", "32", "A-4"});
         }
         if(p4>0) {
-            identifiers.put(R.id.view_animator_42, new String[] {"5", "21", "P+4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "P+4"});
         }else{
-            identifiers.put(R.id.view_animator_42, new String[] {"9", "25", "P-4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"17", "33", "P-4"});
         }
 
 
@@ -313,8 +314,6 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             }
         });
 
-
-        // TODO: modify the codes
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 try {
@@ -531,25 +530,25 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         }
 
         if(a3>0) {
-            identifiers.put(R.id.view_animator_31, new String[] {"2", "18", "A+3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "A+3"});
         }else{
-            identifiers.put(R.id.view_animator_31, new String[] {"6", "22", "A-3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"12", "28", "A-3"});
         }
         if(p3>0) {
-            identifiers.put(R.id.view_animator_41, new String[] {"3", "19", "P+3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"11", "27", "P+3"});
         }else{
-            identifiers.put(R.id.view_animator_41, new String[] {"7", "23", "P-3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"13", "29", "P-3"});
         }
 
         if(a4>0) {
-            identifiers.put(R.id.view_animator_32, new String[] {"4", "20", "A+4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"14", "30", "A+4"});
         }else{
-            identifiers.put(R.id.view_animator_32, new String[] {"8", "24", "A-4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"16", "32", "A-4"});
         }
         if(p4>0) {
-            identifiers.put(R.id.view_animator_42, new String[] {"5", "21", "P+4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "P+4"});
         }else{
-            identifiers.put(R.id.view_animator_42, new String[] {"9", "25", "P-4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"17", "33", "P-4"});
         }
     }
 

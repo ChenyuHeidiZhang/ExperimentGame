@@ -110,33 +110,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
         }
 
-         if(a2>0) {
-             identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
-         }else{
-             identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
-         }
-        if(p2>0) {
-            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
-        }else{
-            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
-        }
-
-        buttonSelect1 = findViewById(R.id.button_select1);
-        buttonSelect2 = findViewById(R.id.button_select2);
-
-        // 1st 2 items in the string are the event codes sent to the arduino
-        // 3rd item is stored in the database along with the timestamp
-        if(a1>0) {
-            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
-        }else{
-            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
-        }
-        if(p1>0) {
-            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
-        }else{
-            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
-        }
-
         if(a2>0) {
             identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
         }else{
@@ -147,6 +120,9 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         }else{
             identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
         }
+
+        buttonSelect1 = findViewById(R.id.button_select1);
+        buttonSelect2 = findViewById(R.id.button_select2);
 
         viewAnimator11 = findViewById(R.id.view_animator_11);
         viewAnimator12 = findViewById(R.id.view_animator_12);

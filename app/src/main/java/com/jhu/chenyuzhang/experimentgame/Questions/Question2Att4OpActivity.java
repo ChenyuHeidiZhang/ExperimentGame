@@ -98,8 +98,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
-        // first 2 strings are the event codes sent on tap, display,
-        // 3rd string is inserted into the sqlite database
+        // 1st 2 items in the string are the event codes sent to the arduino
+        // 3rd item is stored in the database along with the timestamp
         if(a1>0) {
             identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         }else{
@@ -122,25 +122,25 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         }
 
         if(a3>0) {
-            identifiers.put(R.id.view_animator_31, new String[] {"2", "18", "A+3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "A+3"});
         }else{
-            identifiers.put(R.id.view_animator_31, new String[] {"6", "22", "A-3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"12", "28", "A-3"});
         }
         if(p3>0) {
-            identifiers.put(R.id.view_animator_41, new String[] {"3", "19", "P+3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"11", "27", "P+3"});
         }else{
-            identifiers.put(R.id.view_animator_41, new String[] {"7", "23", "P-3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"13", "29", "P-3"});
         }
 
         if(a4>0) {
-            identifiers.put(R.id.view_animator_32, new String[] {"4", "20", "A+4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"14", "30", "A+4"});
         }else{
-            identifiers.put(R.id.view_animator_32, new String[] {"8", "24", "A-4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"16", "32", "A-4"});
         }
         if(p4>0) {
-            identifiers.put(R.id.view_animator_42, new String[] {"5", "21", "P+4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "P+4"});
         }else{
-            identifiers.put(R.id.view_animator_42, new String[] {"9", "25", "P-4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"17", "33", "P-4"});
         }
 
 
@@ -234,7 +234,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(11))*10.0+50.0)));
             bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(13))*10.0+50.0)));
             bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(15))*10.0+50.0)));
-            
+
             // end the stream with the identifier 0
             bluetooth.timeStamperJustID(Integer.toString(0));
 
@@ -308,7 +308,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: modify the codes
+
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 try {
@@ -525,25 +525,25 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         }
 
         if(a3>0) {
-            identifiers.put(R.id.view_animator_31, new String[] {"2", "18", "A+3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "A+3"});
         }else{
-            identifiers.put(R.id.view_animator_31, new String[] {"6", "22", "A-3"});
+            identifiers.put(R.id.view_animator_31, new String[] {"12", "28", "A-3"});
         }
         if(p3>0) {
-            identifiers.put(R.id.view_animator_41, new String[] {"3", "19", "P+3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"11", "27", "P+3"});
         }else{
-            identifiers.put(R.id.view_animator_41, new String[] {"7", "23", "P-3"});
+            identifiers.put(R.id.view_animator_41, new String[] {"13", "29", "P-3"});
         }
 
         if(a4>0) {
-            identifiers.put(R.id.view_animator_32, new String[] {"4", "20", "A+4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"14", "30", "A+4"});
         }else{
-            identifiers.put(R.id.view_animator_32, new String[] {"8", "24", "A-4"});
+            identifiers.put(R.id.view_animator_32, new String[] {"16", "32", "A-4"});
         }
         if(p4>0) {
-            identifiers.put(R.id.view_animator_42, new String[] {"5", "21", "P+4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "P+4"});
         }else{
-            identifiers.put(R.id.view_animator_42, new String[] {"9", "25", "P-4"});
+            identifiers.put(R.id.view_animator_42, new String[] {"17", "33", "P-4"});
         }
     }
 
