@@ -306,7 +306,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}*/
 
-            recordEvent(codes[2] + " " + eventClick);
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();
@@ -319,7 +319,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                         } catch (IOException e) {}*/
 
                         tappedView.showNext();
-                        recordEvent(codes[2] + " " + eventTimeOut);
+                        recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                     }
                 }
             }, 1000);
@@ -374,17 +374,17 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator23, attributes.get(12), attributes.get(13));
         setAttributesForOneVA(viewAnimator24, attributes.get(14), attributes.get(15));
 
-        // Event codes sent via bluetooth (1st 2 strings are for tap and displayed respectively)
-        // last string is the one inserted into the sqlite database
-        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", attributes.get(0)});
-        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", attributes.get(2)});
-        identifiers.put(R.id.view_animator_13, new String[] {"6", "22", attributes.get(4)});
-        identifiers.put(R.id.view_animator_14, new String[] {"7", "23", attributes.get(6)});
+        // First two are event codes sent via bluetooth (1st 2nd strings are for tap and displayed respectively).
+        // 3rd (location) and last (attribute type) strings are the ones inserted into the SQLite database.
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "11", attributes.get(0)});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "12", attributes.get(2)});
+        identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "13", attributes.get(4)});
+        identifiers.put(R.id.view_animator_14, new String[] {"7", "23", "14", attributes.get(6)});
 
-        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", attributes.get(8)});
-        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", attributes.get(10)});
-        identifiers.put(R.id.view_animator_23, new String[] {"8", "24", attributes.get(12)});
-        identifiers.put(R.id.view_animator_24, new String[] {"9", "25", attributes.get(14)});
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(8)});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(10)});
+        identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "23", attributes.get(12)});
+        identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "24", attributes.get(14)});
     }
 
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
