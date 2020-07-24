@@ -95,32 +95,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
-        /*
-         1st 2 items in the string are the event codes sent to the arduino
-         3rd item is stored in the database along with the timestamp
-        */
-        if(a1>0) {
-            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
-        }else{
-            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
-        }
-        if(p1>0) {
-            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
-        }else{
-            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
-        }
-
-        if(a2>0) {
-            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
-        }else{
-            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
-        }
-        if(p2>0) {
-            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
-        }else{
-            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
-        }
-
         buttonSelect1 = findViewById(R.id.button_select1);
         buttonSelect2 = findViewById(R.id.button_select2);
 
@@ -161,27 +135,26 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             }
         }.start();
 
-
         timeRecordDb = new TimeDbHelper(this);
         trialInfoDb = new TrialDbHelper(this);
 
         setupTrial();
 
         if (isDemo) {
-            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial " + trialCounter);
+            recordEvent("startTrainingTrial " + trialCounter);
         } else {
-            timeRecordDb.insertData(getCurrentTime(), "startTrial " + trialCounter);
+            recordEvent("startTrial " + trialCounter);
         }
         // store trial parameters in database
         ArrayList<String> attributes = currentTrial.getAttributes();
-        timeRecordDb.insertData(getCurrentTime(),attributes.get(0) + " " + attributes.get(1)
+        recordEvent(attributes.get(0) + " " + attributes.get(1)
                 + ", " + attributes.get(2) + " " + attributes.get(3)
                 + ", " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + attributes.get(6) + " " + attributes.get(7));
 
         bluetooth = new Bluetooth(timeRecordDb);
         // send trial number + 100 followed by trial parameters followed by 0
-        try {
+        /*try {
             // send trial number
             bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
             // send attribute magnitudes
@@ -194,7 +167,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             bluetooth.timeStamperJustID(Integer.toString(0));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -227,10 +200,10 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                try {
+                /*try {
                     // send identifier and timestamp
                     bluetooth.timeStamperJustID( choice);
-                } catch (IOException e) {e.printStackTrace();}
+                } catch (IOException e) {e.printStackTrace();}*/
 
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
@@ -241,10 +214,10 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                try {
+                /*try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( choice, getCurrentTime());
-                } catch (IOException e) {e.printStackTrace();}
+                } catch (IOException e) {e.printStackTrace();}*/
 
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
@@ -260,10 +233,10 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId());
 
-            try {
+            /*try {
                 // send identifier and timestamp
                 bluetooth.timeStamperJustID( codes[0]);
-            } catch (IOException e) {}
+            } catch (IOException e) {}*/
 
             //armVSyncHandlerA1();
 
@@ -282,9 +255,9 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
 
-                        try {
+                        /*try {
                             bluetooth.timeStamper( identifier_cover, getCurrentTime());
-                        } catch (IOException e) {}
+                        } catch (IOException e) {}*/
 
 
                         tappedView.showNext();
@@ -298,9 +271,9 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
 
-                    try {
+                    /*try {
                         bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
-                    } catch (IOException e) {}
+                    } catch (IOException e) {}*/
 
                     v.showNext();
                 }
@@ -339,6 +312,30 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator12, attributes.get(2), attributes.get(3));
         setAttributesForOneVA(viewAnimator21, attributes.get(4), attributes.get(5));
         setAttributesForOneVA(viewAnimator22, attributes.get(6), attributes.get(7));
+
+        // 1st 2 items in the string are the event codes sent to the arduino
+        // 3rd item is stored in the database along with the timestamp
+        if(a1>0) {
+            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        }else{
+            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
+        }
+        if(p1>0) {
+            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
+        }else{
+            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
+        }
+
+        if(a2>0) {
+            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
+        }else{
+            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
+        }
+        if(p2>0) {
+            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        }else{
+            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
+        }
     }
 
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
@@ -371,30 +368,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         } else if (attType.substring(0, 2).equals("P-")) {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
-        }
-
-        // 1st 2 items in the string are the event codes sent to the arduino
-        // 3rd item is stored in the database along with the timestamp
-        if(a1>0) {
-            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
-        }else{
-            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
-        }
-        if(p1>0) {
-            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
-        }else{
-            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
-        }
-
-        if(a2>0) {
-            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
-        }else{
-            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
-        }
-        if(p2>0) {
-            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
-        }else{
-            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
         }
     }
 
@@ -456,11 +429,11 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 Intent intent = new Intent(QuestionActivityHorizontal.this, ResultActivity.class);
                 intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
 
-                try {
+                /*try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( resultID, getCurrentTime());
                     //bluetooth.sendData(String.format ("%.2f",amountWon));
-                } catch (IOException e) {}
+                } catch (IOException e) {}*/
 
                 startActivity(intent);
                 finish();

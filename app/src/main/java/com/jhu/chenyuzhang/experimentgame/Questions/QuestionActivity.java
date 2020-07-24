@@ -66,17 +66,6 @@ public class QuestionActivity extends AppCompatActivity {
     private ViewAnimator viewAnimator22;  // 22: 2nd of second option (bottom right)
     private Button buttonSelect1, buttonSelect2;
 
-    private Choreographer.FrameCallback frameCallbackA1 = null;
-    private boolean frameCallbackPendingA1 = false;
-    /*
-    private Choreographer.FrameCallback frameCallbackP1 = null;
-    private boolean frameCallbackPendingP1 = false;
-    private Choreographer.FrameCallback frameCallbackA2 = null;
-    private boolean frameCallbackPendingA2 = false;
-    private Choreographer.FrameCallback frameCallbackP2 = null;
-    private boolean frameCallbackPendingP2 = false;
-    */
-
     private String eventClick = "Clicked, Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
@@ -113,32 +102,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         buttonSelect1 = findViewById(R.id.button_select1);
         buttonSelect2 = findViewById(R.id.button_select2);
-
-        /*
-         1st 2 items in the string are the event codes sent to the arduino
-         3rd item is stored in the database along with the timestamp
-        */
-        if(a1>0) {
-            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
-        }else{
-            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
-        }
-        if(p1>0) {
-            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
-        }else{
-            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
-        }
-
-        if(a2>0) {
-            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
-        }else{
-            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
-        }
-        if(p2>0) {
-            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
-        }else{
-            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
-        }
 
         viewAnimator11 = findViewById(R.id.view_animator_11);
         viewAnimator12 = findViewById(R.id.view_animator_12);
@@ -183,19 +146,20 @@ public class QuestionActivity extends AppCompatActivity {
         setupTrial();
 
         if (isDemo) {
-            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial " + trialCounter);
+            recordEvent("startTrainingTrial " + trialCounter);
         } else {
-            timeRecordDb.insertData(getCurrentTime(), "startTrial " + trialCounter);
+            recordEvent("startTrial " + trialCounter);
         }
         // store trial parameters in database
         ArrayList<String> attributes = currentTrial.getAttributes();
-        timeRecordDb.insertData(getCurrentTime(),attributes.get(0) + " " + attributes.get(1)
+        recordEvent(attributes.get(0) + " " + attributes.get(1)
                 + ", " + attributes.get(2) + " " + attributes.get(3)
                 + ", " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + attributes.get(6) + " " + attributes.get(7));
 
         bluetooth = new Bluetooth(timeRecordDb);
         // send trial number + 100 followed by trial parameters followed by 0
+        /*
         try {
             // send trial number
             bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
@@ -211,6 +175,7 @@ public class QuestionActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+         */
 
         viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -243,10 +208,12 @@ public class QuestionActivity extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                /*
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
+                */
 
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
@@ -258,10 +225,12 @@ public class QuestionActivity extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                /*
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
+                */
 
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
@@ -278,18 +247,18 @@ public class QuestionActivity extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
 
-            try {
+            /*try {
                 // send identifier and timestamp
                 bluetooth.timeStamperJustID( codes[0]);
-            } catch (IOException e) {}
+            } catch (IOException e) {}*/
 
             //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
 
-            try {
+            /*try {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
-            } catch (IOException e) {}
+            } catch (IOException e) {}*/
 
             recordEvent(codes[2] + " " + eventClick);
 
@@ -300,9 +269,9 @@ public class QuestionActivity extends AppCompatActivity {
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
 
-                        try {
+                        /*try {
                             bluetooth.timeStamper( identifier_cover, getCurrentTime());
-                        } catch (IOException e) {}
+                        } catch (IOException e) {}*/
 
 
                         tappedView.showNext();
@@ -316,9 +285,9 @@ public class QuestionActivity extends AppCompatActivity {
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
 
-                    try {
+                    /*try {
                         bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
-                    } catch (IOException e) {}
+                    } catch (IOException e) {}*/
 
                     v.showNext();
                 }
@@ -357,6 +326,32 @@ public class QuestionActivity extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator12, attributes.get(2), attributes.get(3));
         setAttributesForOneVA(viewAnimator21, attributes.get(4), attributes.get(5));
         setAttributesForOneVA(viewAnimator22, attributes.get(6), attributes.get(7));
+
+        /*
+         1st 2 items in the string are the event codes sent to the arduino
+         3rd item is stored in the database along with the timestamp
+        */
+        if(a1>0) {
+            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        }else{
+            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
+        }
+        if(p1>0) {
+            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
+        }else{
+            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
+        }
+
+        if(a2>0) {
+            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
+        }else{
+            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
+        }
+        if(p2>0) {
+            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        }else{
+            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
+        }
     }
 
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
@@ -389,32 +384,6 @@ public class QuestionActivity extends AppCompatActivity {
         } else if (attType.substring(0, 2).equals("P-")) {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
-        }
-
-        /*
-         1st 2 items in the string are the event codes sent to the arduino
-         3rd item is stored in the database along with the timestamp
-        */
-        if(a1>0) {
-            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
-        }else{
-            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
-        }
-        if(p1>0) {
-            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
-        }else{
-            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
-        }
-
-        if(a2>0) {
-            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
-        }else{
-            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
-        }
-        if(p2>0) {
-            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
-        }else{
-            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
         }
     }
 
@@ -469,11 +438,11 @@ public class QuestionActivity extends AppCompatActivity {
 
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
-        try {
+        /*try {
             // send identifier and timestamp
             bluetooth.timeStamper( resultID, getCurrentTime());
             //bluetooth.sendData(String.format ("%.2f",amountWon));
-        } catch (IOException e) {}
+        } catch (IOException e) {}*/
 
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();

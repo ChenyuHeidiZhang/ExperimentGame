@@ -1,4 +1,5 @@
 .gradle
+/.idea/jarRepositories.xml
 /.idea/workspace.xml
 /.idea/libraries
 /.idea/caches
