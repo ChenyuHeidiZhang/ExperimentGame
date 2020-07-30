@@ -182,6 +182,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
         bluetooth = new Bluetooth(timeRecordDb);
         // send trial number + 100 followed by trial parameters followed by 0
+        /* Bluetooth
         try {
             // send trial number
             bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
@@ -201,6 +202,8 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+         */
 
         viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -271,10 +274,13 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                /* Bluetooth
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
+
+                 */
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14});
                     showResult(ap1, am1, 1);
@@ -284,10 +290,13 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                /* Bluetooth
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
+
+                 */
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24});
                     showResult(ap2, am2, 2);
@@ -302,19 +311,23 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
 
-
+            /* Bluetooth
             try {
                 // send identifier and timestamp
                 bluetooth.timeStamper( codes[0], getCurrentTime());
             } catch (IOException e) {}
 
+             */
+
             //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
-
+            /* Bluetooth
             try {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}
+
+             */
 
             recordEvent(codes[2] + " " + eventClick);
 
@@ -324,9 +337,12 @@ public class Question4Att2OpActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
+                        /* Bluetooth
                         try {
                             bluetooth.timeStamper( identifier_cover, getCurrentTime());
                         } catch (IOException e) {}
+
+                         */
                         tappedView.showNext();
                         recordEvent(codes[2] + " " + eventTimeOut);
                     }
@@ -337,9 +353,12 @@ public class Question4Att2OpActivity extends AppCompatActivity {
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
+                    /* Bluetooth
                     try {
                         bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
                     } catch (IOException e) {}
+
+                     */
                     v.showNext();
                 }
             }
@@ -504,11 +523,14 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
+        /* Bluetooth
         try {
             // send identifier and timestamp
             bluetooth.timeStamper( resultID, getCurrentTime());
             //bluetooth.sendData(String.format ("%.2f",amountWon));
         } catch (IOException e) {}
+
+         */
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

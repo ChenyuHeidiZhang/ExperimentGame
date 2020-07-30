@@ -483,11 +483,14 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
 
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
+        /* Bluetooth
         try {
             // send identifier and timestamp
             bluetooth.timeStamper( resultID, getCurrentTime());
             //bluetooth.sendData(String.format ("%.2f",amountWon));
         } catch (IOException e) {}
+
+         */
 
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();
