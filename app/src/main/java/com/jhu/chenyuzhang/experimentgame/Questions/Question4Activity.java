@@ -551,6 +551,28 @@ public class Question4Activity extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator42, attributes.get(26), attributes.get(27));
         setAttributesForOneVA(viewAnimator43, attributes.get(28), attributes.get(29));
         setAttributesForOneVA(viewAnimator44, attributes.get(30), attributes.get(31));
+
+        // First two are event codes sent via bluetooth (1st 2nd strings are for tap and displayed respectively).
+        // 3rd (location) and last (attribute type) strings are the ones inserted into the SQLite database.
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "11", attributes.get(0)});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "12", attributes.get(2)});
+        identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "13", attributes.get(4)});
+        identifiers.put(R.id.view_animator_14, new String[] {"7", "23", "14", attributes.get(6)});
+
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(8)});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(10)});
+        identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "23", attributes.get(12)});
+        identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "24", attributes.get(14)});
+
+        identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "31", attributes.get(16)});
+        identifiers.put(R.id.view_animator_32, new String[] {"11", "27", "32", attributes.get(18)});
+        identifiers.put(R.id.view_animator_33, new String[] {"12", "28", "33", attributes.get(20)});
+        identifiers.put(R.id.view_animator_34, new String[] {"13", "29", "34", attributes.get(22)});
+
+        identifiers.put(R.id.view_animator_41, new String[] {"14", "30", "41", attributes.get(24)});
+        identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "42", attributes.get(26)});
+        identifiers.put(R.id.view_animator_43, new String[] {"16", "32", "43", attributes.get(28)});
+        identifiers.put(R.id.view_animator_44, new String[] {"17", "33", "44", attributes.get(30)});
     }
 
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
@@ -620,6 +642,7 @@ public class Question4Activity extends AppCompatActivity {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
         }
+        /* This is the old way of doing
         identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
         identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "A-1"});
@@ -639,6 +662,8 @@ public class Question4Activity extends AppCompatActivity {
         identifiers.put(R.id.view_animator_42, new String[]{"15", "31", "P+4"});
         identifiers.put(R.id.view_animator_43, new String[]{"16", "32", "A-4"});
         identifiers.put(R.id.view_animator_44, new String[]{"17", "33", "P-4"});
+
+         */
     }
 
     //get current time in milliseconds

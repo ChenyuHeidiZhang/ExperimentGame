@@ -461,6 +461,19 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator32, attributes.get(10), attributes.get(11));
         setAttributesForOneVA(viewAnimator41, attributes.get(12), attributes.get(13));
         setAttributesForOneVA(viewAnimator42, attributes.get(14), attributes.get(15));
+
+        // First two are event codes sent via bluetooth (1st 2nd strings are for tap and displayed respectively).
+        // 3rd (location) and last (attribute type) strings are the ones inserted into the SQLite database.
+
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "11", attributes.get(0)});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "12", attributes.get(2)});
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(4)});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(6)});
+
+        identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "31", attributes.get(8)});
+        identifiers.put(R.id.view_animator_32, new String[] {"11", "27", "32", attributes.get(10)});
+        identifiers.put(R.id.view_animator_41, new String[] {"14", "30", "41", attributes.get(12)});
+        identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "42", attributes.get(14)});
     }
 
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
@@ -506,6 +519,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
         }
+        /* The old way of putting datat into the data base
         // 1st 2 items in the string are the event codes sent to the arduino
         // 3rd item is stored in the database along with the timestamp
         if(a1>0) {
@@ -550,6 +564,8 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         }else{
             identifiers.put(R.id.view_animator_42, new String[] {"17", "33", "P-4"});
         }
+
+         */
     }
 
     //get current time in milliseconds

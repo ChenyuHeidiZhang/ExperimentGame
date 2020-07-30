@@ -380,6 +380,18 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator22, attributes.get(10), attributes.get(11));
         setAttributesForOneVA(viewAnimator23, attributes.get(12), attributes.get(13));
         setAttributesForOneVA(viewAnimator24, attributes.get(14), attributes.get(15));
+
+        // First two are event codes sent via bluetooth (1st 2nd strings are for tap and displayed respectively).
+        // 3rd (location) and last (attribute type) strings are the ones inserted into the SQLite database.
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "11", attributes.get(0)});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "12", attributes.get(2)});
+        identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "13", attributes.get(4)});
+        identifiers.put(R.id.view_animator_14, new String[] {"7", "23", "14", attributes.get(6)});
+
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(8)});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(10)});
+        identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "23", attributes.get(12)});
+        identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "24", attributes.get(14)});
     }
 
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
@@ -425,7 +437,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
         }
-
+        /* The old way of saving data into the data base
         // Event codes sent via bluetooth (1st 2 strings are for tap and displayed respectively)
         // last string is the one inserted into the sqlite database
         identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
@@ -437,6 +449,8 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
         identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "A-2"});
         identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "P-2"});
+
+         */
     }
 
     //get current time in milliseconds

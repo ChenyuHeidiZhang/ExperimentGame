@@ -313,8 +313,17 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator21, attributes.get(4), attributes.get(5));
         setAttributesForOneVA(viewAnimator22, attributes.get(6), attributes.get(7));
 
+        // First two are event codes sent via bluetooth (1st 2nd strings are for tap and displayed respectively).
+        // 3rd (location) and last (attribute type) strings are the ones inserted into the SQLite database.
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "11", attributes.get(0)});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "12", attributes.get(2)});
+
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(4)});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(6)});
+
         // 1st 2 items in the string are the event codes sent to the arduino
         // 3rd item is stored in the database along with the timestamp
+        /*
         if(a1>0) {
             identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
         }else{
@@ -336,6 +345,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         }else{
             identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
         }
+
+         */
     }
 
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
