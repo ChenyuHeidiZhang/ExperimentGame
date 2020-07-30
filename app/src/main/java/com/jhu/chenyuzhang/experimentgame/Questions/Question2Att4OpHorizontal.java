@@ -202,13 +202,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         setupTrial();
 
         if (isDemo) {
-            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial " + trialCounter);
+            recordEvent("startTrainingTrial " + trialCounter);
         } else {
-            timeRecordDb.insertData(getCurrentTime(), "startTrial " + trialCounter);
+            recordEvent("startTrial " + trialCounter);
         }
         // store trial parameters in database
         ArrayList<String> attributes = currentTrial.getAttributes();
-        timeRecordDb.insertData(getCurrentTime(),attributes.get(0) + " " + attributes.get(1)
+        recordEvent(attributes.get(0) + " " + attributes.get(1)
                 + ", " + attributes.get(2) + " " + attributes.get(3)
                 + ", " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + attributes.get(6) + " " + attributes.get(7)
