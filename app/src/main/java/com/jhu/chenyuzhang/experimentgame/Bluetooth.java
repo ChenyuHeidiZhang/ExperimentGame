@@ -3,10 +3,15 @@ package com.jhu.chenyuzhang.experimentgame;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.ParcelUuid;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.PopupWindow;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,13 +21,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
-public class Bluetooth {
+public class Bluetooth extends AppCompatActivity {
     private static final String TAG = "Bluetooth";
     private static BluetoothSocket mmSocket;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothDevice mmDevice;
     public static OutputStream mmOutputStream;
     public static InputStream mmInputStream;
+    public String handShakeMessage;
 
     private static Thread workerThread;
     public static byte[] readBuffer;
@@ -53,6 +59,7 @@ public class Bluetooth {
         try {
             sendData(identity);
             sendData(tstmp);
+            handShakeMessage = tstmp + " " + identity;
             Log.d(TAG, "timestamper sent");
 
         } catch (IOException e) {
@@ -117,6 +124,9 @@ public class Bluetooth {
                                     byte[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
+                                    if (!data.contains(handShakeMessage)) {
+                                        reconnectToBt(getApplicationContext());
+                                    }
                                     readBufferPosition = 0;
 
                                     handler.post(new Runnable()
@@ -147,6 +157,18 @@ public class Bluetooth {
         workerThread.start();
     }
 
+    /**
+     * First pop up window to inform that the bluetooth is not working
+     * Then try to reconnect to bluetooth
+     */
+    public void reconnectToBt(Context context) {
+        PopupWindow popupWindow = new PopupWindow(context);
+        popupWindow.setContentView(findViewById(R.id.Popup));
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        beginListenForData();
+    }
     /**
      * Reset input and output streams and make sure socket is closed.
      * This method will be used when app is quit to ensure that the connection is properly closed during a shutdown.
