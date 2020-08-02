@@ -2,6 +2,8 @@ package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -40,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -60,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
             buttonSignIn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+
                     name = editTextName.getText().toString();
                     // Check that if the patient id contains special characters, then it is invalid.
                     Pattern pattern = Pattern.compile("[^A-Za-z0-9_]");

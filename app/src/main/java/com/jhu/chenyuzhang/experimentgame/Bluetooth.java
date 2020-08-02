@@ -4,14 +4,20 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.ParcelUuid;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
-public class Bluetooth extends AppCompatActivity {
+public class Bluetooth {
     private static final String TAG = "Bluetooth";
     private static BluetoothSocket mmSocket;
     BluetoothAdapter mBluetoothAdapter;
@@ -36,8 +42,10 @@ public class Bluetooth extends AppCompatActivity {
     public static volatile boolean stopWorker;
 
     private TimeDbHelper timeRecordDb;
+    private Context context;
 
-    public Bluetooth(TimeDbHelper db) {
+    public Bluetooth(Context context, TimeDbHelper db) {
+        this.context = context;
         this.timeRecordDb = db;
     }
 
@@ -125,7 +133,7 @@ public class Bluetooth extends AppCompatActivity {
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     if (!data.contains(handShakeMessage)) {
-                                        reconnectToBt(getApplicationContext());
+                                        reconnectToBt();
                                     }
                                     readBufferPosition = 0;
 
@@ -161,12 +169,23 @@ public class Bluetooth extends AppCompatActivity {
      * First pop up window to inform that the bluetooth is not working
      * Then try to reconnect to bluetooth
      */
-    public void reconnectToBt(Context context) {
-        PopupWindow popupWindow = new PopupWindow(context);
-        popupWindow.setContentView(findViewById(R.id.Popup));
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    public void reconnectToBt() {
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.popup, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setView(promptsView);
+        alertDialogBuilder
+                .setCancelable(true)
+                .setNegativeButton("Retry", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
         beginListenForData();
     }
     /**
