@@ -3,6 +3,7 @@ package com.jhu.chenyuzhang.experimentgame.Questions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -211,7 +212,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 + ", " + attributes.get(12) + " " + attributes.get(13)
                 + ", " + attributes.get(14) + " " + attributes.get(15));
         
-        bluetooth = new Bluetooth(timeRecordDb);
+        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         /*
         try {
             // send trial number

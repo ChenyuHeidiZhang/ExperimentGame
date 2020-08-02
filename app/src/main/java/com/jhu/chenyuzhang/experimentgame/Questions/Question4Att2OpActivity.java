@@ -180,7 +180,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
                 + ", " + attributes.get(12) + " " + attributes.get(13)
                 + ", " + attributes.get(14) + " " + attributes.get(15));
 
-        bluetooth = new Bluetooth(timeRecordDb);
+        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         // send trial number + 100 followed by trial parameters followed by 0
         /* Bluetooth
         try {

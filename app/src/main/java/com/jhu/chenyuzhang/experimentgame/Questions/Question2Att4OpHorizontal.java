@@ -217,7 +217,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 + ", " + attributes.get(12) + " " + attributes.get(13)
                 + ", " + attributes.get(14) + " " + attributes.get(15));
 
-        bluetooth = new Bluetooth(timeRecordDb);
+        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         /*
         try {
             // send trial number

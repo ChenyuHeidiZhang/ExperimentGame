@@ -152,7 +152,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 + ", " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + attributes.get(6) + " " + attributes.get(7));
 
-        bluetooth = new Bluetooth(timeRecordDb);
+        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         // send trial number + 100 followed by trial parameters followed by 0
         /*try {
             // send trial number
