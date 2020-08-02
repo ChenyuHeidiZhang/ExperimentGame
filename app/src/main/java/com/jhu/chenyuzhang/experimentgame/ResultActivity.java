@@ -101,11 +101,13 @@ public class ResultActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                /*
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( "resultID", getCurrentTime());
                     //bluetooth.sendData(String.format ("%.2f",amountWon));
                 } catch (IOException e) {}
+                 */
 
                 buttonNextTrial.setVisibility(View.VISIBLE);
                 displayResult();

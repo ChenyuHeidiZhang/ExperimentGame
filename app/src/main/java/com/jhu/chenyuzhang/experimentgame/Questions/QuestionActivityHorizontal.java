@@ -241,10 +241,12 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
-
+            /*
             try {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}
+
+             */
 
             recordEvent(codes[2] + " " + eventClick);
 
