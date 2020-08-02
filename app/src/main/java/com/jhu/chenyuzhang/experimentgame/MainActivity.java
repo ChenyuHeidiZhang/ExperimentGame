@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
@@ -21,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -122,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
                         findBT(itemSelected);
                         Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
-                        Toast toast = Toast.makeText(context, "Bluetooth not connected", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
+                        //TODO: don't let the app procede if bluetooth is not connected
                     }
                 }
             }
@@ -228,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
 
                 ParcelUuid[] uuids = device.getUuids();
                 bluetooth.openBT(uuids);    // call openBT method in bluetooth class
-
                 /*
                 try {
                     bluetooth.openBT(uuids);
@@ -236,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
                 }
                 */
-
                 break;
             }
         }

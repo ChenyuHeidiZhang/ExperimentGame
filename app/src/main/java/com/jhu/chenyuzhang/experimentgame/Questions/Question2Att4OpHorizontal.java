@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
+import java.io.IOException;
 
 public class Question2Att4OpHorizontal extends AppCompatActivity {
     private boolean isDemo;
@@ -70,12 +71,16 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
     Bluetooth bluetooth;
 
-    // identifers maps the id of a attribute view to the code sent when it is uncovered
+    // identifiers maps the id of a attribute view to the code sent when it is uncovered
     // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
-    // TODO: the code sent when an attribute view is covered after 1s
-    private String identifier_cover = "16";
+    // the code sent when an attribute view is covered after 1s
+    private String identifier_cover = "34";
+    private String identifier_coverEarly = "35";
+    private String choice = "36";
+    private String resultID = "37";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,15 +94,62 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
-        // TODO: modify the codes
-        identifiers.put(R.id.view_animator_11, new String[] {"3", "7", "11"});
-        identifiers.put(R.id.view_animator_12, new String[] {"4", "8", "12"});
-        identifiers.put(R.id.view_animator_21, new String[] {"5", "9", "21"});
-        identifiers.put(R.id.view_animator_22, new String[] {"6", "10", "22"});
-        identifiers.put(R.id.view_animator_31, new String[] {"3", "7", "31"});
-        identifiers.put(R.id.view_animator_32, new String[] {"4", "8", "32"});
-        identifiers.put(R.id.view_animator_41, new String[] {"5", "9", "41"});
-        identifiers.put(R.id.view_animator_42, new String[] {"6", "10", "42"});
+        /*
+        private double a1;
+        private double p1;
+        private double a2;
+        private double p2;
+        private double a3;
+        private double p3;
+        private double a4;
+        private double p4;
+        */
+
+        // 1st 2 items in the string are the event codes sent to the arduino
+        // 3rd item is stored in the database along with the timestamp
+        if(a1>0) {
+            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        }else{
+            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
+        }
+        if(p1>0) {
+            identifiers.put(R.id.view_animator_21, new String[] {"3", "19", "P+1"});
+        }else{
+            identifiers.put(R.id.view_animator_21, new String[] {"7", "23", "P-1"});
+        }
+        if(a2>0) {
+            identifiers.put(R.id.view_animator_12, new String[] {"4", "20", "A+2"});
+        }else{
+            identifiers.put(R.id.view_animator_12, new String[] {"8", "24", "A-2"});
+        }
+        if(p2>0) {
+            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        }else{
+            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
+        }
+
+        if(a3>0) {
+            identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "A+3"});
+        }else{
+            identifiers.put(R.id.view_animator_31, new String[] {"12", "28", "A-3"});
+        }
+        if(p3>0) {
+            identifiers.put(R.id.view_animator_41, new String[] {"11", "27", "P+3"});
+        }else{
+            identifiers.put(R.id.view_animator_41, new String[] {"13", "29", "P-3"});
+        }
+
+        if(a4>0) {
+            identifiers.put(R.id.view_animator_32, new String[] {"14", "30", "A+4"});
+        }else{
+            identifiers.put(R.id.view_animator_32, new String[] {"16", "32", "A-4"});
+        }
+        if(p4>0) {
+            identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "P+4"});
+        }else{
+            identifiers.put(R.id.view_animator_42, new String[] {"17", "33", "P-4"});
+        }
+
 
         buttonSelect1 = findViewById(R.id.button_select1);
         buttonSelect2 = findViewById(R.id.button_select2);
@@ -150,29 +202,53 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         setupTrial();
 
         if (isDemo) {
-            timeRecordDb.insertData(getCurrentTime(), "startTrainingTrial " + trialCounter);
+            recordEvent("startTrainingTrial " + trialCounter);
         } else {
-            timeRecordDb.insertData(getCurrentTime(), "startTrial " + trialCounter);
-
+            recordEvent("startTrial " + trialCounter);
         }
+        // store trial parameters in database
+        ArrayList<String> attributes = currentTrial.getAttributes();
+        recordEvent(attributes.get(0) + " " + attributes.get(1)
+                + ", " + attributes.get(2) + " " + attributes.get(3)
+                + ", " + attributes.get(4) + " " + attributes.get(5)
+                + ", " + attributes.get(6) + " " + attributes.get(7)
+                + ", " + attributes.get(8) + " " + attributes.get(9)
+                + ", " + attributes.get(10) + " " + attributes.get(11)
+                + ", " + attributes.get(12) + " " + attributes.get(13)
+                + ", " + attributes.get(14) + " " + attributes.get(15));
 
-        //bluetooth = new Bluetooth(timeRecordDb);
-
-        // TODO: setup this for all layouts
+        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         /*
         try {
             // send trial number
-            bluetooth.timeStamper(Integer.toString(trialCounter +200),getCurrentTime());
-            // send attribute magnitudes
-            bluetooth.timeStamper(Integer.toString(16),String.format ("%.0f",a1*100));
-            bluetooth.timeStamper(Integer.toString(18),String.format ("%.0f",p1));
-            bluetooth.timeStamper(Integer.toString(17),String.format ("%.0f",a2*100));
-            bluetooth.timeStamper(Integer.toString(19),String.format ("%.0f",p2));
-
+            bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
         } catch (IOException e) {
             e.printStackTrace();
         }
         */
+        /* Bluetooth
+        // send trial number + 100 followed by trial parameters followed by 0
+        try {
+            // send trial number
+            bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
+
+            // send attribute magnitudes
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(9))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(11))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(13))*10.0+50.0)));
+            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(15))*10.0+50.0)));
+
+            // end the stream with the identifier 0
+            bluetooth.timeStamperJustID(Integer.toString(0));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+         */
 
         viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -240,16 +316,16 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             }
         });
 
-
-        // TODO: modify the codes
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+                /* Bluetooth
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "12", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
-                */
+
+                 */
+
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
                     showResult(a1, 1);
@@ -259,12 +335,14 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+                /* Bluetooth
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "13", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
-                */
+
+                 */
+
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
                     showResult(a2, 2);
@@ -274,12 +352,14 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+                /* Bluetooth
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "??", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
-                */
+
+                 */
+
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32});
                     showResult(a3, 3);
@@ -289,12 +369,14 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                /*
+                /* Bluetooth
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "??", getCurrentTime());
+                    bluetooth.timeStamper( choice, getCurrentTime());
                 } catch (IOException e) {}
-                */
+
+                 */
+
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42});
                     showResult(a4, 4);
@@ -309,20 +391,24 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
 
-            /*
+            /* Bluetooth
             try {
                 // send identifier and timestamp
-                bluetooth.timeStamper( codes[0], getCurrentTime());
+                bluetooth.timeStamperJustID( codes[0]);
             } catch (IOException e) {}
-            */
+
+             */
+
             //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
-            /*
+            /* Bluetooth
             try {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}
-            */
+
+             */
+
             recordEvent(codes[2] + " " + eventClick);
 
             /* automatically re-cover after 1000ms */
@@ -331,11 +417,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
-                        /*
+                        /* Bluetooth
                         try {
                             bluetooth.timeStamper( identifier_cover, getCurrentTime());
                         } catch (IOException e) {}
-                        */
+
+                         */
+
 
                         tappedView.showNext();
                         recordEvent(codes[2] + " " + eventTimeOut);
@@ -347,11 +435,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
-                    /*
+                    /* Bluetooth
                     try {
-                        bluetooth.timeStamper( identifier_cover, getCurrentTime());
+                        bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
                     } catch (IOException e) {}
-                    */
+
+                     */
+
                     v.showNext();
                 }
             }
@@ -393,6 +483,19 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator32, attributes.get(10), attributes.get(11));
         setAttributesForOneVA(viewAnimator41, attributes.get(12), attributes.get(13));
         setAttributesForOneVA(viewAnimator42, attributes.get(14), attributes.get(15));
+
+        // First two are event codes sent via bluetooth (1st 2nd strings are for tap and displayed respectively).
+        // 3rd (location) and last (attribute type) strings are the ones inserted into the SQLite database.
+
+        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "11", attributes.get(0)});
+        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "12", attributes.get(2)});
+        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(4)});
+        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(6)});
+
+        identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "31", attributes.get(8)});
+        identifiers.put(R.id.view_animator_32, new String[] {"11", "27", "32", attributes.get(10)});
+        identifiers.put(R.id.view_animator_41, new String[] {"14", "30", "41", attributes.get(12)});
+        identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "42", attributes.get(14)});
     }
 
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
@@ -438,6 +541,53 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
         }
+        /* The old way of putting datat into the data base
+        // 1st 2 items in the string are the event codes sent to the arduino
+        // 3rd item is stored in the database along with the timestamp
+        if(a1>0) {
+            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
+        }else{
+            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
+        }
+        if(p1>0) {
+            identifiers.put(R.id.view_animator_21, new String[] {"3", "19", "P+1"});
+        }else{
+            identifiers.put(R.id.view_animator_21, new String[] {"7", "23", "P-1"});
+        }
+        if(a2>0) {
+            identifiers.put(R.id.view_animator_12, new String[] {"4", "20", "A+2"});
+        }else{
+            identifiers.put(R.id.view_animator_12, new String[] {"8", "24", "A-2"});
+        }
+        if(p2>0) {
+            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
+        }else{
+            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
+        }
+
+        if(a3>0) {
+            identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "A+3"});
+        }else{
+            identifiers.put(R.id.view_animator_31, new String[] {"12", "28", "A-3"});
+        }
+        if(p3>0) {
+            identifiers.put(R.id.view_animator_41, new String[] {"11", "27", "P+3"});
+        }else{
+            identifiers.put(R.id.view_animator_41, new String[] {"13", "29", "P-3"});
+        }
+
+        if(a4>0) {
+            identifiers.put(R.id.view_animator_32, new String[] {"14", "30", "A+4"});
+        }else{
+            identifiers.put(R.id.view_animator_32, new String[] {"16", "32", "A-4"});
+        }
+        if(p4>0) {
+            identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "P+4"});
+        }else{
+            identifiers.put(R.id.view_animator_42, new String[] {"17", "33", "P-4"});
+        }
+
+         */
     }
 
     //get current time in milliseconds
@@ -492,6 +642,14 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         recordEvent("Option" + option + " selected, $" + amountWon + " won");
         timeRecordDb.close();
+        /* Bluetooth
+        try {
+            // send identifier and timestamp
+            bluetooth.timeStamper( resultID, getCurrentTime());
+            //bluetooth.sendData(String.format ("%.2f",amountWon));
+        } catch (IOException e) {}
+
+         */
 
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();

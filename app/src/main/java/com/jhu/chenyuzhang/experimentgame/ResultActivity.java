@@ -22,7 +22,11 @@ import com.jhu.chenyuzhang.experimentgame.Questions.Question4Att2OpHorizontal;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+import java.io.IOException;
 
 public class ResultActivity extends AppCompatActivity {
     private double amountWon;
@@ -45,6 +49,7 @@ public class ResultActivity extends AppCompatActivity {
 
     TimeDbHelper timeRecordDb;
     Bluetooth bluetooth;
+    private String resultID = "37";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +92,7 @@ public class ResultActivity extends AppCompatActivity {
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
 
-        //bluetooth = new Bluetooth(timeRecordDb);
+        bluetooth = new Bluetooth(timeRecordDb);
 
         // get the trial whose result is shown
         prevTrial = trialInfoDb.getTrial(trialCounter);
@@ -99,10 +104,11 @@ public class ResultActivity extends AppCompatActivity {
                 /*
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( "14", MainActivity.getCurrentTime());
-                    bluetooth.sendData(String.format ("%.2f",amountWon));
+                    bluetooth.timeStamper( "resultID", getCurrentTime());
+                    //bluetooth.sendData(String.format ("%.2f",amountWon));
                 } catch (IOException e) {}
-                */
+                 */
+
                 buttonNextTrial.setVisibility(View.VISIBLE);
                 displayResult();
             }
@@ -223,5 +229,13 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         return intent;
+    }
+
+    //get current time in milliseconds
+    private String getCurrentTime() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
+        String formattedDate= dateFormat.format(date);
+        return formattedDate;
     }
 }

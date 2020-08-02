@@ -3,14 +3,28 @@ package com.jhu.chenyuzhang.experimentgame;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.ParcelUuid;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 public class Bluetooth {
@@ -20,6 +34,7 @@ public class Bluetooth {
     BluetoothDevice mmDevice;
     public static OutputStream mmOutputStream;
     public static InputStream mmInputStream;
+    public String handShakeMessage;
 
     private static Thread workerThread;
     public static byte[] readBuffer;
@@ -27,11 +42,12 @@ public class Bluetooth {
     public static volatile boolean stopWorker;
 
     private TimeDbHelper timeRecordDb;
+    private Context context;
 
-    public Bluetooth(TimeDbHelper db) {
+    public Bluetooth(Context context, TimeDbHelper db) {
+        this.context = context;
         this.timeRecordDb = db;
     }
-
 
     public void openBT(ParcelUuid[] uuids) throws IOException {
         //UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
@@ -51,7 +67,18 @@ public class Bluetooth {
         try {
             sendData(identity);
             sendData(tstmp);
+            handShakeMessage = tstmp + " " + identity;
             Log.d(TAG, "timestamper sent");
+
+        } catch (IOException e) {
+            Log.d(TAG, "timestamper exceptions");
+        }
+    }
+
+    public void timeStamperJustID(String identity) throws IOException {
+        try {
+            sendData(identity);
+            Log.d(TAG, "ID sent");
 
         } catch (IOException e) {
             Log.d(TAG, "timestamper exceptions");
@@ -68,7 +95,6 @@ public class Bluetooth {
         msg += "\n";
         mmOutputStream.write(msg.getBytes());
     }
-
 
     public void beginListenForData() {
         final Handler handler = new Handler();
@@ -106,6 +132,9 @@ public class Bluetooth {
                                     byte[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
+                                    if (!data.contains(handShakeMessage)) {
+                                        reconnectToBt();
+                                    }
                                     readBufferPosition = 0;
 
                                     handler.post(new Runnable()
@@ -113,7 +142,8 @@ public class Bluetooth {
                                         public void run()
                                         {
                                             // put event in SQL LITE TABLE
-                                            timeRecordDb.insertData(data, "received");
+                                            // timeRecordDb.insertData(data, "received");
+                                            timeRecordDb.insertData(getCurrentTime(),data);
                                             // tvReceived.setText(data);
                                         }
                                     });
@@ -136,6 +166,29 @@ public class Bluetooth {
     }
 
     /**
+     * First pop up window to inform that the bluetooth is not working
+     * Then try to reconnect to bluetooth
+     */
+    public void reconnectToBt() {
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.popup, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setView(promptsView);
+        alertDialogBuilder
+                .setCancelable(true)
+                .setNegativeButton("Retry", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+        beginListenForData();
+    }
+    /**
      * Reset input and output streams and make sure socket is closed.
      * This method will be used when app is quit to ensure that the connection is properly closed during a shutdown.
      */
@@ -152,5 +205,13 @@ public class Bluetooth {
             try {mmSocket.close();} catch (Exception e) {}
             mmSocket = null;
         }
+    }
+
+    //get current time in milliseconds
+    private String getCurrentTime() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
+        String formattedDate= dateFormat.format(date);
+        return formattedDate;
     }
 }
