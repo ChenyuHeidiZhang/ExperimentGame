@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.nfc.Tag;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -406,7 +407,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
              */
 
-            recordEvent(codes[2] + " " + eventClick);
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
+            Log.d("Questions", codes[3]);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();
@@ -423,7 +425,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
 
                         tappedView.showNext();
-                        recordEvent(codes[2] + " " + eventTimeOut);
+                        recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                     }
                 }
             }, 1000);

@@ -248,7 +248,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
              */
 
-            recordEvent(codes[2] + " " + eventClick);
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
+            Log.d("Questions", codes[3]);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();
@@ -263,7 +264,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
 
                         tappedView.showNext();
-                        recordEvent(codes[2] + " " + eventTimeOut);
+                        recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                     }
                 }
             }, 1000);

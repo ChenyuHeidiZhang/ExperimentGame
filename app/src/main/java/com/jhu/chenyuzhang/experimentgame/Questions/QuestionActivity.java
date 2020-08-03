@@ -260,7 +260,8 @@ public class QuestionActivity extends AppCompatActivity {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}*/
 
-            recordEvent(codes[2] + " " + eventClick);
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
+            Log.d("Questions", codes[3]);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();
@@ -275,7 +276,7 @@ public class QuestionActivity extends AppCompatActivity {
 
 
                         tappedView.showNext();
-                        recordEvent(codes[2] + " " + eventTimeOut);
+                        recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                     }
                 }
             }, 1000);
