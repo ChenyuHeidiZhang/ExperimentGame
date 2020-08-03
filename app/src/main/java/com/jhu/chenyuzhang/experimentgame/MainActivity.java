@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         String connectedBluetooth = prefBluetooth.getString(KEY_CONNECTED_BLUETOOTH, "");
 
         // bluetooth set up
-        bluetooth = new Bluetooth(timeRecordDb);
+        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
 
         if (!initiateBT()) {

@@ -92,7 +92,7 @@ public class ResultActivity extends AppCompatActivity {
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
 
-        bluetooth = new Bluetooth(timeRecordDb);
+        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
 
         // get the trial whose result is shown
         prevTrial = trialInfoDb.getTrial(trialCounter);
