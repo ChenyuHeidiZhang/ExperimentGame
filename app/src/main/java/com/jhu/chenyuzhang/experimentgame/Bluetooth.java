@@ -135,6 +135,7 @@ public class Bluetooth {
                                     if (!data.contains(handShakeMessage)) {
                                         reconnectToBt();
                                     }
+                                    recordEvent(data);
                                     readBufferPosition = 0;
 
                                     handler.post(new Runnable()
@@ -207,6 +208,13 @@ public class Bluetooth {
         }
     }
 
+    private void recordEvent(String event) {
+        //long timeSpan = System.nanoTime() - startTime;
+        //String timeString = String.format("%d", timeSpan / 1000);
+        String timeString = getCurrentTime();
+
+        timeRecordDb.insertData(timeString, event);
+    }
     //get current time in milliseconds
     private String getCurrentTime() {
         Date date = new Date();

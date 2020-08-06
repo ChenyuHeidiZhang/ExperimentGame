@@ -58,7 +58,8 @@ public class Question4Att2OpActivity extends AppCompatActivity {
     private ViewAnimator viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24;
     private Button buttonSelect1, buttonSelect2;
 
-    private String eventClick = "Clicked, Displayed";
+    private String eventClick = "Clicked";
+    private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
     private long backPressedTime;
@@ -320,7 +321,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
              */
 
             //armVSyncHandlerA1();
-
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
             tappedView.showNext();  /* uncover */
             /* Bluetooth
             try {
@@ -329,7 +330,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
              */
 
-            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
             Log.d("Questions", codes[3]);
 
             /* automatically re-cover after 1000ms */

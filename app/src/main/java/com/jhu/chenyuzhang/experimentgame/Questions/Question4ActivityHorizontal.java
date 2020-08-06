@@ -62,7 +62,8 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
     private ViewAnimator viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44;
     private Button buttonSelect1, buttonSelect2, buttonSelect3, buttonSelect4;
 
-    private String eventClick = "Clicked, Displayed";
+    private String eventClick = "Clicked";
+    private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
     private long backPressedTime;
@@ -483,7 +484,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
              */
 
             //armVSyncHandlerA1();
-
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
             tappedView.showNext();  /* uncover */
             /* Bluetooth
             try {
@@ -492,7 +493,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
              */
 
-            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
             Log.d("Questions", codes[3]);
 
             /* automatically re-cover after 1000ms */

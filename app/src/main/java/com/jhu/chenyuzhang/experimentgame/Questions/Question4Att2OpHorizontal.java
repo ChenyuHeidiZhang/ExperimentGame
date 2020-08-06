@@ -59,7 +59,8 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
     private ViewAnimator viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24;
     private Button buttonSelect1, buttonSelect2;
 
-    private String eventClick = "Clicked, Displayed";
+    private String eventClick = "Clicked";
+    private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
 
     private long backPressedTime;
@@ -299,14 +300,14 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 // send identifier and timestamp
                 bluetooth.timeStamperJustID( codes[0]);
             } catch (IOException e) {}*/
-
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
             tappedView.showNext();  /* uncover */
             // send event code for attribute displayed
             /*try {
                 bluetooth.timeStamper( codes[1], getCurrentTime());
             } catch (IOException e) {}*/
 
-            recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
+            recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();
