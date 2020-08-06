@@ -153,10 +153,10 @@ public class QuestionActivity extends AppCompatActivity {
         }
         // store trial parameters in database
         ArrayList<String> attributes = currentTrial.getAttributes();
-        recordEvent(attributes.get(0) + " " + attributes.get(1)
-                + ", " + attributes.get(2) + " " + attributes.get(3)
-                + ", " + attributes.get(4) + " " + attributes.get(5)
-                + ", " + attributes.get(6) + " " + attributes.get(7));
+        recordEvent("11 " + attributes.get(0) + " " + attributes.get(1)
+                + ", " + "12 " + attributes.get(2) + " " + attributes.get(3)
+                + ", " + "21 " + attributes.get(4) + " " + attributes.get(5)
+                + ", " + "22 " + attributes.get(6) + " " + attributes.get(7));
 
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         // send trial number + 100 followed by trial parameters followed by 0

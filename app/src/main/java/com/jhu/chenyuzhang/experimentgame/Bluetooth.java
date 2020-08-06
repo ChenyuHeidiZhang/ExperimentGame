@@ -26,6 +26,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
+import java.util.Stack;
 
 public class Bluetooth {
     private static final String TAG = "Bluetooth";
@@ -34,7 +35,7 @@ public class Bluetooth {
     BluetoothDevice mmDevice;
     public static OutputStream mmOutputStream;
     public static InputStream mmInputStream;
-    public String handShakeMessage;
+    public Stack<String> handShakeMessage;
 
     private static Thread workerThread;
     public static byte[] readBuffer;
@@ -67,7 +68,7 @@ public class Bluetooth {
         try {
             sendData(identity);
             sendData(tstmp);
-            handShakeMessage = tstmp + " " + identity;
+            handShakeMessage.push(tstmp + " " + identity);
             Log.d(TAG, "timestamper sent");
 
         } catch (IOException e) {
@@ -132,8 +133,11 @@ public class Bluetooth {
                                     byte[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
-                                    if (!data.contains(handShakeMessage)) {
+                                    if (!data.contains(handShakeMessage.get(0))) {
                                         reconnectToBt();
+                                    }
+                                    else {
+                                        handShakeMessage.pop();
                                     }
                                     recordEvent(data);
                                     readBufferPosition = 0;

@@ -188,22 +188,22 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
         }
         // store trial parameters in database
         ArrayList<String> attributes = currentTrial.getAttributes();
-        recordEvent(attributes.get(0) + " " + attributes.get(1)
-                + ", " + attributes.get(2) + " " + attributes.get(3)
-                + ", " + attributes.get(4) + " " + attributes.get(5)
-                + ", " + attributes.get(6) + " " + attributes.get(7)
-                + ", " + attributes.get(8) + " " + attributes.get(9)
-                + ", " + attributes.get(10) + " " + attributes.get(11)
-                + ", " + attributes.get(12) + " " + attributes.get(13)
-                + ", " + attributes.get(14) + " " + attributes.get(15)
-                + ", " + attributes.get(16) + " " + attributes.get(17)
-                + ", " + attributes.get(18) + " " + attributes.get(19)
-                + ", " + attributes.get(20) + " " + attributes.get(21)
-                + ", " + attributes.get(22) + " " + attributes.get(23)
-                + ", " + attributes.get(24) + " " + attributes.get(25)
-                + ", " + attributes.get(26) + " " + attributes.get(27)
-                + ", " + attributes.get(28) + " " + attributes.get(29)
-                + ", " + attributes.get(30) + " " + attributes.get(31));
+        recordEvent("11 " + attributes.get(0) + " " + attributes.get(1)
+                + ", " + "12 " + attributes.get(2) + " " + attributes.get(3)
+                + ", " + "13 " + attributes.get(4) + " " + attributes.get(5)
+                + ", " + "14 " + attributes.get(6) + " " + attributes.get(7)
+                + ", " + "21 " + attributes.get(8) + " " + attributes.get(9)
+                + ", " + "22 " + attributes.get(10) + " " + attributes.get(11)
+                + ", " + "23 " + attributes.get(12) + " " + attributes.get(13)
+                + ", " + "24 " + attributes.get(14) + " " + attributes.get(15)
+                + ", " + "31 " + attributes.get(16) + " " + attributes.get(17)
+                + ", " + "32 " + attributes.get(18) + " " + attributes.get(19)
+                + ", " + "33 " + attributes.get(20) + " " + attributes.get(21)
+                + ", " + "34 " + attributes.get(22) + " " + attributes.get(23)
+                + ", " + "41 " + attributes.get(24) + " " + attributes.get(25)
+                + ", " + "42 " + attributes.get(26) + " " + attributes.get(27)
+                + ", " + "43 " + attributes.get(28) + " " + attributes.get(29)
+                + ", " + "44 " + attributes.get(30) + " " + attributes.get(31));
 
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         // send trial number + 100 followed by trial parameters followed by 0

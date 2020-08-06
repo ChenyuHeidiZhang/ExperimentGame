@@ -163,14 +163,14 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         }
         // store trial parameters in database
         ArrayList<String> attributes = currentTrial.getAttributes();
-        recordEvent(attributes.get(0) + " " + attributes.get(1)
-                + ", " + attributes.get(2) + " " + attributes.get(3)
-                + ", " + attributes.get(4) + " " + attributes.get(5)
-                + ", " + attributes.get(6) + " " + attributes.get(7)
-                + ", " + attributes.get(8) + " " + attributes.get(9)
-                + ", " + attributes.get(10) + " " + attributes.get(11)
-                + ", " + attributes.get(12) + " " + attributes.get(13)
-                + ", " + attributes.get(14) + " " + attributes.get(15));
+        recordEvent("11 " + attributes.get(0) + " " + attributes.get(1)
+                + ", " + "12 " + attributes.get(2) + " " + attributes.get(3)
+                + ", " + "13 " +  attributes.get(4) + " " + attributes.get(5)
+                + ", " + "14 " + attributes.get(6) + " " + attributes.get(7)
+                + ", " + "21 " + attributes.get(8) + " " + attributes.get(9)
+                + ", " + "22 " + attributes.get(10) + " " + attributes.get(11)
+                + ", " + "23 " + attributes.get(12) + " " + attributes.get(13)
+                + ", " + "24 " + attributes.get(14) + " " + attributes.get(15));
 
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         // send trial number + 100 followed by trial parameters followed by 0
