@@ -1,6 +1,7 @@
 package com.jhu.chenyuzhang.experimentgame;
 
 import android.bluetooth.BluetoothAdapter;
+import android.widget.TextView;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
@@ -17,6 +18,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -113,12 +115,10 @@ public class Bluetooth {
                     try
                     {
                         int bytesAvailable = mmInputStream.available();
-                        if(bytesAvailable > 0)
-                        {
+                        if(bytesAvailable > 0) {
                             byte[] packetBytes = new byte[bytesAvailable];
                             mmInputStream.read(packetBytes);
-                            for(int i=0;i<bytesAvailable;i++)
-                            {
+                            for (int i = 0; i < bytesAvailable; i++) {
                                 /*if (i==0){
                                     try {
                                         sendData("s");
@@ -128,33 +128,27 @@ public class Bluetooth {
                                     }
                                 }*/
                                 byte b = packetBytes[i];
-                                if(b == delimiter)
-                                {
+                                if (b == delimiter) {
                                     byte[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     if (!data.contains(handShakeMessage.get(0))) {
                                         reconnectToBt();
-                                    }
-                                    else {
+                                    } else {
                                         handShakeMessage.pop();
                                     }
                                     recordEvent(data);
                                     readBufferPosition = 0;
 
-                                    handler.post(new Runnable()
-                                    {
-                                        public void run()
-                                        {
+                                    handler.post(new Runnable() {
+                                        public void run() {
                                             // put event in SQL LITE TABLE
                                             // timeRecordDb.insertData(data, "received");
-                                            timeRecordDb.insertData(getCurrentTime(),data);
+                                            timeRecordDb.insertData(getCurrentTime(), data);
                                             // tvReceived.setText(data);
                                         }
                                     });
-                                }
-                                else
-                                {
+                                } else {
                                     readBuffer[readBufferPosition++] = b;
                                 }
                             }
@@ -177,7 +171,6 @@ public class Bluetooth {
     public void reconnectToBt() {
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.popup, null);
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setView(promptsView);
         alertDialogBuilder
