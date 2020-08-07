@@ -405,7 +405,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
             /* Bluetooth
             try {
-                bluetooth.timeStamper( codes[1], getCurrentTime());
+                bluetooth.timeStamper(codes[1], getCurrentTime());
             } catch (IOException e) {}
 
              */
@@ -421,7 +421,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                     if (tappedView.getDisplayedChild() == 1) {
                         /* Bluetooth
                         try {
-                            bluetooth.timeStamper( identifier_cover, getCurrentTime());
+                            bluetooth.timeStamper(identifier_cover, getCurrentTime());
                         } catch (IOException e) {}
 
                          */

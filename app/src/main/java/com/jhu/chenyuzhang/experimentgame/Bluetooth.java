@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -37,7 +38,7 @@ public class Bluetooth {
     BluetoothDevice mmDevice;
     public static OutputStream mmOutputStream;
     public static InputStream mmInputStream;
-    public Stack<String> handShakeMessage;
+    public Queue<String> handShakeMessage;
 
     private static Thread workerThread;
     public static byte[] readBuffer;
@@ -46,6 +47,8 @@ public class Bluetooth {
 
     private TimeDbHelper timeRecordDb;
     private Context context;
+
+    private int checktimes = 1;
 
     public Bluetooth(Context context, TimeDbHelper db) {
         this.context = context;
@@ -70,7 +73,7 @@ public class Bluetooth {
         try {
             sendData(identity);
             sendData(tstmp);
-            handShakeMessage.push(tstmp + " " + identity);
+            handShakeMessage.add(tstmp + " " + identity);
             Log.d(TAG, "timestamper sent");
 
         } catch (IOException e) {
@@ -116,6 +119,7 @@ public class Bluetooth {
                     {
                         int bytesAvailable = mmInputStream.available();
                         if(bytesAvailable > 0) {
+                            checktimes = 1;
                             byte[] packetBytes = new byte[bytesAvailable];
                             mmInputStream.read(packetBytes);
                             for (int i = 0; i < bytesAvailable; i++) {
@@ -132,10 +136,12 @@ public class Bluetooth {
                                     byte[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
-                                    if (!data.contains(handShakeMessage.get(0))) {
-                                        reconnectToBt();
+
+                                    if (!data.contains(handShakeMessage.peek())) {
+                                        //if the returned string is not correct
+                                        reconnectToBt(1);
                                     } else {
-                                        handShakeMessage.pop();
+                                        handShakeMessage.remove();
                                     }
                                     recordEvent(data);
                                     readBufferPosition = 0;
@@ -153,11 +159,31 @@ public class Bluetooth {
                                 }
                             }
                         }
+                        else {
+                            //inputstream not available
+                            if (checktimes == 1) {
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        checktimes = 2;
+                                    }
+                                }, 500);
+                            }
+                            else {
+                                reconnectToBt(3);
+                            }
+
+                        }
                     }
                     catch (IOException ex)
                     {
                         stopWorker = true;
                     }
+                }
+                if (Thread.currentThread().isInterrupted() || stopWorker) {
+                    //if the connection is interrupted
+                    reconnectToBt(2);
                 }
             }
         });
@@ -168,9 +194,22 @@ public class Bluetooth {
      * First pop up window to inform that the bluetooth is not working
      * Then try to reconnect to bluetooth
      */
-    public void reconnectToBt() {
+    public void reconnectToBt(int n) {
+        //int = 1: handshake message incorrect
+        //int = 2: bluetooth iresponsive for 500 miliseconds
+        //int = 3: the thread is interrupted
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.popup, null);
+        TextView message = promptsView.findViewById(R.id.popupmessage);
+        if (n == 1) {
+            message.setText(R.string.handshake_error);
+        }
+        else if (n == 2) {
+            message.setText(R.string.bluetooth_error);
+        }
+        else {
+            message.setText(R.string.thread_error);
+        }
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setView(promptsView);
         alertDialogBuilder
