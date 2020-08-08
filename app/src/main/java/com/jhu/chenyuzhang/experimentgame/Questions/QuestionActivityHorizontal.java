@@ -137,10 +137,13 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             buttonEndDemo.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     dbTstamp = recordEvent("Training ended");
+                    /* Bluetooth
                     try {
                         // send identifier and timestamp
                         bluetooth.timeStamper(dbTstamp, "Training ended");
                     } catch (IOException e) {}
+
+                     */
                     // end the training; go to EndDemoActivity
                     endDemo();
                 }
@@ -180,7 +183,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 + ", " + "12 " + attributes.get(2) + " " + attributes.get(3)
                 + ", " + "21 " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + "22 " + attributes.get(6) + " " + attributes.get(7));
-
+        /* Bluetooth
         // send trial number + 100 followed by trial parameters followed by 0
         try {
             // send trial number
@@ -196,6 +199,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+         */
 
         viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -229,10 +234,13 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 dbTstamp = recordEvent("Option1 selected");
+                /* Bluetooth
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( choice, dbTstamp);
                 } catch (IOException e) {e.printStackTrace();}
+
+                 */
 
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
@@ -244,10 +252,13 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 dbTstamp = recordEvent("Option2 selected");
+                /* Bluetooth
                 try {
                     // send identifier and timestamp
                     bluetooth.timeStamper( choice, dbTstamp);
                 } catch (IOException e) {e.printStackTrace();}
+
+                 */
 
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
@@ -263,19 +274,24 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId());
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
-
+            /* Bluetooth
             try {
                 // send identifier and timestamp
                 bluetooth.timeStamper( codes[0], dbTstamp);
             } catch (IOException e) {}
 
+             */
+
             //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+            /* Bluetooth
             try {
                 bluetooth.timeStamper( codes[1], dbTstamp);
             } catch (IOException e) {}
+
+             */
 
 
 
@@ -289,9 +305,12 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                     if (tappedView.getDisplayedChild() == 1) {
                         tappedView.showNext();
                         dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
+                        /* Bluetooth
                         try {
                             bluetooth.timeStamper( identifier_cover, dbTstamp);
                         } catch (IOException e) {}
+
+                         */
 
                     }
                 }
@@ -302,10 +321,12 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
                     dbTstamp = recordEvent(codes[2] + " " + codes[3] + " Early Mask On");
-
+                    /* Bluetooth
                     try {
                         bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
                     } catch (IOException e) {}
+
+                     */
 
                     v.showNext();
                 }
@@ -463,11 +484,14 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         }
 
        dbTstamp = recordEvent("Option" + option + " selected, $" + amountWon + " won");
+        /* Bluetooth
         try {
             // send identifier and timestamp
             bluetooth.timeStamper( resultID, dbTstamp);
             //bluetooth.sendData(String.format ("%.2f",amountWon));
         } catch (IOException e) {}
+
+         */
         timeRecordDb.close();
 
         // Wait for one second during the display of attributes.
