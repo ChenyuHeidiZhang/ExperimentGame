@@ -84,6 +84,7 @@ public class Bluetooth {
     public void timeStamperJustID(String identity) throws IOException {
         try {
             sendData(identity);
+            handShakeMessage.add(identity);
             Log.d(TAG, "ID sent");
 
         } catch (IOException e) {
@@ -137,7 +138,7 @@ public class Bluetooth {
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
 
-                                    if (!data.contains(handShakeMessage.peek())) {
+                                    if (handShakeMessage.peek() != null && !data.contains(handShakeMessage.peek())) {
                                         //if the returned string is not correct
                                         reconnectToBt(1);
                                     } else {
@@ -196,7 +197,7 @@ public class Bluetooth {
      */
     public void reconnectToBt(int n) {
         //int = 1: handshake message incorrect
-        //int = 2: bluetooth iresponsive for 500 miliseconds
+        //int = 2: bluetooth not responsive for 500 milliseconds
         //int = 3: the thread is interrupted
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.popup, null);

@@ -203,7 +203,7 @@ public class QuestionActivity extends AppCompatActivity {
         // send trial number + 100 followed by trial parameters followed by 0
         try {
             // send trial number
-            bluetooth.timeStamper(Integer.toString(trialCounter +100),getCurrentTime());
+            bluetooth.timeStamper(Integer.toString(trialCounter +100),dbTstamp);
 
             // send attribute magnitudes
             bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+50.0)));

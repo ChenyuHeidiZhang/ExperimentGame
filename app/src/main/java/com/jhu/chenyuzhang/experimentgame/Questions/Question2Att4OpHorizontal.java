@@ -348,7 +348,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 /* Bluetooth
                 try {
                     // send identifier and timestamp
-                    bluetooth.timeStamper( choice, getCurrentTime());
+                    bluetooth.timeStamper( choice, dbTstamp);
                 } catch (IOException e) {e.printStackTrace();}
 
                  */
@@ -419,7 +419,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
             /* Bluetooth
             try {
-                bluetooth.timeStamper( codes[1], getCurrentTime());
+                bluetooth.timeStamper( codes[1], dbTstamp);
             } catch (IOException e) {}
 
              */
@@ -436,7 +436,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                         dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                         /* Bluetooth
                         try {
-                            bluetooth.timeStamper( identifier_cover, getCurrentTime());
+                            bluetooth.timeStamper( identifier_cover, dbTstamp);
                         } catch (IOException e) {}
 
                          */
@@ -453,7 +453,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                     dbTstamp = recordEvent(codes[2] + " " + codes[3] +  " Early Mask On");
                     /* Bluetooth
                     try {
-                        bluetooth.timeStamper( identifier_coverEarly, getCurrentTime());
+                        bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
                     } catch (IOException e) {}
 
                      */
