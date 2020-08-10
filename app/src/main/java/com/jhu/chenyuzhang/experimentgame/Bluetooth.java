@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -38,7 +39,7 @@ public class Bluetooth {
     BluetoothDevice mmDevice;
     public static OutputStream mmOutputStream;
     public static InputStream mmInputStream;
-    public Queue<String> handShakeMessage;
+    public Queue<String> handShakeMessage = new LinkedList<>();
 
     private static Thread workerThread;
     public static byte[] readBuffer;
@@ -141,7 +142,7 @@ public class Bluetooth {
                                     if (handShakeMessage.peek() != null && !data.contains(handShakeMessage.peek())) {
                                         //if the returned string is not correct
                                         reconnectToBt(1);
-                                    } else {
+                                    } else if (!handShakeMessage.isEmpty()){
                                         handShakeMessage.remove();
                                     }
                                     recordEvent(data);
@@ -162,6 +163,7 @@ public class Bluetooth {
                         }
                         else {
                             //inputstream not available
+                            /*
                             if (checktimes == 1) {
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
@@ -174,6 +176,8 @@ public class Bluetooth {
                             else {
                                 reconnectToBt(3);
                             }
+
+                             */
 
                         }
                     }
