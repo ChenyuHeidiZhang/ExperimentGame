@@ -75,6 +75,7 @@ public class ResultActivity extends AppCompatActivity {
         int rewardPercentage = getResources().getInteger(R.integer.reward_percentage);
         double random = new Random().nextDouble();
 
+
         if (random <= rewardPercentage/100 && !isDemo) {
             SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
             double totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
