@@ -1,5 +1,6 @@
 package com.jhu.chenyuzhang.experimentgame;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.widget.TextView;
 import android.bluetooth.BluetoothDevice;
@@ -32,7 +33,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
-public class Bluetooth {
+public class Bluetooth extends AppCompatActivity {
     private static final String TAG = "Bluetooth";
     private static BluetoothSocket mmSocket;
     BluetoothAdapter mBluetoothAdapter;
@@ -79,7 +80,8 @@ public class Bluetooth {
 
         } catch (IOException e) {
             Log.d(TAG, "timestamper exceptions");
-            reconnectToBt(2);
+            Intent intent = new Intent(context, BluetoothFailActivity.class);
+            context.startActivity(intent);
         }
     }
 
@@ -91,7 +93,8 @@ public class Bluetooth {
 
         } catch (IOException e) {
             Log.d(TAG, "timestamper exceptions");
-            reconnectToBt(2);
+            Intent intent = new Intent(context, BluetoothFailActivity.class);
+            context.startActivity(intent);
         }
     }
 

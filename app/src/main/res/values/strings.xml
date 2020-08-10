@@ -27,6 +27,7 @@
     <string name="bluetooth_error">The bluetooth is not responsive for over 500 milliseconds!</string>
     <string name="thread_error">The thread is interrupted</string>
 
+    <string name="bluetooth_fail">Bluetooth is disconnected. Please contact the technician.</string>
 
     <string name="pop_up_bt">Bluetooth is not connected correctly, try again</string>
 </resources>
