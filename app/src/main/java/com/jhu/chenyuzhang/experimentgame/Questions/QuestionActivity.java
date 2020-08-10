@@ -183,7 +183,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         // store trial parameters in database
         ArrayList<String> attributes = currentTrial.getAttributes();
-        dbTstamp = recordEvent("11 " + attributes.get(0) + " " + attributes.get(1)
+        dbTstamp = recordEvent("V " + "11 " + attributes.get(0) + " " + attributes.get(1)
                 + ", " + "12 " + attributes.get(2) + " " + attributes.get(3)
                 + ", " + "21 " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + "22 " + attributes.get(6) + " " + attributes.get(7));
