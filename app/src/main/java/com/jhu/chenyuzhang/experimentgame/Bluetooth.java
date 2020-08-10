@@ -70,7 +70,7 @@ public class Bluetooth {
         Log.d(TAG,"Bluetooth Opened");
     }
 
-    public void timeStamper(String identity, String tstmp) throws IOException {
+    public void timeStamper(String identity, String tstmp) {
         try {
             sendData(identity);
             sendData(tstmp);
@@ -79,10 +79,11 @@ public class Bluetooth {
 
         } catch (IOException e) {
             Log.d(TAG, "timestamper exceptions");
+            reconnectToBt(2);
         }
     }
 
-    public void timeStamperJustID(String identity) throws IOException {
+    public void timeStamperJustID(String identity) {
         try {
             sendData(identity);
             handShakeMessage.add(identity);
@@ -90,6 +91,7 @@ public class Bluetooth {
 
         } catch (IOException e) {
             Log.d(TAG, "timestamper exceptions");
+            reconnectToBt(2);
         }
     }
 
