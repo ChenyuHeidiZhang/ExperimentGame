@@ -72,10 +72,10 @@ public class ResultActivity extends AppCompatActivity {
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
 
         // update total amount won; only add to totalAmountWon with some probability and if is not in training
-        int rewardPercentage = getResources().getInteger(R.integer.reward_percentage);
-        double random = new Random().nextDouble();
+        //int rewardPercentage = getResources().getInteger(R.integer.reward_percentage);
+        //double random = new Random().nextDouble();
 
-        if (random <= rewardPercentage/100 && !isDemo) {
+        if (!isDemo) {
             SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
             double totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
 
@@ -119,6 +119,7 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
+                /* Take out the 160 part
                 if (!isDemo && trialCounter % 160 == 0) {
                     incrementTrialCounter();
                     Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
@@ -131,6 +132,11 @@ public class ResultActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+
+                 */
+                Intent intent = getNextIntent();
+                startActivity(intent);
+                finish();
             }
         });
     }
