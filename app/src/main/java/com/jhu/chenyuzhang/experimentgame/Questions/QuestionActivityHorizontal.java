@@ -316,6 +316,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     }
 
     private void getAttributes(){
+        String[][] send_code = new String[4][2];
         ArrayList<String> attributes = currentTrial.getAttributes();
 
         setAttributesForOneVA(viewAnimator11, attributes.get(0), attributes.get(1));
@@ -323,13 +324,83 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator21, attributes.get(4), attributes.get(5));
         setAttributesForOneVA(viewAnimator22, attributes.get(6), attributes.get(7));
 
+        for (int i = 0; i < 4; ++i) {
+            switch (attributes.get(i * 2)) {
+                case "A+1":
+                    send_code[i][0] = "2";
+                    send_code[i][1] = "18";
+                    break;
+                case "A-1":
+                    send_code[i][0] = "6";
+                    send_code[i][1] = "22";
+                    break;
+                case "P+1":
+                    send_code[i][0] = "3";
+                    send_code[i][1] = "19";
+                    break;
+                case "P-1":
+                    send_code[i][0] = "7";
+                    send_code[i][1] = "23";
+                    break;
+                case "A+2":
+                    send_code[i][0] = "4";
+                    send_code[i][1] = "20";
+                    break;
+                case "A-2":
+                    send_code[i][0] = "8";
+                    send_code[i][1] = "24";
+                    break;
+                case "P+2":
+                    send_code[i][0] = "5";
+                    send_code[i][1] = "21";
+                    break;
+                case "P-2":
+                    send_code[i][0] = "9";
+                    send_code[i][1] = "25";
+                    break;
+                case "A+3":
+                    send_code[i][0] = "10";
+                    send_code[i][1] = "26";
+                    break;
+                case "A-3":
+                    send_code[i][0] = "12";
+                    send_code[i][1] = "28";
+                    break;
+                case "P+3":
+                    send_code[i][0] = "11";
+                    send_code[i][1] = "27";
+                    break;
+                case "P-3":
+                    send_code[i][0] = "13";
+                    send_code[i][1] = "29";
+                    break;
+                case "A+4":
+                    send_code[i][0] = "14";
+                    send_code[i][1] = "30";
+                    break;
+                case "A-4":
+                    send_code[i][0] = "16";
+                    send_code[i][1] = "32";
+                    break;
+                case "P+4":
+                    send_code[i][0] = "15";
+                    send_code[i][1] = "31";
+                    break;
+                case "P-4":
+                    send_code[i][0] = "17";
+                    send_code[i][1] = "33";
+                    break;
+
+            }
+        }
+
         // First two are event codes sent via bluetooth (1st 2nd strings are for tap and displayed respectively).
         // 3rd (location) and last (attribute type) strings are the ones inserted into the SQLite database.
-        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "11", attributes.get(0)});
-        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "12", attributes.get(2)});
+        identifiers.put(R.id.view_animator_11, new String[] {send_code[0][0], send_code[0][1], "11", attributes.get(0)});
+        identifiers.put(R.id.view_animator_12, new String[] {send_code[1][0], send_code[1][1], "12", attributes.get(2)});
 
-        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(4)});
-        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(6)});
+        identifiers.put(R.id.view_animator_21, new String[] {send_code[2][0], send_code[2][1], "21", attributes.get(4)});
+        identifiers.put(R.id.view_animator_22, new String[] {send_code[3][0], send_code[3][1], "22", attributes.get(6)});
 
         // 1st 2 items in the string are the event codes sent to the arduino
         // 3rd item is stored in the database along with the timestamp

@@ -517,7 +517,8 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
         getAttributes();
     }
 
-    private void getAttributes(){
+    private void getAttributes() {
+        String[][] send_code = new String[16][2];
         ArrayList<String> attributes = currentTrial.getAttributes();
 
         setAttributesForOneVA(viewAnimator11, attributes.get(0), attributes.get(1));
@@ -537,29 +538,98 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
         setAttributesForOneVA(viewAnimator43, attributes.get(28), attributes.get(29));
         setAttributesForOneVA(viewAnimator44, attributes.get(30), attributes.get(31));
 
+        for (int i = 0; i < 16; ++i) {
+            switch (attributes.get(i * 2)) {
+                case "A+1":
+                    send_code[i][0] = "2";
+                    send_code[i][1] = "18";
+                    break;
+                case "A-1":
+                    send_code[i][0] = "6";
+                    send_code[i][1] = "22";
+                    break;
+                case "P+1":
+                    send_code[i][0] = "3";
+                    send_code[i][1] = "19";
+                    break;
+                case "P-1":
+                    send_code[i][0] = "7";
+                    send_code[i][1] = "23";
+                    break;
+                case "A+2":
+                    send_code[i][0] = "4";
+                    send_code[i][1] = "20";
+                    break;
+                case "A-2":
+                    send_code[i][0] = "8";
+                    send_code[i][1] = "24";
+                    break;
+                case "P+2":
+                    send_code[i][0] = "5";
+                    send_code[i][1] = "21";
+                    break;
+                case "P-2":
+                    send_code[i][0] = "9";
+                    send_code[i][1] = "25";
+                    break;
+                case "A+3":
+                    send_code[i][0] = "10";
+                    send_code[i][1] = "26";
+                    break;
+                case "A-3":
+                    send_code[i][0] = "12";
+                    send_code[i][1] = "28";
+                    break;
+                case "P+3":
+                    send_code[i][0] = "11";
+                    send_code[i][1] = "27";
+                    break;
+                case "P-3":
+                    send_code[i][0] = "13";
+                    send_code[i][1] = "29";
+                    break;
+                case "A+4":
+                    send_code[i][0] = "14";
+                    send_code[i][1] = "30";
+                    break;
+                case "A-4":
+                    send_code[i][0] = "16";
+                    send_code[i][1] = "32";
+                    break;
+                case "P+4":
+                    send_code[i][0] = "15";
+                    send_code[i][1] = "31";
+                    break;
+                case "P-4":
+                    send_code[i][0] = "17";
+                    send_code[i][1] = "33";
+                    break;
+
+            }
+        }
+
         // First two are event codes sent via bluetooth (1st 2nd strings are for tap and displayed respectively).
         // 3rd (location) and last (attribute type) strings are the ones inserted into the SQLite database.
-        identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "11", attributes.get(0)});
-        identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "12", attributes.get(2)});
-        identifiers.put(R.id.view_animator_13, new String[] {"6", "22", "13", attributes.get(4)});
-        identifiers.put(R.id.view_animator_14, new String[] {"7", "23", "14", attributes.get(6)});
+        identifiers.put(R.id.view_animator_11, new String[]{send_code[0][0], send_code[0][1], "11", attributes.get(0)});
+        identifiers.put(R.id.view_animator_12, new String[]{send_code[1][0], send_code[1][1], "12", attributes.get(2)});
+        identifiers.put(R.id.view_animator_13, new String[]{send_code[2][0], send_code[2][1], "13", attributes.get(4)});
+        identifiers.put(R.id.view_animator_14, new String[]{send_code[3][0], send_code[3][1], "14", attributes.get(6)});
 
-        identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(8)});
-        identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(10)});
-        identifiers.put(R.id.view_animator_23, new String[] {"8", "24", "23", attributes.get(12)});
-        identifiers.put(R.id.view_animator_24, new String[] {"9", "25", "24", attributes.get(14)});
+        identifiers.put(R.id.view_animator_21, new String[]{send_code[4][0], send_code[4][1], "21", attributes.get(8)});
+        identifiers.put(R.id.view_animator_22, new String[]{send_code[5][0], send_code[5][1], "22", attributes.get(10)});
+        identifiers.put(R.id.view_animator_23, new String[]{send_code[6][0], send_code[6][1], "23", attributes.get(12)});
+        identifiers.put(R.id.view_animator_24, new String[]{send_code[7][0], send_code[7][1], "24", attributes.get(14)});
 
-        identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "31", attributes.get(16)});
-        identifiers.put(R.id.view_animator_32, new String[] {"11", "27", "32", attributes.get(18)});
-        identifiers.put(R.id.view_animator_33, new String[] {"12", "28", "33", attributes.get(20)});
-        identifiers.put(R.id.view_animator_34, new String[] {"13", "29", "34", attributes.get(22)});
+        identifiers.put(R.id.view_animator_31, new String[]{send_code[8][0], send_code[8][1], "31", attributes.get(16)});
+        identifiers.put(R.id.view_animator_32, new String[]{send_code[9][0], send_code[9][1], "32", attributes.get(18)});
+        identifiers.put(R.id.view_animator_33, new String[]{send_code[10][0], send_code[10][1], "33", attributes.get(20)});
+        identifiers.put(R.id.view_animator_34, new String[]{send_code[11][0], send_code[11][1], "34", attributes.get(22)});
 
-        identifiers.put(R.id.view_animator_41, new String[] {"14", "30", "41", attributes.get(24)});
-        identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "42", attributes.get(26)});
-        identifiers.put(R.id.view_animator_43, new String[] {"16", "32", "43", attributes.get(28)});
-        identifiers.put(R.id.view_animator_44, new String[] {"17", "33", "44", attributes.get(30)});
+        identifiers.put(R.id.view_animator_41, new String[]{send_code[12][0], send_code[12][1], "41", attributes.get(24)});
+        identifiers.put(R.id.view_animator_42, new String[]{send_code[13][0], send_code[13][1], "42", attributes.get(26)});
+        identifiers.put(R.id.view_animator_43, new String[]{send_code[14][0], send_code[14][1], "43", attributes.get(28)});
+        identifiers.put(R.id.view_animator_44, new String[]{send_code[15][0], send_code[15][1], "44", attributes.get(30)});
     }
-
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
         ImageView imgView = (ImageView) va.getChildAt(0);
         TextView tv = (TextView) va.getChildAt(1);
