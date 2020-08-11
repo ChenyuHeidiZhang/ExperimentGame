@@ -6,5 +6,4 @@
     <integer name="min_time_millis_4Att2Opt">4000</integer>
     <integer name="min_time_millis_2Att4Opt">4000</integer>
     <integer name="min_time_millis_4Att4Opt">8000</integer>
-    <integer name="PAYMAX">1</integer>
 </resources>
