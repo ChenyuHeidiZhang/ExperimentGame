@@ -50,16 +50,34 @@ public class TotalAmountActivity extends AppCompatActivity {
         SharedPreferences pref_last = getSharedPreferences("lastTotal", MODE_PRIVATE);
         float lastAmount = pref_last.getFloat(KEY_LAST_TOTAL, 0);
 
-        if (display_id == 1) {  // display total amount over the past 4 blocks
-            float thisAmount = totalAmountWon - lastAmount;
-            tvTotal.setText("Total Amount Won Over 4 Blocks: $" + String.format("%.2f", thisAmount));
-            recordEvent("Display 4 block total: $"+thisAmount);
-
-            pref_last.edit().putFloat(KEY_LAST_TOTAL, totalAmountWon).apply();  // update last_total with current_total
+            if (display_id == 1) {  // display total amount over the past 4 blocks
+                float thisAmount = totalAmountWon - lastAmount;
+                //tvTotal.setText("Total Amount Won Over 4 Blocks: $" + String.format("%.2f", thisAmount));
+                //recordEvent("Display 4 block total: $"+thisAmount);
+                Log.d("My last amount is", String.valueOf(thisAmount));
+                if ((int)thisAmount < getResources().getInteger(R.integer.PAYMAX)) {
+                    tvTotal.setText("Total Amount Won Over 4 Blocks: $" + String.format("%.2f", thisAmount));
+                    recordEvent("Display 4 block total: $" + thisAmount);
+                }
+                else {
+                    tvTotal.setText("Congratulations!" + "\n" + "You have won the maximum amount possible,\n" + "you will get a payment of $" + getResources().getInteger(R.integer.PAYMAX));
+                    recordEvent("Got " + totalAmountWon + "Display 4 block total: $" + getResources().getInteger(R.integer.PAYMAX));
+                }
+                pref_last.edit().putFloat(KEY_LAST_TOTAL, totalAmountWon).apply();  // update last_total with current_total
 
         } else {    // id == 0, display the grand total
-            tvTotal.setText("Total Amount Won: $" + String.format("%.2f", totalAmountWon));
-            recordEvent("Display grand total: $"+totalAmountWon);
+                    //tvTotal.setText("Total Amount Won: $" + String.format("%.2f", totalAmountWon));
+                //recordEvent("Display grand total: $"+totalAmountWon);
+                if ((int)totalAmountWon < getResources().getInteger(R.integer.PAYMAX)) {
+                    Log.d("not_much", "less");
+                    tvTotal.setText("Total Amount Won: $" + String.format("%.2f", totalAmountWon));
+                    recordEvent("Display grand total: $" + getResources().getInteger(R.integer.PAYMAX));
+                }
+                else {
+                    Log.d("a_lot", "more");
+                    tvTotal.setText("Congratulations!" + "\n" + "You have won the maximum amount possible,\n" + "you will get a payment of $" + getResources().getInteger(R.integer.PAYMAX));
+                    recordEvent("Got " + totalAmountWon + "Display grand total: $" + getResources().getInteger(R.integer.PAYMAX));
+                }
         }
 
         btNext.setOnClickListener(new View.OnClickListener() {
