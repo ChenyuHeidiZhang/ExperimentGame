@@ -147,7 +147,7 @@ public class Bluetooth extends AppCompatActivity {
                                     }
 
                                      */
-                                    recordEvent(data);
+                                    //recordEvent(data);
                                     readBufferPosition = 0;
 
                                     handler.post(new Runnable() {
