@@ -66,6 +66,7 @@ public class Question4Activity extends AppCompatActivity {
     private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
     private String dbTstamp;
+    private String temp_click_holder = "";
 
     private long backPressedTime;
     private long startTime;
@@ -458,6 +459,7 @@ public class Question4Activity extends AppCompatActivity {
 
             tappedView.showNext();  /* uncover */
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+            temp_click_holder = codes[2] + ", " + codes[3];
             bluetooth.timeStamper( codes[1], dbTstamp);
 
             /* automatically re-cover after 1000ms */
@@ -468,6 +470,7 @@ public class Question4Activity extends AppCompatActivity {
                     if (tappedView.getDisplayedChild() == 1) {
                         tappedView.showNext();
                         dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
+                        temp_click_holder = "";
                         bluetooth.timeStamper( identifier_cover, dbTstamp);
                     }
                 }
@@ -477,7 +480,11 @@ public class Question4Activity extends AppCompatActivity {
             /* if other attributes are uncovered, cover them */
             for (ViewAnimator v: otherViews) {
                 if (v.getDisplayedChild() == 1) {
-                    dbTstamp = recordEvent(codes[2] + " " + codes[3] +  " Early Mask On");
+                    if (!temp_click_holder.equals("")) {
+                        dbTstamp = recordEvent(temp_click_holder +  " Early Mask On");
+                        temp_click_holder = "";
+                    }
+
                     bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
 
                     v.showNext();
