@@ -40,7 +40,7 @@ public class Bluetooth extends AppCompatActivity {
     BluetoothDevice mmDevice;
     public static OutputStream mmOutputStream;
     public static InputStream mmInputStream;
-    public Queue<String> handShakeMessage = new LinkedList<>();
+   // public Queue<String> handShakeMessage = new LinkedList<>();
 
     private static Thread workerThread;
     public static byte[] readBuffer;
@@ -49,8 +49,6 @@ public class Bluetooth extends AppCompatActivity {
 
     private TimeDbHelper timeRecordDb;
     private Context context;
-
-    private int checktimes = 1;
 
     public Bluetooth(Context context, TimeDbHelper db) {
         this.context = context;
@@ -75,7 +73,6 @@ public class Bluetooth extends AppCompatActivity {
         try {
             sendData(identity);
             sendData(tstmp);
-            handShakeMessage.add(tstmp + " " + identity);
             Log.d(TAG, "timestamper sent");
 
         } catch (IOException e) {
@@ -88,7 +85,6 @@ public class Bluetooth extends AppCompatActivity {
     public void timeStamperJustID(String identity) {
         try {
             sendData(identity);
-            handShakeMessage.add(identity);
             Log.d(TAG, "ID sent");
 
         } catch (IOException e) {
@@ -126,7 +122,6 @@ public class Bluetooth extends AppCompatActivity {
                     {
                         int bytesAvailable = mmInputStream.available();
                         if(bytesAvailable > 0) {
-                            checktimes = 1;
                             byte[] packetBytes = new byte[bytesAvailable];
                             mmInputStream.read(packetBytes);
                             for (int i = 0; i < bytesAvailable; i++) {
@@ -143,13 +138,15 @@ public class Bluetooth extends AppCompatActivity {
                                     byte[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
-
+                                    /*
                                     if (handShakeMessage.peek() != null && !data.contains(handShakeMessage.peek())) {
                                         //if the returned string is not correct
                                         reconnectToBt(1);
                                     } else if (!handShakeMessage.isEmpty()){
                                         handShakeMessage.remove();
                                     }
+
+                                     */
                                     recordEvent(data);
                                     readBufferPosition = 0;
 
@@ -166,44 +163,23 @@ public class Bluetooth extends AppCompatActivity {
                                 }
                             }
                         }
-                        else {
-                            //inputstream not available
-                            /*
-                            if (checktimes == 1) {
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        checktimes = 2;
-                                    }
-                                }, 500);
-                            }
-                            else {
-                                reconnectToBt(3);
-                            }
-
-                             */
-
-                        }
                     }
                     catch (IOException ex)
                     {
                         stopWorker = true;
                     }
                 }
-                if (Thread.currentThread().isInterrupted() || stopWorker) {
-                    //if the connection is interrupted
-                    reconnectToBt(2);
-                }
             }
         });
         workerThread.start();
     }
 
+
     /**
      * First pop up window to inform that the bluetooth is not working
      * Then try to reconnect to bluetooth
      */
+    /*
     public void reconnectToBt(int n) {
         //int = 1: handshake message incorrect
         //int = 2: bluetooth not responsive for 500 milliseconds
@@ -235,6 +211,8 @@ public class Bluetooth extends AppCompatActivity {
         alertDialog.show();
         beginListenForData();
     }
+
+     */
     /**
      * Reset input and output streams and make sure socket is closed.
      * This method will be used when app is quit to ensure that the connection is properly closed during a shutdown.
