@@ -42,8 +42,7 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:id="@+id/option1"
             android:layout_width="160dp"
             android:layout_height="900dp"
@@ -161,8 +160,8 @@
             <Button
                 android:id="@+id/button_select1"
                 style="@android:style/Widget.Button"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="80dp"
                 android:text="@string/select"
                 android:textSize="20sp" />
@@ -171,8 +170,7 @@
 
 
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:id="@+id/option2"
             android:layout_width="160dp"
             android:layout_height="900dp"
@@ -291,8 +289,8 @@
             <Button
                 android:id="@+id/button_select2"
                 style="@android:style/Widget.Button"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="80dp"
                 android:text="@string/select"
                 android:textSize="20sp" />
@@ -300,8 +298,7 @@
         </LinearLayout>
 
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:id="@+id/option3"
             android:layout_width="160dp"
             android:layout_height="900dp"
@@ -420,8 +417,8 @@
             <Button
                 android:id="@+id/button_select3"
                 style="@android:style/Widget.Button"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="80dp"
                 android:text="@string/select"
                 android:textSize="20sp" />
@@ -429,8 +426,7 @@
         </LinearLayout>
 
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:id="@+id/option4"
             android:layout_width="160dp"
             android:layout_height="900dp"
@@ -549,8 +545,8 @@
             <Button
                 android:id="@+id/button_select4"
                 style="@android:style/Widget.Button"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="80dp"
                 android:text="@string/select"
                 android:textSize="20sp" />
