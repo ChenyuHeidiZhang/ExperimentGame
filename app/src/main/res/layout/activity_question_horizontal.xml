@@ -43,8 +43,7 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <RelativeLayout
             android:id="@+id/option1"
             android:layout_width="650dp"
             android:layout_height="250dp"
@@ -112,8 +111,8 @@
             <Button
                 android:id="@+id/button_select1"
                 style="@android:style/Widget.Button"
-                android:layout_width="120dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="400dp"
@@ -123,8 +122,7 @@
 
         </RelativeLayout>
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <RelativeLayout
             android:id="@+id/option2"
             android:layout_width="650dp"
             android:layout_height="250dp"
@@ -192,8 +190,8 @@
             <Button
                 android:id="@+id/button_select2"
                 style="@android:style/Widget.Button"
-                android:layout_width="120dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="400dp"
