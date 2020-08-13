@@ -60,9 +60,9 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
     private ViewAnimator viewAnimator41, viewAnimator42;
     private Button buttonSelect1, buttonSelect2, buttonSelect3, buttonSelect4;
 
-    private String eventClick = "Clicked";
-    private String eventDisplay = "Displayed";
-    private String eventTimeOut = "TimeOut, Covered";
+    private String eventClick = "Tap";
+    private String eventDisplay = "Show";
+    private String eventTimeOut = "TimeOut, Mask On";
     private String dbTstamp;
     private String temp_click_holder = "";
 

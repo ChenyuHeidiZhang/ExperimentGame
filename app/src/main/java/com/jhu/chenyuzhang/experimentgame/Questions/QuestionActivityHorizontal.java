@@ -61,9 +61,9 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private ViewAnimator viewAnimator22;  // 22: 2nd of second option (bottom right)
     private Button buttonSelect1, buttonSelect2;
 
-    private String eventClick = "Clicked";
-    private String eventDisplay = "Displayed";
-    private String eventTimeOut = "TimeOut, Covered";
+    private String eventClick = "Tap";
+    private String eventDisplay = "Show";
+    private String eventTimeOut = "TimeOut, Mask On";
     private String dbTstamp;
     private String temp_click_holder = "";
 

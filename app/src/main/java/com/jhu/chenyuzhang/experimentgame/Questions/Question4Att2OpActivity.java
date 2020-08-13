@@ -58,9 +58,9 @@ public class Question4Att2OpActivity extends AppCompatActivity {
     private ViewAnimator viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24;
     private Button buttonSelect1, buttonSelect2;
 
-    private String eventClick = "Clicked";
-    private String eventDisplay = "Displayed";
-    private String eventTimeOut = "TimeOut, Covered";
+    private String eventClick = "Tap";
+    private String eventDisplay = "Show";
+    private String eventTimeOut = "TimeOut, Mask On";
     private String dbTstamp;
     private String temp_click_holder = "";
 
