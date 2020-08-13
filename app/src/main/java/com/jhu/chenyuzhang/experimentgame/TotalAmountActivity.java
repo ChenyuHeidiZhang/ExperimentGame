@@ -1,7 +1,13 @@
 package com.jhu.chenyuzhang.experimentgame;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +23,7 @@ import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 public class TotalAmountActivity extends AppCompatActivity {
@@ -84,6 +91,7 @@ public class TotalAmountActivity extends AppCompatActivity {
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 if (display_id == 1) {
                     int random = new Random().nextInt(2);
                     Intent intent;
@@ -100,10 +108,15 @@ public class TotalAmountActivity extends AppCompatActivity {
                 }
 
                 finish();
+
+                 */
+                android.os.Process.killProcess(android.os.Process.myPid());
+
             }
         });
 
     }
+
 
     private String getCurrentTime() {
         Date date = new Date();
