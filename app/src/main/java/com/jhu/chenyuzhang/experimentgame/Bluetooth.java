@@ -63,7 +63,6 @@ public class Bluetooth extends AppCompatActivity {
         Log.d(TAG, "connect");
         mmOutputStream = mmSocket.getOutputStream();
         mmInputStream = mmSocket.getInputStream();
-
         beginListenForData();
 
         Log.d(TAG,"Bluetooth Opened");

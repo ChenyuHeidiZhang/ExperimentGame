@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefSignedIn;
     private static final String KEY_CONNECTED_BLUETOOTH = "keyConnectedBluetooth";
     private SharedPreferences prefBluetooth;
+    private Boolean has_picked = false;
 
     private TimeDbHelper timeRecordDb;
 
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         spnBT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                has_picked = true;
                 String itemSelected = spnBT.getSelectedItem().toString();
                 // If a Bluetooth module is selected, connect to it.
                 if (!SPINNER_DEFAULT.equals(itemSelected)) {
@@ -133,14 +135,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                has_picked = false;
             }
         });
 
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getNextIntent();
-                startActivity(intent);
+                if (!has_picked) {
+                    Toast.makeText(context, "You should connect to bluetooth first", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = getNextIntent();
+                    startActivity(intent);
+                }
             }
         });
 
