@@ -289,10 +289,6 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 } catch (IOException e) {e.printStackTrace();}
 
                  */
-                if (!not_covered.equals("")) {
-                    recordEvent(not_covered + " Early Mask On");
-                    not_covered = "";
-                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14});
                     recordEvent("Option1 Mask Off");
@@ -311,10 +307,6 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 } catch (IOException e) {}
 
                  */
-                if (!not_covered.equals("")) {
-                    recordEvent(not_covered + " Early Mask On");
-                    not_covered = "";
-                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24});
                     recordEvent("Option2 Mask Off");

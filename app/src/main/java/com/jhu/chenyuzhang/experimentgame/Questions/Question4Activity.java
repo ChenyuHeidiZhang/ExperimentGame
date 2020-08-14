@@ -424,11 +424,6 @@ public class Question4Activity extends AppCompatActivity {
                 } catch (IOException e) {e.printStackTrace();}
 
                  */
-                //if there are choices not covered
-                if (!not_covered.equals("")) {
-                    recordEvent(not_covered + " Early Mask On");
-                    not_covered = "";
-                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14});
                     recordEvent("Option1 Mask Off");
@@ -448,10 +443,6 @@ public class Question4Activity extends AppCompatActivity {
 
                  */
 
-                if (!not_covered.equals("")) {
-                    recordEvent(not_covered + " Early Mask On");
-                    not_covered = "";
-                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24});
                     recordEvent("Option2 Mask Off");
@@ -471,10 +462,6 @@ public class Question4Activity extends AppCompatActivity {
 
                  */
 
-                if (!not_covered.equals("")) {
-                    recordEvent(not_covered + " Early Mask On");
-                    not_covered = "";
-                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34});
                     recordEvent("Option3 Mask Off");
@@ -494,10 +481,6 @@ public class Question4Activity extends AppCompatActivity {
 
                  */
 
-                if (!not_covered.equals("")) {
-                    recordEvent(not_covered + " Early Mask On");
-                    not_covered = "";
-                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
                     recordEvent("Option4 Mask Off");

@@ -260,10 +260,6 @@ public class QuestionActivity extends AppCompatActivity {
                 }
 
                  */
-                if (!not_covered.equals("")) {
-                    recordEvent(not_covered + " Early Mask On");
-                    not_covered = "";
-                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
                     buttonSelect2.setEnabled(false);
@@ -283,10 +279,6 @@ public class QuestionActivity extends AppCompatActivity {
                 } catch (IOException e) {}
 
                  */
-                if (!not_covered.equals("")) {
-                    recordEvent(not_covered + " Early Mask On");
-                    not_covered = "";
-                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
                     buttonSelect1.setEnabled(false);
