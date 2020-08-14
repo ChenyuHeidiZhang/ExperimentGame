@@ -30,6 +30,7 @@ import java.io.IOException;
 
 public class ResultActivity extends AppCompatActivity {
     private double amountWon;
+    private String temp;
     private Trial prevTrial;
     private ImageView imageViewCongrats;
     private TextView textViewSorry;
@@ -67,7 +68,7 @@ public class ResultActivity extends AppCompatActivity {
         buttonNextTrial = findViewById(R.id.button_next_trial);
 
         amountWon = getIntent().getDoubleExtra("EXTRA_AMOUNT_WON", 0);   // get amount won passed as extra
-
+        temp = getIntent().getStringExtra("DATABASE_RECORD_STRING");
         SharedPreferences demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
 
@@ -112,6 +113,7 @@ public class ResultActivity extends AppCompatActivity {
 
                 //buttonNextTrial.setVisibility(View.VISIBLE);
                 displayResult();
+                timeRecordDb.insertData(getCurrentTime(), temp);
             }
         }, 1000);
         //wait for 1 second to display next
@@ -130,7 +132,7 @@ public class ResultActivity extends AppCompatActivity {
                 buttonNextTrial.setVisibility(View.VISIBLE);
                 timeRecordDb.insertData(getCurrentTime(), "Next Button Displayed");
             }
-        }, 1000);
+        }, 1500);
 
         buttonNextTrial.setOnClickListener(new View.OnClickListener() {
             @Override

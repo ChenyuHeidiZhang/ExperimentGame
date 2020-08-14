@@ -248,6 +248,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
+                    recordEvent("Option1 Mask Off");
                     showResult(a1, 1);
                 }
             }
@@ -269,6 +270,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
+                    recordEvent("Option2 Mask Off");
                     showResult(a2, 2);
                 }
             }
@@ -495,8 +497,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         } else {  // "no outcome".equals(outcome)
             amountWon = 0;
         }
-
-       dbTstamp = recordEvent("Option" + option + " selected, $" + amountWon + " won");
+        final String temp = "Option" + option + " selected, $" + amountWon + " won";
         /* Bluetooth
         try {
             // send identifier and timestamp
@@ -514,6 +515,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(QuestionActivityHorizontal.this, ResultActivity.class);
                 intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
+                intent.putExtra("DATABASE_RECORD_STRING", temp);
 
 
                 startActivity(intent);

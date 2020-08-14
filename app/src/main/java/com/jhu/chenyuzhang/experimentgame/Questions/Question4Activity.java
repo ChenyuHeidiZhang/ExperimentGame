@@ -790,8 +790,7 @@ public class Question4Activity extends AppCompatActivity {
         } else {  // "no outcome".equals(outcome)
             amountWon = 0;
         }
-
-        dbTstamp = recordEvent("Option" + option + " selected, $" + amountWon + " won");
+        final String temp = "Option" + option + " selected, $" + amountWon + " won";
         /* Bluetooth
 
         try {
@@ -810,6 +809,7 @@ public class Question4Activity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(Question4Activity.this, ResultActivity.class);
                 intent.putExtra("EXTRA_AMOUNT_WON",amountWon);
+                intent.putExtra("DATABASE_RECORD_STRING", temp);
                 startActivity(intent);
                 finish();
             }

@@ -681,7 +681,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             amountWon = 0;
         }
 
-        dbTstamp = recordEvent("Option" + option + " selected, $" + amountWon + " won");
+        //Store the display of amount into a string
+        final String temp = "Option" + option + " selected, $" + amountWon + " won";
         timeRecordDb.close();
         /* Bluetooth
         try {
@@ -700,6 +701,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(Question2Att4OpActivity.this, ResultActivity.class);
                 intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
+                intent.putExtra("DATABASE_RECORD_STRING", temp);
                 startActivity(intent);
                 finish();
             }

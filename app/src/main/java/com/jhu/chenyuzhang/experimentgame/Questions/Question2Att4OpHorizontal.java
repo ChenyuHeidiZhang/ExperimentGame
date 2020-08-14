@@ -679,8 +679,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         } else {  // "no outcome".equals(outcome)
             amountWon = 0;
         }
-
-        dbTstamp = recordEvent("Option" + option + " selected, $" + amountWon + " won");
+        final String temp = "Option" + option + " selected, $" + amountWon + " won";
         /* Bluetooth
         try {
             // send identifier and timestamp
@@ -698,6 +697,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(Question2Att4OpHorizontal.this, ResultActivity.class);
                 intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
+                intent.putExtra("DATABASE_RECORD_STRING", temp);
                 startActivity(intent);
                 finish();
             }
