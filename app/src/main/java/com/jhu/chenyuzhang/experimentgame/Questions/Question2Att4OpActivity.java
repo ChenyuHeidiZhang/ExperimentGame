@@ -336,7 +336,10 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
                  */
 
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
                     recordEvent(("Option1 Mask Off"));
@@ -355,7 +358,10 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 } catch (IOException e) {e.printStackTrace();}
 
                  */
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
                     recordEvent("Option2 Mask Off");
@@ -374,7 +380,10 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 } catch (IOException e) {e.printStackTrace();}
 
                  */
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32});
                     recordEvent("Option3 Mask Off");
@@ -392,7 +401,10 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 } catch (IOException e) {e.printStackTrace();}
 
                  */
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42});
                     recordEvent("Option4 Mask Off");

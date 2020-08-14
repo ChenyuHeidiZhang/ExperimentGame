@@ -70,6 +70,7 @@ public class QuestionActivity extends AppCompatActivity {
     private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
     private String dbTstamp;
+    private String not_covered = "";
 
     private long backPressedTime;
     private long startTime;
@@ -259,7 +260,10 @@ public class QuestionActivity extends AppCompatActivity {
                 }
 
                  */
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
                     buttonSelect2.setEnabled(false);
@@ -278,7 +282,10 @@ public class QuestionActivity extends AppCompatActivity {
                 } catch (IOException e) {}
 
                  */
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
                     buttonSelect1.setEnabled(false);
@@ -293,6 +300,7 @@ public class QuestionActivity extends AppCompatActivity {
         /* on tap, if the attribute view is covered, uncover it for 1s and cover other attributes */
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
+
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
             /* Bluetooth
             try {
@@ -303,9 +311,26 @@ public class QuestionActivity extends AppCompatActivity {
              */
 
             //armVSyncHandlerA1();
+            if (!not_covered.equals("")) {
+                /* if other attributes are uncovered, cover them */
+                for (ViewAnimator v: otherViews) {
+                    if (v.getDisplayedChild() == 1) {
+                        dbTstamp = recordEvent(not_covered + " Early Mask On");
+                        not_covered = "";
+                    /* Bluetooth
+                    try {
+                        bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
+                    } catch (IOException e) {}
 
+                     */
+
+                        v.showNext();
+                    }
+                }
+            }
             tappedView.showNext();  /* uncover */
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+            not_covered = codes[2] + ", " + codes[3];
             /* Bluetooth
             try {
                 bluetooth.timeStamper( codes[1], dbTstamp);
@@ -324,6 +349,7 @@ public class QuestionActivity extends AppCompatActivity {
                     if (tappedView.getDisplayedChild() == 1) {
                         tappedView.showNext();
                         dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
+                        not_covered = "";
                         /* Bluetooth
                         try {
                             bluetooth.timeStamper( identifier_cover, dbTstamp);
@@ -335,20 +361,7 @@ public class QuestionActivity extends AppCompatActivity {
             }, 1000);
             viewHandlerMap.put(tappedView.getId(), handler);
 
-            /* if other attributes are uncovered, cover them */
-            for (ViewAnimator v: otherViews) {
-                if (v.getDisplayedChild() == 1) {
-                    dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " Early Mask On");
-                    /* Bluetooth
-                    try {
-                        bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
-                    } catch (IOException e) {}
 
-                     */
-
-                    v.showNext();
-                }
-            }
         }
 
         countDownTimer.cancel();

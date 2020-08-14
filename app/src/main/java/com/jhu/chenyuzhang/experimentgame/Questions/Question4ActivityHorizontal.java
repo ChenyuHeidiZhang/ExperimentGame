@@ -66,6 +66,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
     private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
     private String dbTstamp;
+    private String not_covered = "";
 
     private long backPressedTime;
     private long startTime;
@@ -428,9 +429,13 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
                  */
 
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14});
+                    recordEvent("Option1 Mask Off");
                     showResult(ap1, am1, 1);
                 }
             }
@@ -447,9 +452,13 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
                  */
 
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24});
+                    recordEvent("Option2 Mask Off");
                     showResult(ap2, am2, 2);
                 }
             }
@@ -466,9 +475,13 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
                  */
 
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34});
+                    recordEvent("Option3 Mask Off");
                     showResult(ap3, am3, 3);
                 }
             }
@@ -485,9 +498,13 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
                  */
 
-
+                if (!not_covered.equals("")) {
+                    recordEvent(not_covered + " Early Mask On");
+                    not_covered = "";
+                }
                 if (checkMinimumTimePassed()) {
                     unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44});
+                    recordEvent("Option4 Mask Off");
                     showResult(ap4, am4, 4);
                 }
             }
@@ -499,6 +516,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
         /* on tap, if the attribute view is covered, uncover it for 1s and cover other attributes */
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
+
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
             /* Bluetooth
             try {
@@ -508,11 +526,29 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
              */
 
+            if (!not_covered.equals("")) {
+                /* if other attributes are uncovered, cover them */
+                for (ViewAnimator v: otherViews) {
+                    if (v.getDisplayedChild() == 1) {
+                        dbTstamp = recordEvent(not_covered +  " Early Mask On");
+                        not_covered = "";
+                    /* Bluetooth
+                    try {
+                        bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
+                    } catch (IOException e) {}
 
+                     */
+
+
+                        v.showNext();
+                    }
+                }
+            }
             //armVSyncHandlerA1();
 
             tappedView.showNext();  /* uncover */
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+            not_covered = codes[2] + ", " + codes[3];
             /* Bluetooth
             try {
                 bluetooth.timeStamper( codes[1], dbTstamp);
@@ -532,6 +568,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
                     if (tappedView.getDisplayedChild() == 1) {
                         tappedView.showNext();
                         dbTstamp = recordEvent(codes[2] + " " + eventTimeOut);
+                        not_covered = "";
                         /* Bluetooth
                         try {
                             bluetooth.timeStamper( identifier_cover, dbTstamp);
@@ -546,21 +583,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
             }, 1000);
             viewHandlerMap.put(tappedView.getId(), handler);
 
-            /* if other attributes are uncovered, cover them */
-            for (ViewAnimator v: otherViews) {
-                if (v.getDisplayedChild() == 1) {
-                    dbTstamp = recordEvent(codes[2] + " " + codes[3] +  " Early Mask On");
-                    /* Bluetooth
-                    try {
-                        bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
-                    } catch (IOException e) {}
 
-                     */
-
-
-                    v.showNext();
-                }
-            }
         }
 
         countDownTimer.cancel();
