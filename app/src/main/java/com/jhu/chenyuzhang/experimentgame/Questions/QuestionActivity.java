@@ -348,7 +348,7 @@ public class QuestionActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (tappedView.getDisplayedChild() == 1) {
+                    if (tappedView.getDisplayedChild() == 1 && !not_covered.equals("")) {
                         tappedView.showNext();
                         dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                         not_covered = "";
