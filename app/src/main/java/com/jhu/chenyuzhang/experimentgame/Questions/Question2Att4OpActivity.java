@@ -472,7 +472,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1) {
                         tappedView.showNext();
-                        dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
+                        dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                         not_covered = "";
                         /* Bluetooth
                         try {
