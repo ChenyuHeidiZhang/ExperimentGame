@@ -98,6 +98,7 @@ public class ResultActivity extends AppCompatActivity {
         prevTrial = trialInfoDb.getTrial(trialCounter);
 
         Handler handler = new Handler();
+        timeRecordDb.insertData(getCurrentTime(), "Blank Blue Screen On");
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -109,8 +110,25 @@ public class ResultActivity extends AppCompatActivity {
                 } catch (IOException e) {}
                  */
 
-                buttonNextTrial.setVisibility(View.VISIBLE);
+                //buttonNextTrial.setVisibility(View.VISIBLE);
                 displayResult();
+            }
+        }, 1000);
+        //wait for 1 second to display next
+        Handler next_handler = new Handler();
+        next_handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                /*
+                try {
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( "resultID", getCurrentTime());
+                    //bluetooth.sendData(String.format ("%.2f",amountWon));
+                } catch (IOException e) {}
+                 */
+
+                buttonNextTrial.setVisibility(View.VISIBLE);
+                timeRecordDb.insertData(getCurrentTime(), "Next Button Displayed");
             }
         }, 1000);
 
@@ -134,6 +152,7 @@ public class ResultActivity extends AppCompatActivity {
                 }
 
                  */
+                timeRecordDb.insertData(getCurrentTime(), "Next Tapped");
                 Intent intent = getNextIntent();
                 startActivity(intent);
                 finish();
