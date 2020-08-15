@@ -30,11 +30,14 @@ import java.io.IOException;
 
 public class ResultActivity extends AppCompatActivity {
     private double amountWon;
+    private String temp;
+    private String bluetooth_indicator;
     private Trial prevTrial;
     private ImageView imageViewCongrats;
     private TextView textViewSorry;
     private TextView textViewAmount;
     private Button buttonNextTrial;
+    private String dbTstamp;
 
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
@@ -50,6 +53,9 @@ public class ResultActivity extends AppCompatActivity {
     TimeDbHelper timeRecordDb;
     Bluetooth bluetooth;
     private String resultID = "37";
+    private String next_button = "32";
+    private String tap_next = "31";
+    private String blue_screen = "30";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +73,8 @@ public class ResultActivity extends AppCompatActivity {
         buttonNextTrial = findViewById(R.id.button_next_trial);
 
         amountWon = getIntent().getDoubleExtra("EXTRA_AMOUNT_WON", 0);   // get amount won passed as extra
-
+        temp = getIntent().getStringExtra("DATABASE_RECORD_STRING");
+        bluetooth_indicator = getIntent().getStringExtra("RESULTID");
         SharedPreferences demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
 
@@ -99,6 +106,8 @@ public class ResultActivity extends AppCompatActivity {
         prevTrial = trialInfoDb.getTrial(trialCounter);
 
         Handler handler = new Handler();
+        dbTstamp = recordEvent("Blank Blue Screen On");
+        bluetooth.timeStamper(blue_screen, dbTstamp);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -110,10 +119,21 @@ public class ResultActivity extends AppCompatActivity {
                 } catch (IOException e) {}
                  */
 
-                buttonNextTrial.setVisibility(View.VISIBLE);
+
                 displayResult();
+                dbTstamp = recordEvent(temp);
+                bluetooth.timeStamper(bluetooth_indicator, dbTstamp);
             }
         }, 1000);
+        Handler next_handler = new Handler();
+        next_handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                buttonNextTrial.setVisibility(View.VISIBLE);
+                dbTstamp = recordEvent("Show 'Next' button");
+                bluetooth.timeStamper(next_button, dbTstamp);
+            }
+        }, 1500);
 
         buttonNextTrial.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +155,8 @@ public class ResultActivity extends AppCompatActivity {
                 }
 
                  */
+                dbTstamp = recordEvent("Tapped 'Next'");
+                bluetooth.timeStamper(tap_next, dbTstamp);
                 Intent intent = getNextIntent();
                 startActivity(intent);
                 finish();
@@ -244,5 +266,14 @@ public class ResultActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
         String formattedDate= dateFormat.format(date);
         return formattedDate;
+    }
+
+    private String recordEvent(String event) {
+        //long timeSpan = System.nanoTime() - startTime;
+        //String timeString = String.format("%d", timeSpan / 1000);
+        String timeString = getCurrentTime();
+
+        timeRecordDb.insertData(timeString, event);
+        return timeString;
     }
 }
