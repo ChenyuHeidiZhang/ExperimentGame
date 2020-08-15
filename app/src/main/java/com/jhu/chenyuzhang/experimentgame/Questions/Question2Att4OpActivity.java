@@ -67,7 +67,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     private String eventTimeOut = "TimeOut, Mask On";
     private String dbTstamp;
     private String temp_click_holder = "";
-    private String temp_click_bluetooth = "";
 
     private long backPressedTime;
     private long startTime;
@@ -394,8 +393,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                     if (tappedView.getDisplayedChild() == 1 && !temp_click_holder.equals("")) {
                         tappedView.showNext();
                         dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
-                        temp_click_holder = "";
                         bluetooth.timeStamper(identifier_cover, dbTstamp);
+                        temp_click_holder = "";
                     }
                 }
             }, 1000);

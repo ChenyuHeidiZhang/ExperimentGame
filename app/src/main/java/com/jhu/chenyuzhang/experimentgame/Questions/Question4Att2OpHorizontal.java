@@ -84,6 +84,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
     private String identifier_coverEarly = "35";
     private String choice = "36";
     private String resultID = "37";
+    private String select_uncover = "33";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,7 +269,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 bluetooth.timeStamper( choice, dbTstamp);
 
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14});
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14}, "Option1");
                     showResult(ap1, am1, 1);
                 }
             }
@@ -281,7 +282,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 bluetooth.timeStamper( choice, dbTstamp);
 
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24});
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24}, "Option2");
                     showResult(ap2, am2, 2);
                 }
             }
@@ -298,41 +299,43 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
             // send identifier and timestamp
             bluetooth.timeStamper( codes[0], dbTstamp);
 
+            if (!temp_click_holder.equals("")) {
+                /* if other attributes are uncovered, cover them */
+                for (ViewAnimator v: otherViews) {
+                    if (v.getDisplayedChild() == 1) {
+                        dbTstamp = recordEvent(temp_click_holder + " Early Mask On");
+                        // event code and timestamp if another attribute is tapped before time up
+                        bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
+                        temp_click_holder = "";
+
+
+                        v.showNext();
+                    }
+                }
+            }
             tappedView.showNext();  /* uncover */
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
-            temp_click_holder = codes[2] + ", " + codes[3];
             // send event code for attribute displayed
             bluetooth.timeStamper( codes[1], dbTstamp);
+            temp_click_holder = codes[2] + ", " + codes[3];
+
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (tappedView.getDisplayedChild() == 1) {
+                    if (tappedView.getDisplayedChild() == 1 && !temp_click_holder.equals("")) {
                         tappedView.showNext();
                         dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
-                        temp_click_holder = "";
                         //event code and time attribute is remasked after time up
                         bluetooth.timeStamper( identifier_cover, dbTstamp);
+                        temp_click_holder = "";
+
                     }
                 }
             }, 1000);
             viewHandlerMap.put(tappedView.getId(), handler);
-
-            /* if other attributes are uncovered, cover them */
-            for (ViewAnimator v: otherViews) {
-                if (v.getDisplayedChild() == 1) {
-                    if (!temp_click_holder.equals("")) {
-                        dbTstamp = recordEvent(temp_click_holder + " Early Mask On");
-                        temp_click_holder = "";
-                    }
-                    // event code and timestamp if another attribute is tapped before time up
-                    bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
-
-                    v.showNext();
-                }
-            }
         }
 
         countDownTimer.cancel();
@@ -527,7 +530,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         return true;
     }
 
-    private void unmaskAttributes(ViewAnimator[] viewAnimators) {
+    private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             Handler handler = viewHandlerMap.get(v.getId());
@@ -535,7 +538,8 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
-
+        dbTstamp = recordEvent(option + " Mask Off");
+        bluetooth.timeStamper(select_uncover, dbTstamp);
         buttonSelect1.setEnabled(false);
         buttonSelect2.setEnabled(false);
     }
@@ -551,9 +555,9 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
             amountWon = 0;
         }
 
-        dbTstamp = recordEvent("Option" + option + " selected, $" + amountWon + " won");
+        final String temp = "Option" + option + " selected, $" + amountWon + " won";
         // send identifier and timestamp
-        bluetooth.timeStamper( resultID, dbTstamp);
+        //bluetooth.timeStamper( resultID, dbTstamp);
         //bluetooth.sendData(String.format ("%.2f",amountWon));
 
         timeRecordDb.close();
@@ -565,6 +569,8 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(Question4Att2OpHorizontal.this, ResultActivity.class);
                 intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
+                intent.putExtra("DATABASE_RECORD_STRING", temp);
+                intent.putExtra("RESULTID", resultID);
                 startActivity(intent);
                 finish();
             }
