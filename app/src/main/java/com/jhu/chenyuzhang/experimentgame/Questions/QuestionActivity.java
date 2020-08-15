@@ -89,7 +89,7 @@ public class QuestionActivity extends AppCompatActivity {
     private String identifier_coverEarly = "35";
     private String choice = "36";
     private String resultID = "37";
-    private String select_uncover = "33";
+    private String select_uncover = "41";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,10 +191,10 @@ public class QuestionActivity extends AppCompatActivity {
                 + ", " + "22 " + attributes.get(6) + " " + attributes.get(7));
 
         // send attribute magnitudes
-        bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+50.0)));
-        bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+50.0)));
-        bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+50.0)));
-        bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+50.0)));
+        bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+60.0)));
+        bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+60.0)));
+        bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+60.0)));
+        bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+60.0)));
 
         // end the stream with the identifier 0
         bluetooth.timeStamper(Integer.toString(0), dbTstamp);

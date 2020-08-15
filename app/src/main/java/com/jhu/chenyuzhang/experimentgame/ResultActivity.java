@@ -53,9 +53,9 @@ public class ResultActivity extends AppCompatActivity {
     TimeDbHelper timeRecordDb;
     Bluetooth bluetooth;
     private String resultID = "37";
-    private String next_button = "32";
-    private String tap_next = "31";
-    private String blue_screen = "30";
+    private String next_button = "38";
+    private String tap_next = "39";
+    private String blue_screen = "40";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
