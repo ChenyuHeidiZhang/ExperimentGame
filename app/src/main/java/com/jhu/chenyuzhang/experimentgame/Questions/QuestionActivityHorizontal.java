@@ -243,8 +243,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
-                    recordEvent("Option1 Mask Off");
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12}, "Option1");
                     showResult(a1, 1);
                 }
             }
@@ -261,8 +260,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
-                    recordEvent("Option2 Mask Off");
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22}, "Option2");
                     showResult(a2, 2);
                 }
             }
@@ -468,7 +466,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         return true;
     }
 
-    private void unmaskAttributes(ViewAnimator[] viewAnimators) {
+    private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             Handler handler = viewHandlerMap.get(v.getId());
@@ -476,7 +474,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
-
+        recordEvent(option + " Mask off");
         buttonSelect1.setEnabled(false);
         buttonSelect2.setEnabled(false);
     }

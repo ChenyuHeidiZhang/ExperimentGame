@@ -300,8 +300,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14});
-                    recordEvent("Option1 Mask off");
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14}, "Option1");
                     showResult(ap1, am1, 1);
                 }
             }
@@ -318,8 +317,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24});
-                    recordEvent("Option2 Mask Off");
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24}, "Option2");
                     showResult(ap2, am2, 2);
                 }
             }
@@ -534,7 +532,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
         return true;
     }
 
-    private void unmaskAttributes(ViewAnimator[] viewAnimators) {
+    private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             Handler handler = viewHandlerMap.get(v.getId());
@@ -542,7 +540,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
-
+        recordEvent(option + " Mask off");
         buttonSelect1.setEnabled(false);
         buttonSelect2.setEnabled(false);
     }

@@ -337,8 +337,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                  */
 
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
-                    recordEvent("Option1 Mask Off");
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12}, "Option1");
                     showResult(a1, 1);
                 }
             }
@@ -355,8 +354,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
-                    recordEvent("Option2 Mask Off");
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22}, "Option2");
                     showResult(a2, 2);
                 }
             }
@@ -373,8 +371,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32});
-                    recordEvent("Option3 Mask Off");
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32}, "Option3");
                     showResult(a3, 3);
                 }
             }
@@ -390,8 +387,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42});
-                    recordEvent("Option4 Mask Off");
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42}, "Option4");
                     showResult(a4, 4);
                 }
             }
@@ -640,7 +636,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         return true;
     }
 
-    private void unmaskAttributes(ViewAnimator[] viewAnimators) {
+    private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             // Disable the handler (if one exists for the current view) that sets a 1s cover time.
@@ -649,6 +645,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
+        recordEvent(option + " Mask Off");
 
         buttonSelect1.setEnabled(false);
         buttonSelect2.setEnabled(false);
