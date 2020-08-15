@@ -67,6 +67,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     private String eventTimeOut = "TimeOut, Mask On";
     private String dbTstamp;
     private String temp_click_holder = "";
+    private String temp_click_bluetooth = "";
 
     private long backPressedTime;
     private long startTime;
@@ -89,6 +90,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     private String identifier_coverEarly = "35";
     private String choice = "36";
     private String resultID = "37";
+    private String select_uncover = "33";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -307,10 +309,10 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             public void onClick(View V) {
                 dbTstamp = recordEvent("Option1 selected");
                 // send identifier and timestamp
-                bluetooth.timeStamper( choice, dbTstamp);
+                bluetooth.timeStamper(choice, dbTstamp);
 
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12});
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12}, "Option1");
                     showResult(a1, 1);
                 }
             }
@@ -323,7 +325,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 bluetooth.timeStamper( choice, dbTstamp);
 
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22});
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22}, "Option2");
                     showResult(a2, 2);
                 }
             }
@@ -336,7 +338,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 bluetooth.timeStamper( choice, dbTstamp);
 
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32});
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32}, "Option3");
                     showResult(a3, 3);
                 }
             }
@@ -348,7 +350,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 bluetooth.timeStamper( choice, dbTstamp);
 
                 if (checkMinimumTimePassed()) {
-                    unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42});
+                    unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42}, "Option4");
                     showResult(a4, 4);
                 }
             }
@@ -362,22 +364,34 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
             // send identifier and timestamp
-            bluetooth.timeStamper( codes[0], dbTstamp);
+            bluetooth.timeStamper(codes[0], dbTstamp);
 
             //armVSyncHandlerA1();
+            if (!temp_click_holder.equals("")) {
+                /* if other attributes are uncovered, cover them */
+                for (ViewAnimator v: otherViews) {
+                    if (v.getDisplayedChild() == 1) {
+                        dbTstamp = recordEvent(temp_click_holder + " Early Mask On");
+                        temp_click_holder = "";
+                        bluetooth.timeStamper(identifier_coverEarly, dbTstamp);
+
+                        v.showNext();
+                    }
+                }
+            }
 
             tappedView.showNext();  /* uncover */
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+            bluetooth.timeStamper(codes[1], dbTstamp);
             //prepare if early mask on, need to store this
             temp_click_holder = codes[2] + ", " + codes[3];
-            bluetooth.timeStamper(codes[1], dbTstamp);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (tappedView.getDisplayedChild() == 1) {
+                    if (tappedView.getDisplayedChild() == 1 && !temp_click_holder.equals("")) {
                         tappedView.showNext();
                         dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                         temp_click_holder = "";
@@ -386,19 +400,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 }
             }, 1000);
             viewHandlerMap.put(tappedView.getId(), handler);
-
-            /* if other attributes are uncovered, cover them */
-            for (ViewAnimator v: otherViews) {
-                if (v.getDisplayedChild() == 1) {
-                    if (!temp_click_holder.equals("")) {
-                        dbTstamp = recordEvent(temp_click_holder + " Early Mask On");
-                        temp_click_holder = "";
-                    }
-                    bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
-
-                    v.showNext();
-                }
-            }
         }
 
         countDownTimer.cancel();
@@ -637,7 +638,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         return true;
     }
 
-    private void unmaskAttributes(ViewAnimator[] viewAnimators) {
+    private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             // Disable the handler (if one exists for the current view) that sets a 1s cover time.
@@ -646,7 +647,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
-
+        dbTstamp = recordEvent(option + " Mask Off");
+        bluetooth.timeStamper(select_uncover, dbTstamp);
         buttonSelect1.setEnabled(false);
         buttonSelect2.setEnabled(false);
         buttonSelect3.setEnabled(false);
@@ -661,11 +663,10 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         } else {  // "no outcome".equals(outcome)
             amountWon = 0;
         }
-
-        dbTstamp = recordEvent("Option" + option + " selected, $" + amountWon + " won");
+        final String temp = "Option" +  option + " selected, $" + amountWon + " won";
         timeRecordDb.close();
         // send identifier and timestamp
-        bluetooth.timeStamper( resultID, dbTstamp);
+        //bluetooth.timeStamper( resultID, dbTstamp);
         //bluetooth.sendData(String.format ("%.2f",amountWon));
 
         // Wait for one second during the display of attributes.
@@ -675,6 +676,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(Question2Att4OpActivity.this, ResultActivity.class);
                 intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
+                intent.putExtra("DATABASE_RECORD_STRING", temp);
+                intent.putExtra("RESULTID", resultID);
                 startActivity(intent);
                 finish();
             }
