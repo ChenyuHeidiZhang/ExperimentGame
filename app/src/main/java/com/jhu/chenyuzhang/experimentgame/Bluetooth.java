@@ -2,6 +2,10 @@ package com.jhu.chenyuzhang.experimentgame;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.widget.TextView;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -38,6 +42,8 @@ public class Bluetooth extends AppCompatActivity {
     private static BluetoothSocket mmSocket;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothDevice mmDevice;
+    BluetoothGattCallback mGatCallback;
+    BluetoothGatt mBluetoothGatt;
     public static OutputStream mmOutputStream;
     public static InputStream mmInputStream;
    // public Queue<String> handShakeMessage = new LinkedList<>();
@@ -55,18 +61,14 @@ public class Bluetooth extends AppCompatActivity {
         this.timeRecordDb = db;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void openBT(ParcelUuid[] uuids) throws IOException {
         //UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
-        mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());
-        Log.d(TAG, "createRfcommSocketToServiceRecord" + uuids[0].getUuid());
-        mmSocket.connect();
+        mBluetoothGatt = mmDevice.connectGatt(context, false, mGatCallback);
         Log.d(TAG, "connect");
-        mmOutputStream = mmSocket.getOutputStream();
-        mmInputStream = mmSocket.getInputStream();
-        beginListenForData();
-
-        Log.d(TAG,"Bluetooth Opened");
     }
+
+
 
     public void timeStamper(String identity, String tstmp) {
         try {
@@ -172,46 +174,6 @@ public class Bluetooth extends AppCompatActivity {
         });
         workerThread.start();
     }
-
-
-    /**
-     * First pop up window to inform that the bluetooth is not working
-     * Then try to reconnect to bluetooth
-     */
-    /*
-    public void reconnectToBt(int n) {
-        //int = 1: handshake message incorrect
-        //int = 2: bluetooth not responsive for 500 milliseconds
-        //int = 3: the thread is interrupted
-        LayoutInflater li = LayoutInflater.from(context);
-        View promptsView = li.inflate(R.layout.popup, null);
-        TextView message = promptsView.findViewById(R.id.popupmessage);
-        if (n == 1) {
-            message.setText(R.string.handshake_error);
-        }
-        else if (n == 2) {
-            message.setText(R.string.bluetooth_error);
-        }
-        else {
-            message.setText(R.string.thread_error);
-        }
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        alertDialogBuilder.setView(promptsView);
-        alertDialogBuilder
-                .setCancelable(true)
-                .setNegativeButton("Retry", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-        beginListenForData();
-    }
-
-     */
     /**
      * Reset input and output streams and make sure socket is closed.
      * This method will be used when app is quit to ensure that the connection is properly closed during a shutdown.
@@ -244,5 +206,13 @@ public class Bluetooth extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
         String formattedDate= dateFormat.format(date);
         return formattedDate;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public void close() {
+        if (mBluetoothGatt == null) {
+            return;
+        }
+        mBluetoothGatt.close();
+        mBluetoothGatt = null;
     }
 }

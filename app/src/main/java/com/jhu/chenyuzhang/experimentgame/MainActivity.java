@@ -3,6 +3,7 @@ package com.jhu.chenyuzhang.experimentgame;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -198,12 +200,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /* Returns true if bluetooth adapter is successfully initiated or false otherwise. */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public boolean initiateBT() {
-        bluetooth.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(bluetooth.mBluetoothAdapter == null) {
+        // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
+        // BluetoothAdapter through BluetoothManager.
+        final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        bluetooth.mBluetoothAdapter = bluetoothManager.getAdapter();
+
+        // 确认当前设备的蓝牙是否可用,
+        // 如果不可用, 弹出一个对话框, 请求打开设备的蓝牙模块
+        if (bluetooth.mBluetoothAdapter == null || !bluetooth.mBluetoothAdapter.isEnabled()) {
             Log.d(TAG,"No bluetooth adapter available");
             return false;
-        } else {
+        }
+        else {
             Log.d(TAG, "Bluetooth adapter is not null");
         }
 
