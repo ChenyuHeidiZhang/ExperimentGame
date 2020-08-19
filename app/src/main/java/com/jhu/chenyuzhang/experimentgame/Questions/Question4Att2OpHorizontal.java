@@ -63,7 +63,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
     private String eventDisplay = "Show";
     private String eventTimeOut = "TimeOut, Mask On";
     private String dbTstamp;
-    private String temp_click_holder;
+    private String temp_click_holder = "";
 
     private long backPressedTime;
     private long startTime;
