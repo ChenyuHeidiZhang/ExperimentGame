@@ -795,7 +795,7 @@ public class Question4Activity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 1000);
+        }, 2000);
     }
 
     @Override

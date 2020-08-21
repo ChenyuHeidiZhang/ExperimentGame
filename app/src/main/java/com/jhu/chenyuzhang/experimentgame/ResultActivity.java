@@ -133,7 +133,7 @@ public class ResultActivity extends AppCompatActivity {
                 dbTstamp = recordEvent("Show 'Next' button");
                 bluetooth.timeStamper(next_button, dbTstamp);
             }
-        }, 1500);
+        }, 2000);
 
         buttonNextTrial.setOnClickListener(new View.OnClickListener() {
             @Override
