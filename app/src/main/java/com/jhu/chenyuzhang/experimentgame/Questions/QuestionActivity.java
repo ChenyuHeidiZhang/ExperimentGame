@@ -44,6 +44,7 @@ public class QuestionActivity extends AppCompatActivity {
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
     private SharedPreferences demo_prefs;
+    private SharedPreferences prefTrialStatus;
 
     private CountDownTimer countDownTimer;
 
@@ -94,6 +95,8 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
+        prefTrialStatus.edit().putBoolean("trialDone", false).apply();
 
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -231,6 +234,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option1 selected");
                 // send identifier and timestamp
                 bluetooth.timeStamper( choice, dbTstamp);
@@ -245,6 +249,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option2 selected");
                 // send identifier and timestamp
                 bluetooth.timeStamper( choice, dbTstamp);

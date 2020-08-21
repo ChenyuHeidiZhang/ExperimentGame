@@ -46,6 +46,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private Trial currentTrial;
     public static int trialCounter;
     private SharedPreferences counter_prefs;
+    private SharedPreferences prefTrialStatus;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
     private double amountWon;
     private double a1;
@@ -89,6 +90,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
+        prefTrialStatus.edit().putBoolean("trialDone", false).apply();
 
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -225,6 +228,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option1 selected");
                 // send identifier and timestamp
                 bluetooth.timeStamper( choice, dbTstamp);
@@ -238,6 +242,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option2 selected");
                 // send identifier and timestamp
                 bluetooth.timeStamper( choice, dbTstamp);
