@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.ParcelUuid;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -150,11 +151,18 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(context, "You should connect to bluetooth first", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    if (prefTrialStatus.getBoolean("trialDone", false)) {
-                        incrementTrialCounter();
-                    }
-                    Intent intent = getNextIntent();
-                    startActivity(intent);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (prefTrialStatus.getBoolean("trialDone", false)) {
+                                incrementTrialCounter();
+                            }
+
+                            Intent intent = getNextIntent();
+                            startActivity(intent);
+                        }
+                    }, 2000);
                 }
             }
         });
