@@ -45,6 +45,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
     private Trial currentTrial;
     private static int trialCounter;
     private SharedPreferences counter_prefs;
+    private SharedPreferences prefTrialStatus;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
 
     private double amountWon;
@@ -89,7 +90,8 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
+        prefTrialStatus.edit().putBoolean("trialDone", false).apply();
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -420,6 +422,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option1 selected");
                 /* Bluetooth
                 try {
@@ -438,6 +441,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option2 selected");
                 /* Bluetooth
                 try {
@@ -456,6 +460,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option3 selected");
                 /* Bluetooth
                 try {
@@ -474,6 +479,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
 
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option4 selected");
                 /* Bluetooth
                 try {

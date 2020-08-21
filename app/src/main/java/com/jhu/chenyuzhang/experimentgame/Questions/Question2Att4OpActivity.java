@@ -40,6 +40,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
     private SharedPreferences demo_prefs;
+    private SharedPreferences prefTrialStatus;
 
     private CountDownTimer countDownTimer;
 
@@ -93,6 +94,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
+        prefTrialStatus.edit().putBoolean("trialDone", false).apply();
 
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -327,6 +330,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option1 selected");
                 /* Bluetooth
                 try {
@@ -345,6 +349,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option2 selected");
                 /* Bluetooth
                 try {
@@ -362,6 +367,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option3 selected");
                 /* Bluetooth
                 try {
@@ -379,6 +385,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
+                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 /* Bluetooth
                 try {
                     // send identifier and timestamp

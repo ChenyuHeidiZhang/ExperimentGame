@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefSignedIn;
     private static final String KEY_CONNECTED_BLUETOOTH = "keyConnectedBluetooth";
     private SharedPreferences prefBluetooth;
+    private SharedPreferences prefTrialStatus;
+    private SharedPreferences counter_prefs;
 
     private TimeDbHelper timeRecordDb;
 
@@ -94,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         // bluetooth set up
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
+
+        prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
+        counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
 
         if (!initiateBT()) {
             Toast.makeText(this, "No bluetooth adapter available. Cannot connect to Bluetooth.", Toast.LENGTH_SHORT).show();
@@ -139,6 +144,9 @@ public class MainActivity extends AppCompatActivity {
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (prefTrialStatus.getBoolean("trialDone", false)) {
+                    incrementTrialCounter();
+                }
                 Intent intent = getNextIntent();
                 startActivity(intent);
             }
@@ -150,6 +158,15 @@ public class MainActivity extends AppCompatActivity {
                 checkPasswordDialog();
             }
         });
+    }
+    private void incrementTrialCounter() {  // increment trial counter
+        if (trialCounter == trialInfoDb.getNumRows()){
+            trialCounter = 1;       // wrap around if reaches the end
+        } else {
+            trialCounter++;
+        }
+
+        counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trialCounter).apply();
     }
 
     private Trial getNextTrial() {
