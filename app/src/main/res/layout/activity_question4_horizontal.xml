@@ -21,47 +21,50 @@
         android:textColor="@color/pinky"
         android:textStyle="bold"
         android:textSize="50sp"/>
+
     <Button
         android:id="@+id/button_end_demo"
         android:layout_width="150dp"
-        android:layout_height="70dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_height="60dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
-        android:visibility="invisible"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@color/pink"
         android:text="@string/end_demo"
-        android:textSize="20sp"
         android:textColor="@color/white"
-        android:background="@color/pink"/>
+        android:textSize="20sp"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingStart="20dp"
-        android:paddingRight="20dp"
-        android:paddingEnd="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        android:paddingStart="20dp"
+        android:paddingLeft="10dp"
+        android:paddingEnd="20dp"
+        android:paddingRight="20dp">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/option1"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:orientation="horizontal"
+            android:background="@color/gray"
             android:gravity="center"
-            android:background="@color/gray">
+            android:orientation="horizontal">
 
             <ViewAnimator
                 android:id="@+id/view_animator_11"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/image_view_11"
@@ -74,12 +77,12 @@
                     android:id="@+id/text_view_11"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="50"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -87,28 +90,28 @@
                 android:id="@+id/view_animator_12"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="150dp"
-                android:layout_marginStart="150dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="150dp"
+                android:layout_marginLeft="150dp">
 
                 <ImageView
                     android:id="@+id/image_view_12"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability_win"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/probability_win" />
 
                 <TextView
                     android:id="@+id/text_view_12"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="40"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -116,28 +119,28 @@
                 android:id="@+id/view_animator_13"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="300dp"
-                android:layout_marginStart="300dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="300dp"
+                android:layout_marginLeft="300dp">
 
                 <ImageView
                     android:id="@+id/image_view_13"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dollar_lose"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/dollar_lose" />
 
                 <TextView
                     android:id="@+id/text_view_13"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="50"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -145,28 +148,28 @@
                 android:id="@+id/view_animator_14"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="450dp"
-                android:layout_marginStart="450dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="450dp"
+                android:layout_marginLeft="450dp">
 
                 <ImageView
                     android:id="@+id/image_view_14"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability_lose"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/probability_lose" />
 
                 <TextView
                     android:id="@+id/text_view_14"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="40"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -191,34 +194,34 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="50dp"
-            android:orientation="horizontal"
+            android:background="@color/gray"
             android:gravity="center"
-            android:background="@color/gray">
+            android:orientation="horizontal">
 
             <ViewAnimator
                 android:id="@+id/view_animator_21"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/image_view_21"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dollar_win"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/dollar_win" />
 
                 <TextView
                     android:id="@+id/text_view_21"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="50"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -226,28 +229,28 @@
                 android:id="@+id/view_animator_22"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="150dp"
-                android:layout_marginStart="150dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="150dp"
+                android:layout_marginLeft="150dp">
 
                 <ImageView
                     android:id="@+id/image_view_22"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability_win"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/probability_win" />
 
                 <TextView
                     android:id="@+id/text_view_22"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="40"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -255,28 +258,28 @@
                 android:id="@+id/view_animator_23"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="300dp"
-                android:layout_marginStart="300dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="300dp"
+                android:layout_marginLeft="300dp">
 
                 <ImageView
                     android:id="@+id/image_view_23"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dollar_lose"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/dollar_lose" />
 
                 <TextView
                     android:id="@+id/text_view_23"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="50"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -284,28 +287,28 @@
                 android:id="@+id/view_animator_24"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="450dp"
-                android:layout_marginStart="450dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="450dp"
+                android:layout_marginLeft="450dp">
 
                 <ImageView
                     android:id="@+id/image_view_24"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability_lose"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/probability_lose" />
 
                 <TextView
                     android:id="@+id/text_view_24"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="40"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -330,34 +333,34 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="50dp"
-            android:orientation="horizontal"
+            android:background="@color/gray"
             android:gravity="center"
-            android:background="@color/gray">
+            android:orientation="horizontal">
 
             <ViewAnimator
                 android:id="@+id/view_animator_31"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/image_view_31"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dollar_win"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/dollar_win" />
 
                 <TextView
                     android:id="@+id/text_view_31"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="50"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -365,28 +368,28 @@
                 android:id="@+id/view_animator_32"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="150dp"
-                android:layout_marginStart="150dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="150dp"
+                android:layout_marginLeft="150dp">
 
                 <ImageView
                     android:id="@+id/image_view_32"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability_win"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/probability_win" />
 
                 <TextView
                     android:id="@+id/text_view_32"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="40"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -394,28 +397,28 @@
                 android:id="@+id/view_animator_33"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="300dp"
-                android:layout_marginStart="300dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="300dp"
+                android:layout_marginLeft="300dp">
 
                 <ImageView
                     android:id="@+id/image_view_33"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dollar_lose"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/dollar_lose" />
 
                 <TextView
                     android:id="@+id/text_view_33"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="50"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -423,28 +426,28 @@
                 android:id="@+id/view_animator_34"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="450dp"
-                android:layout_marginStart="450dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="450dp"
+                android:layout_marginLeft="450dp">
 
                 <ImageView
                     android:id="@+id/image_view_34"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability_lose"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/probability_lose" />
 
                 <TextView
                     android:id="@+id/text_view_34"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="40"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -469,34 +472,34 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="50dp"
-            android:orientation="horizontal"
+            android:background="@color/gray"
             android:gravity="center"
-            android:background="@color/gray">
+            android:orientation="horizontal">
 
             <ViewAnimator
                 android:id="@+id/view_animator_41"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true">
 
                 <ImageView
                     android:id="@+id/image_view_41"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dollar_win"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/dollar_win" />
 
                 <TextView
                     android:id="@+id/text_view_41"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="50"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -504,28 +507,28 @@
                 android:id="@+id/view_animator_42"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="150dp"
-                android:layout_marginStart="150dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="150dp"
+                android:layout_marginLeft="150dp">
 
                 <ImageView
                     android:id="@+id/image_view_42"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability_win"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/probability_win" />
 
                 <TextView
                     android:id="@+id/text_view_42"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="40"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -533,28 +536,28 @@
                 android:id="@+id/view_animator_43"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="300dp"
-                android:layout_marginStart="300dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="300dp"
+                android:layout_marginLeft="300dp">
 
                 <ImageView
                     android:id="@+id/image_view_43"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dollar_lose"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/dollar_lose" />
 
                 <TextView
                     android:id="@+id/text_view_43"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="50"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -562,28 +565,28 @@
                 android:id="@+id/view_animator_44"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="450dp"
-                android:layout_marginStart="450dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="450dp"
+                android:layout_marginLeft="450dp">
 
                 <ImageView
                     android:id="@+id/image_view_44"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/probability_lose"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/probability_lose" />
 
                 <TextView
                     android:id="@+id/text_view_44"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
                     android:text="40"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:visibility="invisible" />
 
             </ViewAnimator>
 
@@ -600,9 +603,6 @@
                 android:textSize="20sp" />
 
         </RelativeLayout>
-
-
-
 
 
     </LinearLayout>
