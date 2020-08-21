@@ -681,7 +681,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 1000);
+        }, 2000);
     }
 
     @Override

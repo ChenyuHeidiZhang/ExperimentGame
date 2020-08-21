@@ -132,7 +132,7 @@ public class ResultActivity extends AppCompatActivity {
                 buttonNextTrial.setVisibility(View.VISIBLE);
                 timeRecordDb.insertData(getCurrentTime(), "Next Button Displayed");
             }
-        }, 1500);
+        }, 2000);
 
         buttonNextTrial.setOnClickListener(new View.OnClickListener() {
             @Override

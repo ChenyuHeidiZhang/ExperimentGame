@@ -577,7 +577,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 1000);
+        }, 2000);
     }
 
     @Override
