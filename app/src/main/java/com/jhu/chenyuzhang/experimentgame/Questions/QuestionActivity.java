@@ -490,6 +490,15 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
+        if (!not_covered.equals("")) {
+            ViewAnimator[] all = new ViewAnimator[]{viewAnimator11, viewAnimator21,
+                    viewAnimator12, viewAnimator22};
+            for (ViewAnimator a : all) {
+                a.setDisplayedChild(0);
+            }
+            recordEvent(not_covered + " Early Mask On");
+            not_covered = "";
+        }
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             // Disable the handler (if one exists for the current view) that sets a 1s cover time.
@@ -497,6 +506,7 @@ public class QuestionActivity extends AppCompatActivity {
             if (handler != null) {
                 handler.removeCallbacksAndMessages(null);
             }
+
         }
         recordEvent(option + " Mask off");
         buttonSelect1.setEnabled(false);

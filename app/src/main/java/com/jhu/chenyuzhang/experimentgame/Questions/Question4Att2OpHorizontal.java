@@ -510,6 +510,15 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
     }
 
     private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
+        if (!not_covered.equals("")) {
+            ViewAnimator[] all = new ViewAnimator[] {viewAnimator11, viewAnimator21, viewAnimator13, viewAnimator23,
+                    viewAnimator12, viewAnimator22, viewAnimator14, viewAnimator14};
+            for (ViewAnimator a : all) {
+                a.setDisplayedChild(0);
+            }
+            recordEvent(not_covered + " Early Mask On");
+            not_covered = "";
+        }
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             Handler handler = viewHandlerMap.get(v.getId());

@@ -752,6 +752,17 @@ public class Question4Activity extends AppCompatActivity {
     }
 
     private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
+        if (!not_covered.equals("")) {
+            ViewAnimator[] all = new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                    viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                    viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                    viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44};
+            for (ViewAnimator a : all) {
+                a.setDisplayedChild(0);
+            }
+            recordEvent(not_covered + " Early Mask On");
+            not_covered = "";
+        }
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             Handler handler = viewHandlerMap.get(v.getId());
