@@ -655,6 +655,16 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
     }
 
     private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
+        if (!temp_click_holder.equals("")) {
+            ViewAnimator[] all = new ViewAnimator[]{viewAnimator11, viewAnimator21, viewAnimator31, viewAnimator41,
+                    viewAnimator12, viewAnimator22, viewAnimator32, viewAnimator42};
+            for (ViewAnimator a : all) {
+                a.setDisplayedChild(0);
+            }
+            dbTstamp = recordEvent(temp_click_holder + " Early Mask On");
+            bluetooth.timeStamper(identifier_coverEarly, dbTstamp);
+            temp_click_holder = "";
+        }
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             // Disable the handler (if one exists for the current view) that sets a 1s cover time.

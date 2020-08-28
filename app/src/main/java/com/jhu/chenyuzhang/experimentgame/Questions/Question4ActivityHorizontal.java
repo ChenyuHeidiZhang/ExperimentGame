@@ -763,6 +763,18 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
     }
 
     private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
+        if (!temp_click_holder.equals("")) {
+            ViewAnimator[] all = new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator14, viewAnimator13,
+                    viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24,
+                    viewAnimator31, viewAnimator32, viewAnimator33, viewAnimator34,
+                    viewAnimator41, viewAnimator42, viewAnimator43, viewAnimator44};
+            for (ViewAnimator a : all) {
+                a.setDisplayedChild(0);
+            }
+            dbTstamp = recordEvent(temp_click_holder + " Early Mask On");
+            bluetooth.timeStamper(identifier_coverEarly, dbTstamp);
+            temp_click_holder = "";
+        }
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             Handler handler = viewHandlerMap.get(v.getId());
