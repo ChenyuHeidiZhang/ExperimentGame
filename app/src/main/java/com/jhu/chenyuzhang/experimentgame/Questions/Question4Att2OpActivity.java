@@ -195,6 +195,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
                 + ", " + "24 " + attributes.get(14) + " " + attributes.get(15));
 
         // send attribute magnitudes
+        bluetooth.timeStamperJustID("41"); // event code for vertical display
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+60.0)));

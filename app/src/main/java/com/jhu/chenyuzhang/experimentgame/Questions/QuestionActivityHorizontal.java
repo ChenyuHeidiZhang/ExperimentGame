@@ -189,6 +189,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 + ", " + "22 " + attributes.get(6) + " " + attributes.get(7));
 
         // send attribute magnitudes
+        bluetooth.timeStamperJustID("40"); // event code for horizontal display
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+60.0)));
