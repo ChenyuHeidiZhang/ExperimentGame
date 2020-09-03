@@ -140,21 +140,18 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
-                /*Take out the 160 part
                 if (!isDemo && trialCounter % 160 == 0) {
                     incrementTrialCounter();
                     Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
-                    intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
+                    intent_total.putExtra("EXTRA_DISPLAY_ID", 1);// 1 means to display amount over 4 blocks
                     startActivity(intent_total);
-                    finish();
 
                 } else {
                     Intent intent = getNextIntent();
                     startActivity(intent);
-                    finish();
                 }
+                finish();
 
-                 */
                 dbTstamp = recordEvent("Tapped 'Next'");
                 bluetooth.timeStamper(tap_next, dbTstamp);
                 Intent intent = getNextIntent();
