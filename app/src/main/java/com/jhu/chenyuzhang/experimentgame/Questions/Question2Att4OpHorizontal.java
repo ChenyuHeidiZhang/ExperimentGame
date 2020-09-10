@@ -217,6 +217,8 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         } else {
             dbTstamp = recordEvent("startTrial " + trialCounter);
         }
+        // Trial start event
+        bluetooth.timeStamper("1",dbTstamp);
         // send trial number
         bluetooth.timeStamper(Integer.toString(trialCounter +100),dbTstamp);
 

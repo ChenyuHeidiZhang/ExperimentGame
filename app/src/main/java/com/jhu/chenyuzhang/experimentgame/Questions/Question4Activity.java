@@ -190,7 +190,8 @@ public class Question4Activity extends AppCompatActivity {
         } else {
             dbTstamp = recordEvent("startTrial " + trialCounter);
         }
-
+        // Trial start event
+        bluetooth.timeStamper("1",dbTstamp);
         // send trial number + 100 followed by trial parameters followed by 0
         bluetooth.timeStamper(Integer.toString(trialCounter +100), dbTstamp);
 

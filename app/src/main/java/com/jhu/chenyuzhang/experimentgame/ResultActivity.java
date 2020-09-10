@@ -55,7 +55,7 @@ public class ResultActivity extends AppCompatActivity {
     private String resultID = "37";
     private String next_button = "38";
     private String tap_next = "39";
-    private String blue_screen = "40";
+    private String blue_screen = "42";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

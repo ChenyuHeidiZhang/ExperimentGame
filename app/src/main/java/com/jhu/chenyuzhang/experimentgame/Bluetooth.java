@@ -73,7 +73,7 @@ public class Bluetooth extends AppCompatActivity {
             sendData(identity);
             sendData(tstmp);
             //Log.d(TAG, "timestamper sent");
-            Log.d(TAG, identity + " " + tstmp);
+            Log.d(TAG, "sent " + identity + " " + tstmp);
 
         } catch (IOException e) {
             Log.d(TAG, "timestamper exceptions");
