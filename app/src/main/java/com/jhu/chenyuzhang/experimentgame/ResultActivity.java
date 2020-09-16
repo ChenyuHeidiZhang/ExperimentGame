@@ -142,7 +142,7 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
-                if (!isDemo && trialCounter % 2 == 0) {
+                if (!isDemo && trialCounter % 160 == 0) {
                     Log.d("160trial", "in if");
                     incrementTrialCounter();
                     Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
