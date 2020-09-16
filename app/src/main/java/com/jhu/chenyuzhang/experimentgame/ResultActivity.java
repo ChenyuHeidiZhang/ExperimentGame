@@ -2,7 +2,9 @@ package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,6 +54,7 @@ public class ResultActivity extends AppCompatActivity {
     Bluetooth bluetooth;
     private String resultID = "37";
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,8 +142,8 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
-                /* Take out the 160 part
-                if (!isDemo && trialCounter % 160 == 0) {
+                if (!isDemo && trialCounter % 2 == 0) {
+                    Log.d("160trial", "in if");
                     incrementTrialCounter();
                     Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
                     intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
@@ -148,16 +151,36 @@ public class ResultActivity extends AppCompatActivity {
                     finish();
 
                 } else {
+                    Log.d("160trial", "out of if");
+                    Log.d("160trial", Integer.toString(trialCounter));
                     Intent intent = getNextIntent();
                     startActivity(intent);
                     finish();
                 }
 
-                 */
+                /*
+                if (!isDemo && trialCounter % 3 == 0) {
+                    Log.d("160trial", "in if");
+                    //incrementTrialCounter();
+                    Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
+                    intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
+                    startActivity(intent_total);
+
+                } else {
+                    Log.d("160trial", "out of if");
+                    Log.d("160trial", Integer.toString(trialCounter));
+                    //Intent intent = getNextIntent();
+                    //startActivity(intent);
+                }
+
+
+                finish();
                 timeRecordDb.insertData(getCurrentTime(), "Next Tapped");
                 Intent intent = getNextIntent();
                 startActivity(intent);
                 finish();
+
+                 */
             }
         });
     }
