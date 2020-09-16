@@ -143,6 +143,19 @@ public class ResultActivity extends AppCompatActivity {
                 if (!isDemo && trialCounter % 160 == 0) {
                     incrementTrialCounter();
                     Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
+                    intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
+                    startActivity(intent_total);
+                    finish();
+
+                } else {
+                    Intent intent = getNextIntent();
+                    startActivity(intent);
+                    finish();
+                }
+                /*
+                if (!isDemo && trialCounter % 160 == 0) {
+                    incrementTrialCounter();
+                    Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
                     intent_total.putExtra("EXTRA_DISPLAY_ID", 1);// 1 means to display amount over 4 blocks
                     startActivity(intent_total);
 
@@ -157,6 +170,8 @@ public class ResultActivity extends AppCompatActivity {
                 Intent intent = getNextIntent();
                 startActivity(intent);
                 finish();
+
+                 */
             }
         });
     }
