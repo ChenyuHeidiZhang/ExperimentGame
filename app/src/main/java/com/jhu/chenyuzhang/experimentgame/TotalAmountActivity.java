@@ -79,7 +79,7 @@ public class TotalAmountActivity extends AppCompatActivity {
             if ((int)totalAmountWon < getResources().getInteger(R.integer.PAYMAX)) {
                 Log.d("not_much", "less");
                 tvTotal.setText("Total Amount Won: $" + String.format("%.2f", totalAmountWon));
-                recordEvent("Display grand total: $" + getResources().getInteger(R.integer.PAYMAX));
+                recordEvent("Display grand total: $" + totalAmountWon);
             }
             else {
                 Log.d("a_lot", "more");
