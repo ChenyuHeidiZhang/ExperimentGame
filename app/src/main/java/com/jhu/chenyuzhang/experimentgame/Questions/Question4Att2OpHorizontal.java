@@ -91,7 +91,7 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
-        prefTrialStatus.edit().putBoolean("trialDone", false).apply();
+        //prefTrialStatus.edit().putBoolean("trialDone", false).apply();
 
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -270,12 +270,13 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         // Display chosen option on button click
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option1 selected");
                 // send identifier and timestamp
                 bluetooth.timeStamper( choice, dbTstamp);
 
                 if (checkMinimumTimePassed()) {
+                    incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14}, "Option1");
                     showResult(ap1, am1, 1);
                 }
@@ -284,12 +285,13 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option2 selected");
                 // send identifier and timestamp
                 bluetooth.timeStamper( choice, dbTstamp);
 
                 if (checkMinimumTimePassed()) {
+                    incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24}, "Option2");
                     showResult(ap2, am2, 2);
                 }
@@ -604,5 +606,15 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         }
 
         backPressedTime = System.currentTimeMillis();
+    }
+
+    private void incrementTrialCounter() {  // increment trial counter
+        if (trialCounter == trialInfoDb.getNumRows()){
+            trialCounter = 1;       // wrap around if reaches the end
+        } else {
+            trialCounter++;
+        }
+
+        counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trialCounter).apply();
     }
 }

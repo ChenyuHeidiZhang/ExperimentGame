@@ -103,7 +103,7 @@ public class ResultActivity extends AppCompatActivity {
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
 
         // get the trial whose result is shown
-        prevTrial = trialInfoDb.getTrial(trialCounter);
+        prevTrial = trialInfoDb.getTrial(trialCounter-1);
 
         Handler handler = new Handler();
         dbTstamp = recordEvent("Blank Blue Screen On");
@@ -140,8 +140,9 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
-                if (!isDemo && trialCounter % 160 == 0) {
-                    incrementTrialCounter();
+                if (!isDemo && (trialCounter - 1) % 160 == 0) {
+                    //incrementTrialCounter();
+                    Log.d("160trial", Integer.toString(trialCounter - 1));
                     Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
                     intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
                     startActivity(intent_total);
@@ -217,6 +218,7 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    /*
     private void incrementTrialCounter() {  // increment trial counter
         if (trialCounter == trialInfoDb.getNumRows()){
             trialCounter = 1;       // wrap around if reaches the end
@@ -226,6 +228,8 @@ public class ResultActivity extends AppCompatActivity {
 
         counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trialCounter).apply();
     }
+
+     */
 
     private Trial getNextTrial() {
         if (isDemo) {   // if is in training, randomly choose a trial; otherwise, pick the next one
@@ -238,7 +242,7 @@ public class ResultActivity extends AppCompatActivity {
 
             return trialInfoDb.getTrial(trial_num);
         }   // else
-        incrementTrialCounter();
+        //incrementTrialCounter();
         return trialInfoDb.getTrial(trialCounter);
     }
 

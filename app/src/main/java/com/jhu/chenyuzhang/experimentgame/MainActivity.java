@@ -155,9 +155,12 @@ public class MainActivity extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            /*
                             if (prefTrialStatus.getBoolean("trialDone", false)) {
                                 incrementTrialCounter();
                             }
+
+                             */
                             Toast.makeText(context, "Checking bluetooth status", Toast.LENGTH_SHORT).show();
                             Intent intent = getNextIntent();
                             startActivity(intent);
