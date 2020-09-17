@@ -89,7 +89,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
-        prefTrialStatus.edit().putBoolean("trialDone", false).apply();
+        //prefTrialStatus.edit().putBoolean("trialDone", false).apply();
 
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -329,7 +329,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option1 selected");
                 /* Bluetooth
                 try {
@@ -340,6 +340,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                  */
 
                 if (checkMinimumTimePassed()) {
+                    incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12}, "Option1");
                     showResult(a1, 1);
                 }
@@ -348,7 +349,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option2 selected");
                 /* Bluetooth
                 try {
@@ -358,6 +359,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
+                    incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22}, "Option2");
                     showResult(a2, 2);
                 }
@@ -366,7 +368,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option3 selected");
                 /* Bluetooth
                 try {
@@ -376,6 +378,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
+                    incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32}, "Option3");
                     showResult(a3, 3);
                 }
@@ -384,7 +387,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
                 dbTstamp = recordEvent("Option4 selected");
                 /* Bluetooth
                 try {
@@ -394,6 +397,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
+                    incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42}, "Option4");
                     showResult(a4, 4);
                 }
@@ -709,5 +713,15 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         }
 
         backPressedTime = System.currentTimeMillis();
+    }
+
+    private void incrementTrialCounter() {  // increment trial counter
+        if (trialCounter == trialInfoDb.getNumRows()){
+            trialCounter = 1;       // wrap around if reaches the end
+        } else {
+            trialCounter++;
+        }
+
+        counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trialCounter).apply();
     }
 }

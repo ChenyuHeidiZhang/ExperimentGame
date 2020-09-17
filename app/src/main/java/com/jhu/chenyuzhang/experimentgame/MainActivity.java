@@ -144,9 +144,12 @@ public class MainActivity extends AppCompatActivity {
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 if (prefTrialStatus.getBoolean("trialDone", false)) {
                     incrementTrialCounter();
                 }
+
+                 */
                 Intent intent = getNextIntent();
                 startActivity(intent);
             }

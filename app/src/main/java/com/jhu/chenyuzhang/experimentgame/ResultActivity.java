@@ -99,7 +99,7 @@ public class ResultActivity extends AppCompatActivity {
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
 
         // get the trial whose result is shown
-        prevTrial = trialInfoDb.getTrial(trialCounter);
+        prevTrial = trialInfoDb.getTrial(trialCounter - 1);
 
         Handler handler = new Handler();
         timeRecordDb.insertData(getCurrentTime(), "Blank Blue Screen On");
@@ -142,9 +142,10 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
-                if (!isDemo && trialCounter % 160 == 0) {
+                if (!isDemo && (trialCounter - 1) % 160 == 0) {
                     Log.d("160trial", "in if");
-                    incrementTrialCounter();
+                    Log.d("160trial", Integer.toString(trialCounter - 1));
+                    //incrementTrialCounter();
                     Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
                     intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
                     startActivity(intent_total);
@@ -152,7 +153,7 @@ public class ResultActivity extends AppCompatActivity {
 
                 } else {
                     Log.d("160trial", "out of if");
-                    Log.d("160trial", Integer.toString(trialCounter));
+                    Log.d("160trial", Integer.toString(trialCounter - 1));
                     Intent intent = getNextIntent();
                     startActivity(intent);
                     finish();
@@ -247,7 +248,7 @@ public class ResultActivity extends AppCompatActivity {
 
             return trialInfoDb.getTrial(trial_num);
         }   // else
-        incrementTrialCounter();
+        //incrementTrialCounter();
         return trialInfoDb.getTrial(trialCounter);
     }
 
