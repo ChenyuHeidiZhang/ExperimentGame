@@ -106,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
         timeRecordDb.createTableIfNotExists(tableName);
 
         String startTimeWorld = getCurrentTime();
+        prefSignedIn.edit().putString("startTime", startTimeWorld).apply();
+
         String notes = editTextNotes.getText().toString();
         timeRecordDb.insertData(startTimeWorld, "Sign In: Patient ID: " + name + ", Password: " + key + ", Notes: " + notes);
 

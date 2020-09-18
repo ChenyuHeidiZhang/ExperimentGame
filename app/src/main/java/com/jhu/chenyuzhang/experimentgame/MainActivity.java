@@ -55,10 +55,11 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefSignedIn;
     private static final String KEY_CONNECTED_BLUETOOTH = "keyConnectedBluetooth";
     private SharedPreferences prefBluetooth;
-    private SharedPreferences prefTrialStatus;
+    //private SharedPreferences prefSignedinTime;
     private SharedPreferences counter_prefs;
     private Boolean has_picked = false;
     private String itemSelected;
+    private String time;
 
     private TimeDbHelper timeRecordDb;
 
@@ -100,7 +101,12 @@ public class MainActivity extends AppCompatActivity {
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
 
-        prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
+        //prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
+        //record the sign in time
+        time = prefSignedIn.getString("startTime", "");
+        timeRecordDb.insertData(time, "Sign in");
+        bluetooth.timeStamper("43", time);
+
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         if (!initiateBT()) {
             Toast.makeText(this, "No bluetooth adapter available. Cannot connect to Bluetooth.", Toast.LENGTH_SHORT).show();
@@ -349,5 +355,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         backPressedTime = System.currentTimeMillis();
+    }
+
+    private String recordEvent(String event) {
+        //long timeSpan = System.nanoTime() - startTime;
+        //String timeString = String.format("%d", timeSpan / 1000);
+        String timeString = getCurrentTime();
+
+        timeRecordDb.insertData(timeString, event);
+        return timeString;
     }
 }
