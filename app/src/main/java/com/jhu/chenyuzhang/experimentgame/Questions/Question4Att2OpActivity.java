@@ -2,6 +2,7 @@ package com.jhu.chenyuzhang.experimentgame.Questions;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -87,6 +88,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
         //prefTrialStatus.edit().putBoolean("trialDone", false).apply();
 
