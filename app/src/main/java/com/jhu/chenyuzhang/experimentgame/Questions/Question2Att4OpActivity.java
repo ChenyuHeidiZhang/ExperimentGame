@@ -637,7 +637,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         //String timeString = String.format("%d", timeSpan / 1000);
         String timeString = getCurrentTime();
 
-        timeRecordDb.insertData(timeString, event);
+        if (!timeRecordDb.insertData(timeString, event))
+            Toast.makeText(getApplicationContext(), "Something goes wrong with database", Toast.LENGTH_LONG).show();
         return timeString;
     }
 
