@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         //record the sign in time
         time = prefSignedIn.getString("startTime", "");
         timeRecordDb.insertData(time, "Sign in");
-        bluetooth.timeStamper("43", time);
+
 
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         if (!initiateBT()) {
@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     spnBT.setSelection(spnPosition);
                 }
             }
+            bluetooth.timeStamper("43", time);
         }
 
         final Context context = getApplicationContext();
