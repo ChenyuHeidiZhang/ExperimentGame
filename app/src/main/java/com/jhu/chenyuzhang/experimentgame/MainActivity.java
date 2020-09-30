@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                     spnBT.setSelection(spnPosition);
                 }
             }
-            bluetooth.timeStamper("43", time);
         }
 
         final Context context = getApplicationContext();
@@ -139,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(context, "Trying to connect to Bluetooth...", Toast.LENGTH_SHORT).show();
                         findBT(itemSelected);
                         Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
+                        bluetooth.timeStamper("43", time);
                     } catch (IOException e) {
                         Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
                         //TODO: don't let the app procede if bluetooth is not connected
