@@ -1,6 +1,7 @@
 package com.jhu.chenyuzhang.experimentgame;
 
 import android.bluetooth.BluetoothAdapter;
+import android.os.Looper;
 import android.widget.TextView;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -163,6 +164,7 @@ public class Bluetooth {
                         else {
                             //inputstream not available
                             if (checktimes == 1) {
+                                Looper.prepare();
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
