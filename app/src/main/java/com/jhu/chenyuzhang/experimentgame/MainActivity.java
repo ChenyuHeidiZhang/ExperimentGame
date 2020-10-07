@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.ParcelUuid;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -327,6 +328,12 @@ public class MainActivity extends AppCompatActivity {
         // Finish the app if the user back presses twice within 2 seconds.
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             // Shutdown bluetooth connection before exiting the app.
+            //remove all the handlers.
+            Handler handler = new Handler();
+            if (handler != null) {
+                handler.removeCallbacksAndMessages(null);
+            }
+            timeRecordDb.close();
             bluetooth.resetConnection();
             prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, "").apply();
             finish();

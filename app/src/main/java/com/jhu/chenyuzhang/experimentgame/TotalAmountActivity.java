@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
@@ -24,6 +25,7 @@ public class TotalAmountActivity extends AppCompatActivity {
 
     public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
     public static final String KEY_LAST_TOTAL = "keyLastTotal";
+    private long backPressedTime;
     private int display_id; // = 1: display total over 4 blocks; = 0: display grand total
 
     TimeDbHelper timeRecordDb;
@@ -86,6 +88,7 @@ public class TotalAmountActivity extends AppCompatActivity {
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                timeRecordDb.close();
                 if (display_id == 1) {
                     int random = new Random().nextInt(2);
                     Intent intent;
@@ -117,6 +120,17 @@ public class TotalAmountActivity extends AppCompatActivity {
     private void recordEvent(String event) {    // only record once and close the db
         timeRecordDb.insertData(getCurrentTime(), event);
         timeRecordDb.close();
+    }
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            timeRecordDb.close();
+            finish();
+        } else {
+            Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 
 }

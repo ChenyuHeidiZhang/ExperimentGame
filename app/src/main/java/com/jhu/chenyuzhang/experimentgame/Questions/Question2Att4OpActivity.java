@@ -23,6 +23,7 @@ import android.widget.ViewAnimator;
 
 import com.jhu.chenyuzhang.experimentgame.Bluetooth;
 import com.jhu.chenyuzhang.experimentgame.EndDemoActivity;
+import com.jhu.chenyuzhang.experimentgame.MainActivity;
 import com.jhu.chenyuzhang.experimentgame.R;
 import com.jhu.chenyuzhang.experimentgame.ResultActivity;
 import com.jhu.chenyuzhang.experimentgame.TimeDbHelper;
@@ -717,6 +718,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            timeRecordDb.close();
             finish();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();

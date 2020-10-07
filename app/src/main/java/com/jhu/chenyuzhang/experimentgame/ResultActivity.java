@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpHorizontal;
@@ -39,6 +40,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextView textViewSorry;
     private TextView textViewAmount;
     private Button buttonNextTrial;
+    private long backPressedTime;
 
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
@@ -144,6 +146,7 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
+                timeRecordDb.close();
                 if (!isDemo && (trialCounter - 1) % 160 == 0) {
                     Log.d("160trial", "in if");
                     Log.d("160trial", Integer.toString(trialCounter - 1));
@@ -290,5 +293,17 @@ public class ResultActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
         String formattedDate= dateFormat.format(date);
         return formattedDate;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            timeRecordDb.close();
+            finish();
+        } else {
+            Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }
