@@ -480,8 +480,7 @@ public class QuestionActivity extends AppCompatActivity {
         //String timeString = String.format("%d", timeSpan / 1000);
         String timeString = getCurrentTime();
 
-        if (!timeRecordDb.insertData(timeString, event))
-            Toast.makeText(getApplicationContext(), "Something goes wrong with database", Toast.LENGTH_LONG).show();
+        timeRecordDb.insertData(timeString, event);
         return timeString;
     }
 

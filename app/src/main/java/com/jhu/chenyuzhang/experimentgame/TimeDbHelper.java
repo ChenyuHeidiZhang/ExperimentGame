@@ -39,7 +39,7 @@ public class TimeDbHelper extends SQLiteOpenHelper {
         contentValues.put(COL_2, time);
         contentValues.put(COL_3, event);
         long result = db.insert(TABLE_NAME, null, contentValues);
-        return (result != -1);
+        return (result == -1);
     }
 
     // create table if it doesn't exist; called from log in
