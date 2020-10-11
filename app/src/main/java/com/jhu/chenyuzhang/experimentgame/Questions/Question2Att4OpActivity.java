@@ -68,6 +68,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     private String eventTimeOut = "TimeOut, Mask On";
     private String dbTstamp;
     private String temp_click_holder = "";
+    boolean stop;
 
     private long backPressedTime;
     private long startTime;
@@ -98,6 +99,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
         //prefTrialStatus.edit().putBoolean("trialDone", false).apply();
 
+        //help the handler delayed
+        stop = false;
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -700,12 +703,14 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Question2Att4OpActivity.this, ResultActivity.class);
-                intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
-                intent.putExtra("DATABASE_RECORD_STRING", temp);
-                intent.putExtra("RESULTID", resultID);
-                startActivity(intent);
-                finish();
+                if (!stop) {
+                    Intent intent = new Intent(Question2Att4OpActivity.this, ResultActivity.class);
+                    intent.putExtra("EXTRA_AMOUNT_WON", amountWon);
+                    intent.putExtra("DATABASE_RECORD_STRING", temp);
+                    intent.putExtra("RESULTID", resultID);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }, 2000);
     }
@@ -713,6 +718,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            recordEvent("Pressed back button, return to main page");
+            stop = true;
             finish();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();

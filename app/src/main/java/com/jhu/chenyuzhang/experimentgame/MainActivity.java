@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean has_picked = false;
     private String itemSelected;
     private String time;
+    boolean bluetoothConnect;
 
     private TimeDbHelper timeRecordDb;
 
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        bluetoothConnect = false;
         timeRecordDb = new TimeDbHelper(this);
 
         Button playGame = findViewById(R.id.button_playGame);
@@ -138,10 +140,10 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(context, "Trying to connect to Bluetooth...", Toast.LENGTH_SHORT).show();
                         findBT(itemSelected);
                         Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
+                        bluetoothConnect = true;
                         bluetooth.timeStamper("43", time);
                     } catch (IOException e) {
                         Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
-                        //TODO: don't let the app procede if bluetooth is not connected
                     }
                 }
             }
@@ -157,22 +159,23 @@ public class MainActivity extends AppCompatActivity {
                 if (SPINNER_DEFAULT.equals(itemSelected)) {
                     Toast.makeText(context, "You should connect to bluetooth first", Toast.LENGTH_SHORT).show();
                 }
+                else if (!bluetoothConnect) {
+                    Toast.makeText(context, "Please wait until the bluetooth get connected", Toast.LENGTH_SHORT).show();
+                }
                 else {
+                    Intent intent = getNextIntent();
+                    startActivity(intent);
+                    /*
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            /*
-                            if (prefTrialStatus.getBoolean("trialDone", false)) {
-                                incrementTrialCounter();
-                            }
-
-                             */
                             Toast.makeText(context, "Checking bluetooth status", Toast.LENGTH_SHORT).show();
                             Intent intent = getNextIntent();
                             startActivity(intent);
                         }
                     }, 2000);
+        */
                 }
             }
         });
@@ -348,6 +351,7 @@ public class MainActivity extends AppCompatActivity {
         // Finish the app if the user back presses twice within 2 seconds.
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             // Shutdown bluetooth connection before exiting the app.
+            timeRecordDb.insertData(getCurrentTime(), "Pressed back button, exit the app");
             bluetooth.resetConnection();
             prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, "").apply();
             finish();
