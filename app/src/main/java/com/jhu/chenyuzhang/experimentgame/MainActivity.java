@@ -328,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
         // Finish the app if the user back presses twice within 2 seconds.
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             // Shutdown bluetooth connection before exiting the app.
+            timeRecordDb.insertData(getCurrentTime(), "Pressed back button, exit the app");
             timeRecordDb.close();
             bluetooth.resetConnection();
             prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, "").apply();

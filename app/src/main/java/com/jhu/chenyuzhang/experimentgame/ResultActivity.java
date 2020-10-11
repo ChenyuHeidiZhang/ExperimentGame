@@ -41,6 +41,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextView textViewAmount;
     private Button buttonNextTrial;
     private long backPressedTime;
+    boolean stop;
 
     private boolean isDemo;
     private static final String KEY_DO_DEMO = "keyDoDemo";
@@ -68,7 +69,7 @@ public class ResultActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_result);
-
+        stop = false;
         imageViewCongrats = findViewById(R.id.image_view_congrats);
         textViewSorry = findViewById(R.id.text_view_sorry);
         textViewAmount = findViewById(R.id.text_view_result_amount);
@@ -119,8 +120,10 @@ public class ResultActivity extends AppCompatActivity {
                  */
 
                 //buttonNextTrial.setVisibility(View.VISIBLE);
-                displayResult();
-                timeRecordDb.insertData(getCurrentTime(), temp);
+                if (!stop) {
+                    displayResult();
+                    timeRecordDb.insertData(getCurrentTime(), temp);
+                }
             }
         }, 1000);
         //wait for 1 second to display next
@@ -299,6 +302,7 @@ public class ResultActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             //timeRecordDb.close();
+            stop = true;
             finish();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
