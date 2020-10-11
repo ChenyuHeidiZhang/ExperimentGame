@@ -81,7 +81,7 @@ public class TotalAmountActivity extends AppCompatActivity {
             else {
                 Log.d("a_lot", "more");
                 tvTotal.setText("Congratulations!" + "\n" + "You have won the maximum amount possible,\n" + "you will get a payment of $" + getResources().getInteger(R.integer.PAYMAX));
-                recordEvent("Got " + totalAmountWon + "Display grand total: $" + getResources().getInteger(R.integer.PAYMAX));
+                recordEvent("Got " + totalAmountWon + "Display grand total: $" + totalAmountWon);
             }
         }
 
