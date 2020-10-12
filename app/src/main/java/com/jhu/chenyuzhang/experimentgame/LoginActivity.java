@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.Normalizer2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isSignedIn;
     private SharedPreferences prefSignedIn;
+    private SharedPreferences user_name;
     private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
 
     private static final String KEY_DO_DEMO = "keyDoDemo";
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
+        user_name = getSharedPreferences("userName", MODE_PRIVATE);
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
 
@@ -64,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     name = editTextName.getText().toString();
+                    user_name.edit().putString("name", name).apply();
                     // Check that if the patient id contains special characters, then it is invalid.
                     Pattern pattern = Pattern.compile("[^A-Za-z0-9_]");
                     Matcher matcher = pattern.matcher(name);

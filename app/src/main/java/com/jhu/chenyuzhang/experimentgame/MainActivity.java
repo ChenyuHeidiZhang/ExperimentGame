@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefBluetooth;
     //private SharedPreferences prefSignedinTime;
     private SharedPreferences counter_prefs;
-    private Boolean has_picked = false;
+    private SharedPreferences user_name;
     private String itemSelected;
     private String time;
     boolean bluetoothConnect;
@@ -87,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
         bluetoothConnect = false;
         timeRecordDb = new TimeDbHelper(this);
+        user_name = getSharedPreferences("userName", MODE_PRIVATE);
+        String tableName = "timeRecord_table_" + user_name.getString("name", "");
+        timeRecordDb.createTableIfNotExists(tableName);
 
         Button playGame = findViewById(R.id.button_playGame);
 
@@ -132,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         spnBT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                has_picked = true;
                 itemSelected = spnBT.getSelectedItem().toString();
                 // If a Bluetooth module is selected, connect to it.
                 if (!SPINNER_DEFAULT.equals(itemSelected)) {

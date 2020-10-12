@@ -2,6 +2,7 @@ package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -14,6 +15,7 @@ public class TimeDbHelper extends SQLiteOpenHelper {
     public static final String COL_1 = "ID";
     public static final String COL_2 = "TIME_Mircroseconds";
     public static final String COL_3 = "EVENT";
+    private SharedPreferences user_name;
 
     public TimeDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

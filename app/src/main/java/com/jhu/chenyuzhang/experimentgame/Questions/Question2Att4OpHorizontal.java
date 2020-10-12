@@ -19,6 +19,7 @@ import android.widget.Toast;
 import android.widget.ViewAnimator;
 
 import com.jhu.chenyuzhang.experimentgame.Bluetooth;
+import com.jhu.chenyuzhang.experimentgame.Database_fail;
 import com.jhu.chenyuzhang.experimentgame.EndDemoActivity;
 import com.jhu.chenyuzhang.experimentgame.R;
 import com.jhu.chenyuzhang.experimentgame.ResultActivity;
@@ -650,8 +651,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         //String timeString = String.format("%d", timeSpan / 1000);
         String timeString = getCurrentTime();
 
-        if (!timeRecordDb.insertData(timeString, event))
+        if (!timeRecordDb.insertData(timeString, event)) {
             Toast.makeText(getApplicationContext(), "Something goes wrong with database", Toast.LENGTH_LONG).show();
+            timeRecordDb.close();
+            Intent intent = new Intent(Question2Att4OpHorizontal.this, Database_fail.class);
+            startActivity(intent);
+            finish();
+        }
         return timeString;
     }
 
