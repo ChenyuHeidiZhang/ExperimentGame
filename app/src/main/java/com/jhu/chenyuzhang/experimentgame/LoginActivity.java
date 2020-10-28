@@ -102,6 +102,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefLastAmount = getSharedPreferences("lastTotal", MODE_PRIVATE);
         prefLastAmount.edit().putFloat(KEY_LAST_TOTAL, 0).apply();  // total amount 4 blocks ago
 
+        SharedPreferences prefSigninTime = getSharedPreferences("SignIn", MODE_PRIVATE);
+
         String tableName = "timeRecord_table_" + name;
 
         TimeDbHelper timeRecordDb = new TimeDbHelper(LoginActivity.this);
@@ -110,7 +112,9 @@ public class LoginActivity extends AppCompatActivity {
         String startTimeWorld = getCurrentTime();
         String notes = editTextNotes.getText().toString();
         timeRecordDb.insertData(startTimeWorld, "Sign In: Patient ID: " + name + ", Password: " + key + ", Notes: " + notes);
-
+        String current_date = getCurrentDate();
+        timeRecordDb.insertData(current_date,"Sign in(date + time)");
+        prefSigninTime.edit().putString("date", current_date).apply();
         timeRecordDb.close();
 
         goToMainActivity();
@@ -127,6 +131,13 @@ public class LoginActivity extends AppCompatActivity {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
         String formattedDate= dateFormat.format(date);
+        return formattedDate;
+    }
+
+    private String getCurrentDate() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd:G:HH:mm:ss");
+        String formattedDate = dateFormat.format(date);
         return formattedDate;
     }
 }

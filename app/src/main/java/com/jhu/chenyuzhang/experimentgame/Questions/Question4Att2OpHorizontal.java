@@ -288,7 +288,6 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                dbTstamp = recordEvent("Option1 selected");
                 /* Bluetooth
                 try {
                     // send identifier and timestamp
@@ -297,9 +296,13 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
+                    dbTstamp = recordEvent("Option1 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12, viewAnimator13, viewAnimator14}, "Option1");
                     showResult(ap1, am1, 1);
+                }
+                else {
+                    dbTstamp = recordEvent("Option1 selected");
                 }
             }
         });
@@ -307,7 +310,6 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                dbTstamp = recordEvent("Option selected");
                 /* Bluetooth
                 try {
                     // send identifier and timestamp
@@ -316,9 +318,13 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
 
                  */
                 if (checkMinimumTimePassed()) {
+                    dbTstamp = recordEvent("Option selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22, viewAnimator23, viewAnimator24}, "Option2");
                     showResult(ap2, am2, 2);
+                }
+                else {
+                    dbTstamp = recordEvent("Option2 selected");
                 }
             }
         });
@@ -356,7 +362,14 @@ public class Question4Att2OpHorizontal extends AppCompatActivity {
                     }
                 }
             }
-            tappedView.showNext();  /* uncover */
+
+            Handler handler1 = new Handler();
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tappedView.showNext();  /* uncover */
+                }
+            }, 50);
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
             not_covered = codes[2] + ", " + codes[3];
             // send event code for attribute displayed

@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefBluetooth;
     private SharedPreferences prefTrialStatus;
     private SharedPreferences counter_prefs;
+    private SharedPreferences signinTime;
 
     private TimeDbHelper timeRecordDb;
 
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String SPINNER_DEFAULT = "- Bluetooth -";
     private Spinner spnBT;
     private Bluetooth bluetooth;
+    private String signInDate;
 
     private long backPressedTime = 0;
 
@@ -100,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
 
+        signinTime = getSharedPreferences("SignIn", MODE_PRIVATE);
+        signInDate = signinTime.getString("date", "");
+
         prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
 
@@ -112,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnBT.setAdapter(btItemsAdapter);
 
+            /*
             // Set the currently connected device on the spinner so that we don't need to connect again.
             if (!"".equals(connectedBluetooth)) {
                 int spnPosition = btItemsAdapter.getPosition(connectedBluetooth);
@@ -119,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
                     spnBT.setSelection(spnPosition);
                 }
             }
+
+             */
         }
 
         final Context context = getApplicationContext();
@@ -134,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
-                        //TODO: don't let the app procede if bluetooth is not connected
                     }
                 }
             }

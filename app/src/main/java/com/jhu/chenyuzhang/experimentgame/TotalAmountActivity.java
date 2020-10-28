@@ -28,6 +28,9 @@ public class TotalAmountActivity extends AppCompatActivity {
     private long backPressedTime;
     private int display_id; // = 1: display total over 4 blocks; = 0: display grand total
 
+    SharedPreferences signinTime;
+    String signInDate;
+
     TimeDbHelper timeRecordDb;
 
     @Override
@@ -54,6 +57,9 @@ public class TotalAmountActivity extends AppCompatActivity {
         SharedPreferences pref_last = getSharedPreferences("lastTotal", MODE_PRIVATE);
         float lastAmount = pref_last.getFloat(KEY_LAST_TOTAL, 0);
 
+        signinTime = getSharedPreferences("SignIn", MODE_PRIVATE);
+        signInDate = signinTime.getString("date", "");
+
         Log.d("value", Double.toString(totalAmountWon));
         Log.d("value", String.valueOf(getResources().getInteger(R.integer.PAYMAX)));
 
@@ -76,18 +82,19 @@ public class TotalAmountActivity extends AppCompatActivity {
             if ((int)totalAmountWon < getResources().getInteger(R.integer.PAYMAX)) {
                 Log.d("not_much", "less");
                 tvTotal.setText("Total Amount Won: $" + String.format("%.2f", totalAmountWon));
-                recordEvent("Display grand total: $" + getResources().getInteger(R.integer.PAYMAX));
+                recordEvent("Display grand total: $" + totalAmountWon);
             }
             else {
                 Log.d("a_lot", "more");
                 tvTotal.setText("Congratulations!" + "\n" + "You have won the maximum amount possible,\n" + "you will get a payment of $" + getResources().getInteger(R.integer.PAYMAX));
-                recordEvent("Got " + totalAmountWon + "Display grand total: $" + totalAmountWon);
+                recordEvent("Got " + totalAmountWon + "Display grand total: $" + getResources().getInteger(R.integer.PAYMAX));
             }
         }
 
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                timeRecordDb.insertData(signInDate, "Signed in time");
                 timeRecordDb.close();
                 if (display_id == 1) {
                     int random = new Random().nextInt(2);
