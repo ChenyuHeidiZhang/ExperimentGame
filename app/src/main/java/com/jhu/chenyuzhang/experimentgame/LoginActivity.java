@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isSignedIn;
     private SharedPreferences prefSignedIn;
     private SharedPreferences user_name;
+    private SharedPreferences hasStarted;
     private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
 
     private static final String KEY_DO_DEMO = "keyDoDemo";
@@ -53,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
 
         user_name = getSharedPreferences("userName", MODE_PRIVATE);
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
+        hasStarted = getSharedPreferences("started", MODE_PRIVATE);
+        hasStarted.edit().putBoolean("record_signin", false).apply();
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
 
         if (isSignedIn) {
@@ -110,7 +113,10 @@ public class LoginActivity extends AppCompatActivity {
         timeRecordDb.createTableIfNotExists(tableName);
 
         String startTimeWorld = getCurrentTime();
+        //store the signin time
         prefSignedIn.edit().putString("startTime", startTimeWorld).apply();
+        //store the signin date
+        prefSignedIn.edit().putString("startDate", getCurrentDate()).apply();
 
         String notes = editTextNotes.getText().toString();
         timeRecordDb.insertData(startTimeWorld, "Sign In: Patient ID: " + name + ", Password: " + key + ", Notes: " + notes);
@@ -131,6 +137,13 @@ public class LoginActivity extends AppCompatActivity {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
         String formattedDate= dateFormat.format(date);
+        return formattedDate;
+    }
+
+    private String getCurrentDate() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd:G:HH:mm:ss");
+        String formattedDate = dateFormat.format(date);
         return formattedDate;
     }
 }

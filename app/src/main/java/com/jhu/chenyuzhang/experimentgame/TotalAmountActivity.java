@@ -31,7 +31,9 @@ public class TotalAmountActivity extends AppCompatActivity {
     public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
     public static final String KEY_LAST_TOTAL = "keyLastTotal";
     private int display_id; // = 1: display total over 4 blocks; = 0: display grand total
-
+    SharedPreferences signin;
+    String signInTime;
+    String signInDate;
     TimeDbHelper timeRecordDb;
 
     @Override
@@ -56,6 +58,10 @@ public class TotalAmountActivity extends AppCompatActivity {
 
         SharedPreferences pref_last = getSharedPreferences("lastTotal", MODE_PRIVATE);
         float lastAmount = pref_last.getFloat(KEY_LAST_TOTAL, 0);
+
+        signin = getSharedPreferences("isSignedIn", MODE_PRIVATE);
+        signInDate = signin.getString("startDate", "");
+        signInTime = signin.getString("startTime", "");
 
 
         if (display_id == 1) {  // display total amount over the past 4 blocks
@@ -110,6 +116,9 @@ public class TotalAmountActivity extends AppCompatActivity {
                 finish();
 
                  */
+                timeRecordDb.insertData(signInTime, "Signed in Time");
+                timeRecordDb.insertData(signInDate, "Signed in Date");
+                timeRecordDb.close();
                 android.os.Process.killProcess(android.os.Process.myPid());
 
             }

@@ -58,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
     //private SharedPreferences prefSignedinTime;
     private SharedPreferences counter_prefs;
     private SharedPreferences user_name;
+    private SharedPreferences hasStarted;
     private String itemSelected;
     private String time;
+    private String date;
     boolean bluetoothConnect;
 
     private TimeDbHelper timeRecordDb;
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String SPINNER_DEFAULT = "- Bluetooth -";
     private Spinner spnBT;
     private Bluetooth bluetooth;
+    Boolean started;
 
     private long backPressedTime = 0;
 
@@ -106,11 +109,6 @@ public class MainActivity extends AppCompatActivity {
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
         spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
 
-        //prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
-        //record the sign in time
-        time = prefSignedIn.getString("startTime", "");
-        timeRecordDb.insertData(time, "Sign in");
-
 
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         if (!initiateBT()) {
@@ -122,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnBT.setAdapter(btItemsAdapter);
 
+            /*
             // Set the currently connected device on the spinner so that we don't need to connect again.
             if (!"".equals(connectedBluetooth)) {
                 int spnPosition = btItemsAdapter.getPosition(connectedBluetooth);
@@ -129,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                     spnBT.setSelection(spnPosition);
                 }
             }
+
+             */
         }
 
         final Context context = getApplicationContext();
@@ -143,7 +144,19 @@ public class MainActivity extends AppCompatActivity {
                         findBT(itemSelected);
                         Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
                         bluetoothConnect = true;
-                        bluetooth.timeStamper("43", time);
+                        //prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
+                        //record the sign in time
+                        hasStarted = getSharedPreferences("started", MODE_PRIVATE);
+                        started = hasStarted.getBoolean("record_signin", false);
+                        //If it is the first time, record the sign in date and time.
+                        if (!started) {
+                            time = prefSignedIn.getString("startTime", "");
+                            date = prefSignedIn.getString("startDate", "");
+                            timeRecordDb.insertData(time, "Sign in time");
+                            bluetooth.timeStamper("43", time);
+                            timeRecordDb.insertData(date, "Sign in date");
+                            hasStarted.edit().putBoolean("record_signin", true).apply();
+                        }
                     } catch (IOException e) {
                         Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
                     }

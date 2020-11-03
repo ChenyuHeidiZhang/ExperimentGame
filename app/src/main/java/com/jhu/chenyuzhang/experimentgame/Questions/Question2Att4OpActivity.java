@@ -316,60 +316,81 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                dbTstamp = recordEvent("Option1 selected");
-                // send identifier and timestamp
-                bluetooth.timeStamper(choice, dbTstamp);
-
                 if (checkMinimumTimePassed()) {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option1 selected successfully");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper(choice, dbTstamp);
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12}, "Option1");
                     showResult(a1, 1);
+                }
+                else {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option1 selected");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper(choice, dbTstamp);
                 }
             }
         });
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                dbTstamp = recordEvent("Option2 selected");
-                // send identifier and timestamp
-                bluetooth.timeStamper( choice, dbTstamp);
-
                 if (checkMinimumTimePassed()) {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option2 selected successfully");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22}, "Option2");
                     showResult(a2, 2);
+                }
+                else {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option2 selected");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
                 }
             }
         });
 
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                dbTstamp = recordEvent("Option3 selected");
-                // send identifier and timestamp
-                bluetooth.timeStamper( choice, dbTstamp);
-
                 if (checkMinimumTimePassed()) {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option3 selected successfully");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
+
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32}, "Option3");
                     showResult(a3, 3);
+                }
+                else {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option3 selected");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
                 }
             }
         });
 
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                dbTstamp = recordEvent("Option4 selected");
-                // send identifier and timestamp
-                bluetooth.timeStamper( choice, dbTstamp);
-
                 if (checkMinimumTimePassed()) {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option4 selected successfully");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42}, "Option4");
                     showResult(a4, 4);
+                }
+                else {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option4 selected");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
                 }
             }
         });
@@ -398,11 +419,17 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 }
             }
 
-            tappedView.showNext();  /* uncover */
-            dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
-            bluetooth.timeStamper(codes[1], dbTstamp);
-            //prepare if early mask on, need to store this
-            temp_click_holder = codes[2] + ", " + codes[3];
+            Handler handler1 = new Handler();
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tappedView.showNext();  /* uncover */
+                    dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+                    bluetooth.timeStamper(codes[1], dbTstamp);
+                    //prepare if early mask on, need to store this
+                    temp_click_holder = codes[2] + ", " + codes[3];
+                }
+            }, 50);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();

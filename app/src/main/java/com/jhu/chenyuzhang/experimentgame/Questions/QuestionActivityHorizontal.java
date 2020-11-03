@@ -234,30 +234,40 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                dbTstamp = recordEvent("Option1 selected");
-                // send identifier and timestamp
-                bluetooth.timeStamper( choice, dbTstamp);
-
                 if (checkMinimumTimePassed()) {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option1 selected successfully");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12}, "Option1");
                     showResult(a1, 1);
+                }
+                else {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option1 selected");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
                 }
             }
         });
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                dbTstamp = recordEvent("Option2 selected");
-                // send identifier and timestamp
-                bluetooth.timeStamper( choice, dbTstamp);
-
                 if (checkMinimumTimePassed()) {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option2 selected successfully");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22}, "Option2");
                     showResult(a2, 2);
+                }
+                else {
+                    //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
+                    dbTstamp = recordEvent("Option2 selected");
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( choice, dbTstamp);
                 }
             }
         });
@@ -285,10 +295,16 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             }
             //armVSyncHandlerA1();
 
-            tappedView.showNext();  /* uncover */
-            dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
-            bluetooth.timeStamper( codes[1], dbTstamp);
-            temp_click_holder = codes[2] + ", " + codes[3];
+            Handler handler1 = new Handler();
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tappedView.showNext();  /* uncover */
+                    dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+                    bluetooth.timeStamper( codes[1], dbTstamp);
+                    temp_click_holder = codes[2] + ", " + codes[3];
+                }
+            }, 50);
 
 
             Log.d("Questions", codes[3]);
