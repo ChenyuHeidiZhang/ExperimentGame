@@ -201,7 +201,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+60.0)));
 
         // end the stream with the identifier 0
-        bluetooth.timeStamperJustID(Integer.toString(0));
+        bluetooth.timeStamper(Integer.toString(0), dbTstamp);
 
         viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
