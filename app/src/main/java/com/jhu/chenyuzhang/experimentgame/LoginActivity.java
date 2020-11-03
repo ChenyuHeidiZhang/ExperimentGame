@@ -55,12 +55,12 @@ public class LoginActivity extends AppCompatActivity {
         user_name = getSharedPreferences("userName", MODE_PRIVATE);
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         hasStarted = getSharedPreferences("started", MODE_PRIVATE);
-        hasStarted.edit().putBoolean("record_signin", false).apply();
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
 
         if (isSignedIn) {
             goToMainActivity();
         } else {
+            hasStarted.edit().putBoolean("record_signin", false).apply();
             editTextName = findViewById(R.id.edit_text_name);
             editTextKey = findViewById(R.id.edit_text_key);
             editTextNotes = findViewById(R.id.edit_text_notes);

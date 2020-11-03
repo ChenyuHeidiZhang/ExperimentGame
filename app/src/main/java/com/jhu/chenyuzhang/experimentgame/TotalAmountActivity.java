@@ -8,6 +8,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
@@ -35,6 +37,7 @@ public class TotalAmountActivity extends AppCompatActivity {
     String signInTime;
     String signInDate;
     TimeDbHelper timeRecordDb;
+    Bluetooth bluetooth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class TotalAmountActivity extends AppCompatActivity {
         display_id = getIntent().getIntExtra("EXTRA_DISPLAY_ID", 0);   // get total amount passed as extra
 
         TextView tvTotal = findViewById(R.id.text_view_total);
-        Button btNext = findViewById(R.id.button_next);
+        final Button btNext = findViewById(R.id.button_next);
 
         SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
         float totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
@@ -62,6 +65,7 @@ public class TotalAmountActivity extends AppCompatActivity {
         signin = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         signInDate = signin.getString("startDate", "");
         signInTime = signin.getString("startTime", "");
+        bluetooth = new Bluetooth(this.getApplicationContext(), timeRecordDb);
 
 
         if (display_id == 1) {  // display total amount over the past 4 blocks
@@ -116,11 +120,19 @@ public class TotalAmountActivity extends AppCompatActivity {
                 finish();
 
                  */
+                btNext.setEnabled(false);
                 timeRecordDb.insertData(signInTime, "Signed in Time");
                 timeRecordDb.insertData(signInDate, "Signed in Date");
+                bluetooth.timeStamper("43", signInTime);
                 timeRecordDb.close();
-                android.os.Process.killProcess(android.os.Process.myPid());
-
+                Toast.makeText(getApplicationContext(), "Exiting...", Toast.LENGTH_LONG).show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                    }
+                }, 1000);
             }
         });
 

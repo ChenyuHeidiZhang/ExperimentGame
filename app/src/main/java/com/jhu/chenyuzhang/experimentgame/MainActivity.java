@@ -198,7 +198,12 @@ public class MainActivity extends AppCompatActivity {
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkPasswordDialog();
+                if (bluetoothConnect) {
+                    checkPasswordDialog();
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Please connect to Bluetooth before signing out", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
