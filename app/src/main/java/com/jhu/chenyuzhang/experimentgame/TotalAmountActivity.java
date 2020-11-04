@@ -101,7 +101,6 @@ public class TotalAmountActivity extends AppCompatActivity {
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
                 if (display_id == 1) {
                     int random = new Random().nextInt(2);
                     Intent intent;
@@ -113,26 +112,21 @@ public class TotalAmountActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 } else {
-                    Intent intent = new Intent(TotalAmountActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    btNext.setEnabled(false);
+                    timeRecordDb.insertData(signInTime, "Signed in Time");
+                    timeRecordDb.insertData(signInDate, "Signed in Date");
+                    bluetooth.timeStamper("43", signInTime);
+                    timeRecordDb.close();
+                    Toast.makeText(getApplicationContext(), "Exiting...", Toast.LENGTH_LONG).show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                        }
+                    }, 1000);
                 }
-
                 finish();
-
-                 */
-                btNext.setEnabled(false);
-                timeRecordDb.insertData(signInTime, "Signed in Time");
-                timeRecordDb.insertData(signInDate, "Signed in Date");
-                bluetooth.timeStamper("43", signInTime);
-                timeRecordDb.close();
-                Toast.makeText(getApplicationContext(), "Exiting...", Toast.LENGTH_LONG).show();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                    }
-                }, 1000);
             }
         });
 
