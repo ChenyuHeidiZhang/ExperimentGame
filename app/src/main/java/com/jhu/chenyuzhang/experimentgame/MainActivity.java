@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnBT.setAdapter(btItemsAdapter);
 
-            /*
+
             // Set the currently connected device on the spinner so that we don't need to connect again.
             if (!"".equals(connectedBluetooth)) {
                 int spnPosition = btItemsAdapter.getPosition(connectedBluetooth);
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-             */
+
         }
 
         final Context context = getApplicationContext();
