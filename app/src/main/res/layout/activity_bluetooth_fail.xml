@@ -9,16 +9,24 @@
     android:gravity="center"
     tools:context=".BluetoothFailActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="50dp"
-        android:text="@string/bluetooth_fail"
-        android:textColor="@color/pinky"
-        android:textStyle="bold"
-        android:textSize="50sp"/>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="400dp"
+            android:text="@string/bluetooth_fail"
+            android:textColor="@color/pinky"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="52dp" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

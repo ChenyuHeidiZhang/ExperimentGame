@@ -69,41 +69,29 @@ public class Bluetooth extends AppCompatActivity {
     }
 
     public void timeStamper(String identity, String tstmp) {
-        try {
-            sendData(identity);
-            sendData(tstmp);
-            //Log.d(TAG, "timestamper sent");
-            Log.d(TAG, "sent " + identity + " " + tstmp);
-
-        } catch (IOException e) {
-            Log.d(TAG, "timestamper exceptions");
-            Intent intent = new Intent(context, BluetoothFailActivity.class);
-            context.startActivity(intent);
-        }
+        sendData(identity);
+        sendData(tstmp);
+        //Log.d(TAG, "timestamper sent");
+        Log.d(TAG, "sent " + identity + " " + tstmp);
     }
 
     public void timeStamperJustID(String identity) {
-        try {
-            sendData(identity);
-            Log.d(TAG, "ID sent");
-            Log.d(TAG, identity);
+        sendData(identity);
+        Log.d(TAG, "ID sent");
+        Log.d(TAG, identity);
+    }
 
-        } catch (IOException e) {
-            Log.d(TAG, "timestamper exceptions");
+    public void sendData(String msg) {
+        try {
+            mmOutputStream = mmSocket.getOutputStream();
+            msg += "\n";
+            mmOutputStream.write(msg.getBytes());
+        } catch (Exception e) {
+            Log.d(TAG,"can't getOutputStream");
+            recordEvent("The Bluetooth connection broke, might restart the app.");
             Intent intent = new Intent(context, BluetoothFailActivity.class);
             context.startActivity(intent);
         }
-    }
-
-    public void sendData(String msg) throws IOException {
-        try {
-            mmOutputStream = mmSocket.getOutputStream();
-        } catch (IOException e) {
-            Log.d(TAG,"can't getOutputStream");
-        }
-
-        msg += "\n";
-        mmOutputStream.write(msg.getBytes());
     }
 
     public void beginListenForData() {

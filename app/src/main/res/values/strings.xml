@@ -21,6 +21,7 @@
 
     <string name="select">Select</string>
     <string name="next_trial">Next</string>
+    <string name="exit">Exit</string>
     <string name="stay_longer">Check the options carefully!</string>
 
     <string name="handshake_error">The handshake message does not match!</string>

@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         user_name = getSharedPreferences("userName", MODE_PRIVATE);
         String tableName = "timeRecord_table_" + user_name.getString("name", "");
         timeRecordDb.createTableIfNotExists(tableName);
-
         Button playGame = findViewById(R.id.button_playGame);
 
         Button signOut = findViewById(R.id.button_signOut);
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnBT.setAdapter(btItemsAdapter);
 
-
+            /*
             // Set the currently connected device on the spinner so that we don't need to connect again.
             if (!"".equals(connectedBluetooth)) {
                 int spnPosition = btItemsAdapter.getPosition(connectedBluetooth);
@@ -128,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
                     spnBT.setSelection(spnPosition);
                 }
             }
+
+             */
 
 
         }
@@ -158,8 +159,12 @@ public class MainActivity extends AppCompatActivity {
                             hasStarted.edit().putBoolean("record_signin", true).apply();
                         }
                     } catch (IOException e) {
+                        e.printStackTrace();
                         Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
                     }
+                }
+                else {
+                    bluetooth.resetConnection();
                 }
             }
 
@@ -175,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(context, "You should connect to bluetooth first", Toast.LENGTH_SHORT).show();
                 }
                 else if (!bluetoothConnect) {
-                    Toast.makeText(context, "Please wait until the bluetooth get connected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please try selecting \"-Bluetooth-\" on the top right corner and then selecting the right device again", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Intent intent = getNextIntent();
