@@ -429,7 +429,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                     //prepare if early mask on, need to store this
                     temp_click_holder = codes[2] + ", " + codes[3];
                 }
-            }, 50);
+            }, 100);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();

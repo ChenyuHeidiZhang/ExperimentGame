@@ -520,7 +520,7 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
                     bluetooth.timeStamper( codes[1], dbTstamp);
                     temp_click_holder = codes[2] + ", " + codes[3];
                 }
-            }, 50);
+            }, 100);
 
             Log.d("Questions", codes[3]);
 
