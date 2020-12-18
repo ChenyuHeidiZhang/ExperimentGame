@@ -381,7 +381,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
                 public void run() {
                     tappedView.showNext();  /* uncover */
                 }
-            }, 50);
+            }, 100);
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
             not_covered = codes[2] + ", " + codes[3];
 
