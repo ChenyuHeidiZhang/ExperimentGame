@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -70,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
     private Bluetooth bluetooth;
 
     private long backPressedTime = 0;
+    private BluetoothAdapter bluetoothAdapter;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
-                        //TODO: don't let the app procede if bluetooth is not connected
                     }
                 }
             }
@@ -202,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
     /* Returns true if bluetooth adapter is successfully initiated or false otherwise. */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public boolean initiateBT() {
+        /*
         // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
         // BluetoothAdapter through BluetoothManager.
         final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
@@ -220,6 +224,32 @@ public class MainActivity extends AppCompatActivity {
         if(!bluetooth.mBluetoothAdapter.isEnabled()) {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBluetooth, 0);
+        }
+        return true;
+        */
+        //如果不支持蓝牙
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            //提示不支持蓝牙
+            Toast.makeText(this, "Doesn't support bluetooth", Toast.LENGTH_SHORT).show();
+            //退出程序
+            return false;
+        }
+        //创建蓝牙适配器原型是BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        //如果蓝牙适配器为空
+        if (bluetoothAdapter == null) {
+            //显示设备无蓝牙
+            Toast.makeText(this, "No bluetooth on this device", Toast.LENGTH_SHORT).show();
+            //退出
+            return false;
+        }
+        //如果蓝牙未开启
+        if (!bluetoothAdapter.isEnabled()) {
+            //不提示,直接开启蓝牙
+            bluetoothAdapter.enable();
+            //提示开启蓝牙中
+            Toast.makeText(this, "Bluetooth is on", Toast.LENGTH_SHORT).show();
+
         }
         return true;
     }
@@ -241,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
         return bluetoothItems;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void findBT(String bluetoothName) throws IOException {
         Set<BluetoothDevice> pairedDevices = bluetooth.mBluetoothAdapter.getBondedDevices();
         for(BluetoothDevice device : pairedDevices) {
@@ -248,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
                 bluetooth.mmDevice = device;
 
                 ParcelUuid[] uuids = device.getUuids();
-                bluetooth.openBT(uuids);    // call openBT method in bluetooth class
+                bluetooth.openBT(device, getApplicationContext(), uuids);    // call openBT method in bluetooth class
                 /*
                 try {
                     bluetooth.openBT(uuids);
