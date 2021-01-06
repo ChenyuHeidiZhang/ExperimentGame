@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                 bluetooth.mmDevice = device;
 
                 ParcelUuid[] uuids = device.getUuids();
-                bluetooth.openBT(device, getApplicationContext(), uuids);    // call openBT method in bluetooth class
+                bluetooth.openBT(device, getApplicationContext());
                 /*
                 try {
                     bluetooth.openBT(uuids);
@@ -353,6 +353,7 @@ public class MainActivity extends AppCompatActivity {
         return binaryTime;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onBackPressed() {
         // Finish the app if the user back presses twice within 2 seconds.
