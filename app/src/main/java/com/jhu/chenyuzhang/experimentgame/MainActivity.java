@@ -227,26 +227,30 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
         */
-        //如果不支持蓝牙
+        //如果不支持蓝牙\
+        /*
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             //提示不支持蓝牙
             Toast.makeText(this, "Doesn't support bluetooth", Toast.LENGTH_SHORT).show();
             //退出程序
             return false;
         }
+
+         */
+        final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         //创建蓝牙适配器原型是BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        bluetooth.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         //如果蓝牙适配器为空
-        if (bluetoothAdapter == null) {
+        if (bluetooth.mBluetoothAdapter == null) {
             //显示设备无蓝牙
             Toast.makeText(this, "No bluetooth on this device", Toast.LENGTH_SHORT).show();
             //退出
             return false;
         }
         //如果蓝牙未开启
-        if (!bluetoothAdapter.isEnabled()) {
+        if (!bluetooth.mBluetoothAdapter.isEnabled()) {
             //不提示,直接开启蓝牙
-            bluetoothAdapter.enable();
+            bluetooth.mBluetoothAdapter.enable();
             //提示开启蓝牙中
             Toast.makeText(this, "Bluetooth is on", Toast.LENGTH_SHORT).show();
 
