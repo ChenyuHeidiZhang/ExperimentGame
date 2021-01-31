@@ -280,17 +280,12 @@ public class MainActivity extends AppCompatActivity {
         Set<BluetoothDevice> pairedDevices = bluetooth.mBluetoothAdapter.getBondedDevices();
         for(BluetoothDevice device : pairedDevices) {
             if(device.getName().equals(bluetoothName)) {
-                bluetooth.mmDevice = device;
+                Bluetooth.mmDevice = device;
 
                 ParcelUuid[] uuids = device.getUuids();
-                bluetooth.openBT(device, getApplicationContext());
-                /*
-                try {
-                    bluetooth.openBT(uuids);
-                } catch (IOException e) {
-                    Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
+                if (!bluetooth.openBT(device, getApplicationContext())) {
+                    throw new IOException();
                 }
-                */
                 break;
             }
         }

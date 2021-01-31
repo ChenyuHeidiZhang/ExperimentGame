@@ -189,9 +189,9 @@ public class Question4ActivityHorizontal extends AppCompatActivity {
         setupTrial();
 
         if (isDemo) {
-            recordEvent("startTrainingTrial " + trialCounter);
+            dbTstamp = recordEvent("startTrainingTrial " + trialCounter);
         } else {
-            recordEvent("startTrial " + trialCounter);
+            dbTstamp = recordEvent("startTrial " + trialCounter);
         }
         // send trial number + 100 followed by trial parameters followed by 0
         bluetooth.timeStamper(Integer.toString(trialCounter +100),dbTstamp);
