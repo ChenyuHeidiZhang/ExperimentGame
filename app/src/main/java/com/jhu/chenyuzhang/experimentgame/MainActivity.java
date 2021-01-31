@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
 
     private static final String SPINNER_DEFAULT = "- Bluetooth -";
-    private Spinner spnBT;
+    //private Spinner spnBT;
     private Bluetooth bluetooth;
     private String signInDate;
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         // bluetooth set up
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
-        spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
+        //spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
 
         signinTime = getSharedPreferences("SignIn", MODE_PRIVATE);
         signInDate = signinTime.getString("date", "");
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
             ArrayAdapter<String> btItemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spnBluetoothItems);
             btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spnBT.setAdapter(btItemsAdapter);
+            //spnBT.setAdapter(btItemsAdapter);
 
             /*
             // Set the currently connected device on the spinner so that we don't need to connect again.
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final Context context = getApplicationContext();
+        /*
         spnBT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -150,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+         */
 
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
