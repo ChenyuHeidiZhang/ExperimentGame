@@ -4,15 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.nfc.Tag;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,98 +16,71 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
-
-import com.jhu.chenyuzhang.experimentgame.Bluetooth;
 import com.jhu.chenyuzhang.experimentgame.Database_fail;
 import com.jhu.chenyuzhang.experimentgame.EndDemoActivity;
-import com.jhu.chenyuzhang.experimentgame.MainActivity;
 import com.jhu.chenyuzhang.experimentgame.R;
 import com.jhu.chenyuzhang.experimentgame.ResultActivity;
 import com.jhu.chenyuzhang.experimentgame.TimeDbHelper;
 import com.jhu.chenyuzhang.experimentgame.Trial;
 import com.jhu.chenyuzhang.experimentgame.TrialDbHelper;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Random;
-import java.io.IOException;
 
 public class Question2Att4OpActivity extends AppCompatActivity {
+    private CountDownTimer countDownTimer; //Going back to the main page after countDownTime
+    private SharedPreferences demo_prefs; //The shared preference storing the status for demo
+    private SharedPreferences counter_prefs; //Count how many trials have been done
     private boolean isDemo;
-    private static final String KEY_DO_DEMO = "keyDoDemo";
-    private SharedPreferences demo_prefs;
-    private SharedPreferences prefTrialStatus;
-
-    private CountDownTimer countDownTimer;
-
     private TrialDbHelper trialInfoDb;
     private Trial currentTrial;
-    private static int trialCounter;
-    private SharedPreferences counter_prefs;
-    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
-
-    private double amountWon;
-
-    private double a1, a2, a3, a4;
-    private double p1, p2, p3, p4;
-
-    private TimeDbHelper timeRecordDb;
-
+    private static int trialCounter; //A trial counter just for this specific trial
+    private double amountWon; //If negative, then it's lose
+    private double a1, a2, a3, a4; //Value of choices
+    private double p1, p2, p3, p4; //Probability of choices
+    private TimeDbHelper timeRecordDb; //The helper to help insert data
+    //Animators for attributes
     private ViewAnimator viewAnimator11, viewAnimator12;
     private ViewAnimator viewAnimator21, viewAnimator22;
     private ViewAnimator viewAnimator31, viewAnimator32;
     private ViewAnimator viewAnimator41, viewAnimator42;
-    private Button buttonSelect1, buttonSelect2, buttonSelect3, buttonSelect4;
-
+    private Button buttonSelect1, buttonSelect2, buttonSelect3, buttonSelect4; //Four selection button
+    //Actions to record
     private String eventClick = "Clicked";
     private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
-    private String dbTstamp;
-    private String not_covered = "";
-    boolean stop;
-
-    private long backPressedTime;
-    private long startTime;
-
-    // A map from viewAnimator ID to their corresponding handlers.
-    private HashMap<Integer, Handler> viewHandlerMap = new HashMap<>();
-
-    Bluetooth bluetooth;
-
-    // identifiers maps the id of a attribute view to the code sent when it is uncovered
-    // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
+    private String dbTstamp; //Used especially in Bluetooth version to take the return string from the recordEvent() method
+    private String not_covered = ""; //Store which attribute(s) is not covered
+    private static final String KEY_TRIAL_COUNTER = "keyTrialCounter"; //Key for the shared preference storing the number of trials
+    private static final String KEY_DO_DEMO = "keyDoDemo"; //Key for the shared preference storing whether the trial is demo
+    private boolean stop; //Record the stopping point of the user (whether a trial is finished)
+    private long backPressedTime; //The time when the user pressed back button
+    private long startTime; //When does the trial start
+    private HashMap<Integer, Handler> viewHandlerMap = new HashMap<>(); //A map from viewAnimator ID to their corresponding handlers.
+    //Identifiers maps the id of a attribute view to the code sent when it is uncovered
+    //For each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
-    /*
-    The codes sent when an attribute view is covered after 1s
-    when another attribute is tapped before 1s
-    when an option is selected
-    when the result is displayed
-    */
-    private String identifier_cover = "34";
-    private String identifier_coverEarly = "35";
-    private String choice = "36";
-    private String resultID = "37";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
-        //prefTrialStatus.edit().putBoolean("trialDone", false).apply();
-        stop = false;
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_question_2att_4op);
 
+        //Get shared preference to judge whether it's demo section
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
-        isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
+        isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);
 
-        // 1st 2 items in the string are the event codes sent to the arduino
+        //initialization
+        stop = false;
+        timeRecordDb = new TimeDbHelper(this);
+        trialInfoDb = new TrialDbHelper(this);
+        // 1st and 2nd items in the string are the event codes sent to the Arduino
         // 3rd item is stored in the database along with the timestamp
         if(a1>0) {
             identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
@@ -155,13 +124,10 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         }else{
             identifiers.put(R.id.view_animator_42, new String[] {"17", "33", "P-4"});
         }
-
-
         buttonSelect1 = findViewById(R.id.button_select1);
         buttonSelect2 = findViewById(R.id.button_select2);
         buttonSelect3 = findViewById(R.id.button_select3);
         buttonSelect4 = findViewById(R.id.button_select4);
-
         viewAnimator11 = findViewById(R.id.view_animator_11);
         viewAnimator21 = findViewById(R.id.view_animator_21);
         viewAnimator12 = findViewById(R.id.view_animator_12);
@@ -170,33 +136,35 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         viewAnimator41 = findViewById(R.id.view_animator_41);
         viewAnimator32 = findViewById(R.id.view_animator_32);
         viewAnimator42 = findViewById(R.id.view_animator_42);
+        setupTrial();
 
-        // if is in training part, display "training" and the "end training" button
+        //Take down the trial starting time
+        startTime = System.currentTimeMillis();
+
+        //If is in training part, display "training" and the "end training" button
         if (isDemo) {
             Button buttonEndDemo = findViewById(R.id.button_end_demo);
             TextView tvDemo = findViewById(R.id.text_view_demo);
             buttonEndDemo.setVisibility(View.VISIBLE);
             tvDemo.setVisibility(View.VISIBLE);
 
+            //If end training button is clicked
             buttonEndDemo.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     dbTstamp = recordEvent("Training ended");
-                    /* Bluetooth
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper(dbTstamp, "Training ended");
-                    } catch (IOException e) {}
-
-                     */
-                    // end the training; go to EndDemoActivity
                     endDemo();
                 }
             });
         }
 
-        startTime = System.currentTimeMillis();
+        //Start recording data
+        if (isDemo) {
+            dbTstamp = recordEvent("startTrainingTrial " + trialCounter);
+        } else {
+            dbTstamp = recordEvent("startTrial " + trialCounter);
+        }
 
-        //finish activity after 1 minute of inactivity
+        //Go back to the entry page after 1 minute of inactivity
         int timeoutLength = getResources().getInteger(R.integer.trial_timeout_millis);
         countDownTimer = new CountDownTimer(timeoutLength,1000) {
             @Override
@@ -209,28 +177,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             }
         }.start();
 
-
-        timeRecordDb = new TimeDbHelper(this);
-        trialInfoDb = new TrialDbHelper(this);
-        bluetooth = new Bluetooth(this.getApplicationContext(), timeRecordDb);
-
-        setupTrial();
-
-        if (isDemo) {
-            dbTstamp = recordEvent("startTrainingTrial " + trialCounter);
-        } else {
-            dbTstamp = recordEvent("startTrial " + trialCounter);
-        }
-        /* Bluetooth
-        try {
-            bluetooth.timeStamper(Integer.toString(trialCounter + 100), dbTstamp);
-        }catch(IOException e) {
-            e.printStackTrace();
-        }
-
-         */
         // store trial parameters in database
-
         ArrayList<String> attributes = currentTrial.getAttributes();
         dbTstamp = recordEvent("V " + "11 " + attributes.get(0) + " " + attributes.get(1)
                 + ", " + "12 " + attributes.get(2) + " " + attributes.get(3)
@@ -240,32 +187,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 + ", " + "32 " + attributes.get(10) + " " + attributes.get(11)
                 + ", " + "41 " + attributes.get(12) + " " + attributes.get(13)
                 + ", " + "42 " + attributes.get(14) + " " + attributes.get(15));
-        
-        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
-        /* Bluetooth
-        // send trial number + 100 followed by trial parameters followed by 0
-        try {
 
-            // send attribute magnitudes
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(9))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(11))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(13))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(15))*10.0+50.0)));
-
-            // end the stream with the identifier 0
-            bluetooth.timeStamper(Integer.toString(0), dbTstamp);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-         */
-
-
+        //Set onclick on all the attributes
         viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attributeOnClick(viewAnimator11,
@@ -273,7 +196,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                                 viewAnimator12, viewAnimator22, viewAnimator32, viewAnimator42});
             }
         });
-
         viewAnimator21.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attributeOnClick(viewAnimator21,
@@ -282,7 +204,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
             }
         });
-
         viewAnimator12.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attributeOnClick(viewAnimator12,
@@ -290,7 +211,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                                 viewAnimator22, viewAnimator32, viewAnimator42});
             }
         });
-
         viewAnimator22.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attributeOnClick(viewAnimator22,
@@ -298,7 +218,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                                 viewAnimator12, viewAnimator32, viewAnimator42});
             }
         });
-
         viewAnimator31.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attributeOnClick(viewAnimator31,
@@ -306,7 +225,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                                 viewAnimator12, viewAnimator22, viewAnimator32, viewAnimator42});
             }
         });
-
         viewAnimator41.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attributeOnClick(viewAnimator41,
@@ -315,7 +233,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
             }
         });
-
         viewAnimator32.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attributeOnClick(viewAnimator32,
@@ -323,7 +240,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                                 viewAnimator12, viewAnimator22, viewAnimator42});
             }
         });
-
         viewAnimator42.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attributeOnClick(viewAnimator42,
@@ -332,19 +248,10 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             }
         });
 
-
+        //Set onclick on all the selection button
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-
-                /* Bluetooth
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( choice, dbTstamp);
-                } catch (IOException e) {e.printStackTrace();}
-
-                 */
-
+                //If minimum time not reached, prevent user from clicking
                 if (checkMinimumTimePassed()) {
                     dbTstamp = recordEvent("Option1 selected successfully");
                     incrementTrialCounter();
@@ -356,17 +263,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 }
             }
         });
-
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                /* Bluetooth
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( choice, dbTstamp);
-                } catch (IOException e) {e.printStackTrace();}
-
-                 */
                 if (checkMinimumTimePassed()) {
                     dbTstamp = recordEvent("Option2 selected successfully");
                     incrementTrialCounter();
@@ -378,17 +276,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 }
             }
         });
-
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                /* Bluetooth
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( choice, dbTstamp);
-                } catch (IOException e) {e.printStackTrace();}
-
-                 */
                 if (checkMinimumTimePassed()) {
                     dbTstamp = recordEvent("Option3 selected successfully");
                     incrementTrialCounter();
@@ -400,17 +289,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 }
             }
         });
-
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                /* Bluetooth
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( choice, dbTstamp);
-                } catch (IOException e) {e.printStackTrace();}
-
-                 */
                 if (checkMinimumTimePassed()) {
                     dbTstamp = recordEvent("Option4 selected successfully");
                     incrementTrialCounter();
@@ -424,64 +304,41 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         });
     }
 
-    // called when each attribute is clicked
+    /**
+     * This method is called when an attribute is clicked
+     * @param tappedView The view that is tapped by the user
+     * @param otherViews All the other views(attributes) that are on the screen
+     */
     private void attributeOnClick(final ViewAnimator tappedView, ViewAnimator[] otherViews) {
-        /* on tap, if the attribute view is covered, uncover it for 1s and cover other attributes */
+        //On tap, if the attribute view is covered, uncover it for 1s and cover other attributes
         if (tappedView.getDisplayedChild() == 0) {
-            final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
-
+            final String[] codes = identifiers.get(tappedView.getId());
+            //Store the action of clicking the attribute
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
-            /* Bluetooth
-            try {
-                // send identifier and timestamp
-                bluetooth.timeStamper( codes[0], dbTstamp);
-            } catch (IOException e) {}
-
-             */
-
+            //If there is another attribute that is not covered, cover them
             if (!not_covered.equals("")) {
-                /* if other attributes are uncovered, cover them */
                 for (ViewAnimator v : otherViews) {
                     if (v.getDisplayedChild() == 1) {
                         dbTstamp = recordEvent(not_covered + " Early Mask On");
                         not_covered = "";
-                    /* Bluetooth
-                   try {
-                        bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
-                    } catch (IOException e) {}
-
-                     */
-
                         v.showNext();
                     }
                 }
             }
 
-
-
-            //armVSyncHandlerA1();
-
+            //Display the content of the attribute, delayed by 100 milliseconds since tapping
             Handler handler1 = new Handler();
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    tappedView.showNext();  /* uncover */
+                    tappedView.showNext();
                 }
             }, 100);
+            //Store the action of displaying
             dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
             not_covered = codes[2] + ", " + codes[3];
-            /* Bluetooth
-            try {
-                bluetooth.timeStamper(codes[1], dbTstamp);
-            } catch (IOException e) {}
 
-             */
-
-
-
-            Log.d("Questions", codes[3]);
-
-            /* automatically re-cover after 1000ms */
+            //Automatically re-cover after 1000ms
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -490,37 +347,35 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                         tappedView.showNext();
                         dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                         not_covered = "";
-                        /* Bluetooth
-                        try {
-                            bluetooth.timeStamper(identifier_cover, dbTstamp);
-                        } catch (IOException e) {}
-
-                         */
-
-
                     }
                 }
             }, 1000);
             viewHandlerMap.put(tappedView.getId(), handler);
-
-
         }
-
+        //Reset the inactive time counter
         countDownTimer.cancel();
         countDownTimer.start();
     }
 
+    /**
+     * This method is called when the user clicks the endDemo button
+     */
     private void endDemo(){
-        demo_prefs.edit().putBoolean(KEY_DO_DEMO, false).apply();    // change shared "prefs" for do_demo to false
+        //Change shared "prefs" for do_demo to false
+        demo_prefs.edit().putBoolean(KEY_DO_DEMO, false).apply();
 
-        // set trialCounter back to 1
+        //Set trialCounter back to 1
         counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, 1).apply();
 
+        //Go to the end demo page
         Intent intent = new Intent(Question2Att4OpActivity.this, EndDemoActivity.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * This method is called at the beginning of the trial
+     */
     private void setupTrial() {
         // load trialCounter from shared preference
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
@@ -531,7 +386,11 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         getAttributes();
     }
 
+    /**
+     * This method is to get all the attribute information and set them into the animator and identifier
+     */
     private void getAttributes(){
+        //This is the array that stores all the attributes information
         ArrayList<String> attributes = currentTrial.getAttributes();
 
         setAttributesForOneVA(viewAnimator11, attributes.get(0), attributes.get(1));
@@ -547,13 +406,19 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "12", attributes.get(2)});
         identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(4)});
         identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(6)});
-
         identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "31", attributes.get(8)});
         identifiers.put(R.id.view_animator_32, new String[] {"11", "27", "32", attributes.get(10)});
         identifiers.put(R.id.view_animator_41, new String[] {"14", "30", "41", attributes.get(12)});
         identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "42", attributes.get(14)});
     }
 
+    /**
+     * This method is called by getAttributes() method
+     * Helper function to link animator with the attribute information
+     * @param va The view animator of the attribute
+     * @param attType The type of attribute
+     * @param att The amount of the attribute
+     */
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
         ImageView imgView = (ImageView) va.getChildAt(0);
         TextView tv = (TextView) va.getChildAt(1);
@@ -597,56 +462,12 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             imgView.setImageResource(R.drawable.probability_lose);
             tv.setTextColor(Color.RED);
         }
-        /* This is the old way we did before we substitute these by the part in getAttributes()
-        // 1st 2 items in the string are the event codes sent to the arduino
-        // 3rd item is stored in the database along with the timestamp
-        if(a1>0) {
-            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
-        }else{
-            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
-        }
-        if(p1>0) {
-            identifiers.put(R.id.view_animator_21, new String[] {"3", "19", "P+1"});
-        }else{
-            identifiers.put(R.id.view_animator_21, new String[] {"7", "23", "P-1"});
-        }
-        if(a2>0) {
-            identifiers.put(R.id.view_animator_12, new String[] {"4", "20", "A+2"});
-        }else{
-            identifiers.put(R.id.view_animator_12, new String[] {"8", "24", "A-2"});
-        }
-        if(p2>0) {
-            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
-        }else{
-            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
-        }
-
-        if(a3>0) {
-            identifiers.put(R.id.view_animator_31, new String[] {"10", "26", "A+3"});
-        }else{
-            identifiers.put(R.id.view_animator_31, new String[] {"12", "28", "A-3"});
-        }
-        if(p3>0) {
-            identifiers.put(R.id.view_animator_41, new String[] {"11", "27", "P+3"});
-        }else{
-            identifiers.put(R.id.view_animator_41, new String[] {"13", "29", "P-3"});
-        }
-
-        if(a4>0) {
-            identifiers.put(R.id.view_animator_32, new String[] {"14", "30", "A+4"});
-        }else{
-            identifiers.put(R.id.view_animator_32, new String[] {"16", "32", "A-4"});
-        }
-        if(p4>0) {
-            identifiers.put(R.id.view_animator_42, new String[] {"15", "31", "P+4"});
-        }else{
-            identifiers.put(R.id.view_animator_42, new String[] {"17", "33", "P-4"});
-        }
-
-         */
     }
 
-    //get current time in milliseconds
+    /**
+     * Get current time in dd:HH:mm:ss:SSS format
+     * @return The current time in string
+     */
     private String getCurrentTime() {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd:HH:mm:ss:SSS");
@@ -654,11 +475,14 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         return formattedDate;
     }
 
+    /**
+     * A helper function to insert data into database
+     * @param event The description of the data
+     * @return The current time string
+     */
     private String recordEvent(String event) {
-        //long timeSpan = System.nanoTime() - startTime;
-        //String timeString = String.format("%d", timeSpan / 1000);
         String timeString = getCurrentTime();
-
+        //If inserting not success, go to the error page
         if (!timeRecordDb.insertData(timeString, event)) {
             Toast.makeText(getApplicationContext(), "Something goes wrong with database", Toast.LENGTH_LONG).show();
             timeRecordDb.close();
@@ -669,6 +493,10 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         return timeString;
     }
 
+    /**
+     * This is a helper function checking whether the user stay on the trial page for a minimum amount of time
+     * @return True if the minimum time is passed, false otherwise
+     */
     private boolean checkMinimumTimePassed() {
         if (System.currentTimeMillis() - startTime <
                 getResources().getInteger(R.integer.min_time_millis_2Att4Opt)) {
@@ -678,8 +506,13 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * The helper function called when a selection is made and need to unmask all the attributes
+     * @param viewAnimators All the animators in the trial
+     * @param option The choice that is selected
+     */
     private void unmaskAttributes(ViewAnimator[] viewAnimators, String option) {
-        //first cover all the attributes
+        //First cover all the attributes
         if (!not_covered.equals("")) {
             ViewAnimator[] all = new ViewAnimator[]{viewAnimator11, viewAnimator21, viewAnimator31, viewAnimator41,
                     viewAnimator12, viewAnimator22, viewAnimator32, viewAnimator42};
@@ -689,6 +522,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             recordEvent(not_covered + " Early Mask On");
             not_covered = "";
         }
+        //Uncover all the attributes from the specific selection
         for (ViewAnimator v : viewAnimators) {
             v.setDisplayedChild(1);
             // Disable the handler (if one exists for the current view) that sets a 1s cover time.
@@ -698,15 +532,20 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             }
         }
         recordEvent(option + " Mask Off");
-
+        //Disable all the button
         buttonSelect1.setEnabled(false);
         buttonSelect2.setEnabled(false);
         buttonSelect3.setEnabled(false);
         buttonSelect4.setEnabled(false);
     }
 
+    /**
+     * This method is used to show the result after user select a choice
+     * @param a The value of the result
+     * @param option The option
+     */
     private void showResult(double a, int option){
-        String outcomes[] = currentTrial.getOutcomes();
+        String[] outcomes = currentTrial.getOutcomes();
         String outcome = outcomes[option-1];
         if ("win".equals(outcome) || "lose".equals(outcome)) {
             amountWon = a;  // This can be either positive or negative.
@@ -717,15 +556,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         //Store the display of amount into a string
         final String temp = "Option" + option + " selected, $" + amountWon + " won";
         timeRecordDb.close();
-        /* Bluetooth
-        try {
-            // send identifier and timestamp
-            bluetooth.timeStamper( resultID, dbTstamp);
-            //bluetooth.sendData(String.format ("%.2f",amountWon));
-        } catch (IOException e) {}
-
-         */
-
 
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();
@@ -743,27 +573,33 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         }, 2000);
     }
 
+    /**
+     * If the user press the back button on the bottom
+     */
     @Override
     public void onBackPressed() {
+        //If pressing twice
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            //timeRecordDb.close();
             recordEvent("Pressed back button, return to main page");
             stop = true;
             finish();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
         }
-
         backPressedTime = System.currentTimeMillis();
     }
 
-    private void incrementTrialCounter() {  // increment trial counter
+    /**
+     * This method increments the number of trials
+     */
+    private void incrementTrialCounter() {
         if (trialCounter == trialInfoDb.getNumRows()){
-            trialCounter = 1;       // wrap around if reaches the end
+            // wrap around if reaches the end
+            trialCounter = 1;
         } else {
             trialCounter++;
         }
-
+        //Store the number of trial counters
         counter_prefs.edit().putInt(KEY_TRIAL_COUNTER, trialCounter).apply();
     }
 }
