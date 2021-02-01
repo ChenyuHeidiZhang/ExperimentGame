@@ -28,6 +28,7 @@ import com.jhu.chenyuzhang.experimentgame.ResultActivity;
 import com.jhu.chenyuzhang.experimentgame.TimeDbHelper;
 import com.jhu.chenyuzhang.experimentgame.Trial;
 import com.jhu.chenyuzhang.experimentgame.TrialDbHelper;
+import com.jhu.chenyuzhang.experimentgame.Database_fail;
 
 import org.w3c.dom.Text;
 

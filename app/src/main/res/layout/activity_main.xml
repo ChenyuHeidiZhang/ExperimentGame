@@ -11,14 +11,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/button_signOut"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
             android:text="@string/sign_out"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/spinner_bluetooth"

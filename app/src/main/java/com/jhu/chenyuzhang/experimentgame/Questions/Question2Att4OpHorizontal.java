@@ -25,6 +25,7 @@ import com.jhu.chenyuzhang.experimentgame.ResultActivity;
 import com.jhu.chenyuzhang.experimentgame.TimeDbHelper;
 import com.jhu.chenyuzhang.experimentgame.Trial;
 import com.jhu.chenyuzhang.experimentgame.TrialDbHelper;
+import com.jhu.chenyuzhang.experimentgame.Database_fail;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

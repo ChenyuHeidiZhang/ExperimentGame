@@ -22,7 +22,9 @@
     <string name="select">Select</string>
     <string name="next_trial">Next</string>
     <string name="stay_longer">Check the attributes carefully!</string>
-    <string name="database_error">Something is wrong with storing your result, click the button to restart the application. If still not working, please contact the technician.</string>
+    <string name="database_error">Something is wrong with storing your result, please try to exit the
+        app by licking the square on the bottom and clear the app by swiping it to the left.
+        If reopening the app does not solve the problem, please contact the technician. </string>
 
     <string name="handshake_error">The handshake message does not match!</string>
     <string name="bluetooth_error">The bluetooth is not responsive for over 500 milliseconds!</string>
