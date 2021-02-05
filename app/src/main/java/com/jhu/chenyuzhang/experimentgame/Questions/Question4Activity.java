@@ -513,7 +513,7 @@ public class Question4Activity extends AppCompatActivity {
                     bluetooth.timeStamper( codes[1], dbTstamp);
                     temp_click_holder = codes[2] + ", " + codes[3];
                 }
-            }, 100);
+            }, 160);
 
             /* automatically re-cover after 1000ms */
             Handler handler = new Handler();

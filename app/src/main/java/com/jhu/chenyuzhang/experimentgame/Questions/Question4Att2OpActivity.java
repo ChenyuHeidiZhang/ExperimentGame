@@ -351,7 +351,7 @@ public class Question4Att2OpActivity extends AppCompatActivity {
                     bluetooth.timeStamper( codes[1], dbTstamp);
                     temp_click_holder = codes[2] + ", " + codes[3];
                 }
-            }, 100);
+            }, 160);
 
 
             Log.d("Questions", codes[3]);

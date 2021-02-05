@@ -427,7 +427,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                     bluetooth.timeStamper( codes[1], dbTstamp);
                     temp_click_holder = codes[2] + ", " + codes[3];
                 }
-            }, 100);
+            }, 160);
             Log.d("Questions", codes[3]);
 
             /* automatically re-cover after 1000ms */
