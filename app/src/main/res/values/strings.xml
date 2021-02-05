@@ -32,4 +32,32 @@
 
 
     <string name="pop_up_bt">Bluetooth is not connected correctly, try again</string>
+
+    <string name="survey_date">Date: </string>
+    <string name="survey_age">Age: </string>
+    <string name="survey_language">Are you a native English speaker?</string>
+    <string name="survey_hand">Handedness?</string>
+    <string name="survey_color">Do you have any form of color blindness?</string>
+    <string name="survey_vision">Vision?</string>
+    <string name="survey_disease">Do you currently have a diagnosed,
+        major neurological or other health condition that affects your
+        memory or attention? (other than ADHD, Depression,
+        or Autism spectrum disorders) Such as traumatic brain injury,
+        multiple sclerosis, chronic fatigue syndrome, Alzheimer’s, Parkinson’s, etc.
+        Do not enter epilepsy</string>
+
+    <string name="survey_claim">The National Institutes of Health (NIH),
+        the Federal agency that is supporting this research,
+        requests information on the gender, racial, and ethnic composition
+        of the participants of studies it sponsors. This information is
+        collected to ensure that the results of this study can be generalized
+        to the population as a whole and do not exclude any ethnic or gender groups.
+        You do not have to respond to these questions to participate in experiments
+        in the lab. If you choose to respond, please select the relevant
+        categories below.</string>
+    <string name="survey_personal_info_sex">Sex: </string>
+    <string name="survey_personal_info_ethnic">Ethnic Category: </string>
+    <string name="survey_personal_info_racial">Racial Category: </string>
+
+
 </resources>

@@ -17,7 +17,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Database_fail"></activity>
+        <activity android:name=".SurveyOpening"></activity>
+        <activity android:name=".Database_fail" />
         <activity android:name=".TotalAmountActivity" />
         <activity android:name=".Questions.Question2Att4OpHorizontal" />
         <activity android:name=".Questions.Question2Att4OpActivity" />
