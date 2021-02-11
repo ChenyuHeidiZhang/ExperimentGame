@@ -58,6 +58,80 @@
     <string name="survey_personal_info_sex">Sex: </string>
     <string name="survey_personal_info_ethnic">Ethnic Category: </string>
     <string name="survey_personal_info_racial">Racial Category: </string>
+    <string name="instruct1">Indicate the extend to which you agree or disagree with each of the following statements.
+        (1 = Strongly Agree, 2 = Agree, 3 = Disagree, 4 = Strongly Disagree)</string>
+    <string name="instruct2">Indicate the extent to which the following statements are true or false about you.
+        (On a scale from 0 - 10, 0 for False, 10 for True)	</string>
 
+    <string-array name="SurveyQs">
+        <item>If I think something unpleasant is going to happen I usually get pretty "worked up."</item>
+        <item>I\'m always willing to try something new if I think it will be fun.</item>
+        <item>It would excite me to win a contest.</item>
+        <item>Even if something bad is about to happen to me, I rarely experience fear or nervousness.</item>
+        <item>When good things happen to me, it affects me strongly.</item>
+        <item>I go out of my way to get things I want.</item>
+        <item>I crave excitement and new sensations.</item>
+        <item>I have very few fears compared to my friends.</item>
+        <item>When I want something, I usually go all-out to get it.</item>
+        <item>I often act on the spur of the moment.</item>
+        <item>When I get something I want, I feel excited and energized.</item>
+        <item>I will often do things for no other reason than that they might be fun.</item>
+        <item>I feel pretty worried or upset when I think or know somebody is angry with me.</item>
+        <item>If I see a chance to get something I want, I move on it right away.</item>
+        <item>Criticism or scolding hurts me quite a bit.</item>
+        <item>I worry about making mistakes.</item>
+        <item>I feel worried when I think I have done poorly at something.</item>
+        <item>When I seen an opportunity for something I like, I get excited right away.</item>
+        <item>When I\'m doing well at something, I love to keep at it.</item>
+        <item>When I go after something, I use a "no holds barred" approach.</item>
+
+        <item>I like to do things which are new and different.</item>
+        <item>I like to do things spontaneously.</item>
+        <item>I tend to do several things at the same time.</item>
+        <item>I actively look for new experiences.</item>
+        <item>I have a feel for how things work.</item>
+        <item>I look for new sensations.</item>
+        <item>I am excited by what is new in my field.</item>
+        <item>I often have lots of spontaneous ideas.</item>
+        <item>I have new ideas all the time.</item>
+        <item>I enjoy starting projects.</item>
+    </string-array>
+    <string-array name="longquestions">
+        <item>On a scale from 1 to 5, how motivated are you to do well on this task?
+            With 1 being not motivated at all, and 5 being extremely motivated.
+            Please be as honest as possible.</item>
+        <item>On a scale from 1 to 5, how engaged were you in the task?
+            With 1 being not engaged at all, and 5 being extremely engaged.
+            Please be as honest as possible.</item>
+        <item>Using a scale from 1–5, how would you rate the degree with which
+            you paid attention to all available information, before you made a decision?
+        (1: I paid attention to very few factors, 5: I paid attention to all available information)</item>
+        <item>Using a scale from 1–5, how would you rate your willingness to take a risk?
+        (1: strongly risk-averse; 5: strongly risk-seeking)</item>
+        <item>IUsing a scale from 1–5, how would you rate the degree
+            to which you used a clearly defined strategy to find the best option,
+            that you could explain in words?
+        (1: never any clear strategy used, 5: always clear strategy used)</item>
+        <item>Using a scale from 1–5, how would you rate the degree to which
+            you used clearly different strategies in the most complex case
+            (4 options, each with 4 attributes) relative to the most simple case
+            (2 options, each with 2 attributes)?
+        (1: no difference in strategy, 5: completely different strategies)</item>
+
+    </string-array>
+
+    <string name="Qs1">Using a scale from 1 to 5, how would
+        you rate the influence of the following attributes
+        on your assessment of an option’s value (or attractiveness)?</string>
+
+    <string name="Qs2">Using a scale from 1–5,
+        how would you rate the difficulty of deciding
+        for the different decision situations?
+        (1: easiest, 5: hardest)</string>
+
+    <string name="Qs3">Using a scale from 1–5,
+        how strongly did each variable increase
+        the degree of difficulty of finding the best available option?
+        (1: weakest, 5: strongest)</string>
 
 </resources>

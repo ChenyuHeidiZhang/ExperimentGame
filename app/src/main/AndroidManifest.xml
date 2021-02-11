@@ -17,7 +17,10 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SurveyOpening"></activity>
+        <activity android:name=".SurveySpecial"></activity>
+        <activity android:name=".SurveyMore" />
+        <activity android:name=".SurveyContinue" />
+        <activity android:name=".SurveyOpening" />
         <activity android:name=".Database_fail" />
         <activity android:name=".TotalAmountActivity" />
         <activity android:name=".Questions.Question2Att4OpHorizontal" />

@@ -10,156 +10,250 @@
         android:id="@+id/Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/survey_date"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="81dp" />
+        android:textColor="#0C0C0C"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Age"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/survey_age"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="150dp" />
+        android:textColor="#0B0A0A"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Language"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Language"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="15dp"
         android:text="@string/survey_language"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="216dp" />
+        android:textColor="#090909"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Lan_yes"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Handedness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="15dp"
         android:text="@string/survey_hand"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="312dp" />
+        android:textColor="#070707"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Handedness_left"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/Colorblind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="440dp" />
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/survey_color"
+        android:textColor="#090909"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Color_no"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/Vision"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="515dp" />
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/survey_vision"
+        android:textColor="#100F0F"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Vision_normal"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
+        android:id="@+id/Disease"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="608dp" />
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/survey_disease"
+        android:textColor="#0B0A0A"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editTextDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="50dp"
         android:ems="10"
         android:inputType="date"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="81dp" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextNumber"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:inputType="number"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="150dp" />
-
-    <Button
-        android:id="@+id/Lan_yes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Yes"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="247dp" />
-
-    <Button
-        android:id="@+id/Lang_No"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No"
-        tools:layout_editor_absoluteX="240dp"
-        tools:layout_editor_absoluteY="247dp" />
-
-    <Button
-        android:id="@+id/Handedness_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Right"
-        tools:layout_editor_absoluteX="240dp"
-        tools:layout_editor_absoluteY="351dp" />
-
-    <Button
-        android:id="@+id/Handedness_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Left"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="351dp" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="436dp" />
-
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="289dp"
-        tools:layout_editor_absoluteY="440dp" />
-
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="512dp" />
-
-    <Button
-        android:id="@+id/button10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="265dp"
-        tools:layout_editor_absoluteY="508dp" />
-
-    <Button
-        android:id="@+id/button11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="207dp"
-        tools:layout_editor_absoluteY="573dp" />
+        app:layout_constraintBottom_toTopOf="@+id/Language"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="30dp"
+        android:contentDescription="Type the Name of the Disease"
+        android:ems="10"
+        android:hint="Type the Name of the Disease"
+        android:inputType="textPersonName"
+        android:textColor="#8A7F7F"
+        app:layout_constraintBottom_toTopOf="@+id/Next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/Next"
+        android:layout_width="88dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="64dp"
+        android:background="#3F51B5"
+        android:text="Next"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RadioButton
+        android:id="@+id/Lan_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginBottom="30dp"
+        android:text="Yes"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Handedness"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioButton
+        android:id="@+id/Lan_no"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="76dp"
+        android:text="No"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Handedness_right"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RadioButton
+        android:id="@+id/Handedness_left"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginBottom="30dp"
+        android:text="Left"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Colorblind"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioButton
+        android:id="@+id/Handedness_right"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="30dp"
+        android:text="Right"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Colorblind"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RadioButton
+        android:id="@+id/Color_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginBottom="30dp"
+        android:text="Yes"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Vision"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioButton
+        android:id="@+id/Color_no"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="76dp"
+        android:text="No"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Vision_glasses"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RadioButton
+        android:id="@+id/Vision_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="639dp" />
+        android:layout_marginStart="80dp"
+        android:layout_marginBottom="30dp"
+        android:text="Normal"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Disease"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioButton
+        android:id="@+id/Vision_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="Contacts"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Disease"
+        app:layout_constraintEnd_toStartOf="@+id/Vision_glasses"
+        app:layout_constraintStart_toEndOf="@+id/Vision_normal" />
+
+    <RadioButton
+        android:id="@+id/Vision_glasses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="30dp"
+        android:text="Glasses"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Disease"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
