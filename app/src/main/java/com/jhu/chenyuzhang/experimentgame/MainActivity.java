@@ -173,8 +173,12 @@ public class MainActivity extends AppCompatActivity {
                 if (survey_stats == 0) {
                     intent = new Intent(MainActivity.this, SurveyOpening.class);
                 }
-                else if (survey_stats == 1) {
+                else if (survey_stats == 2) {
                     intent = new Intent(MainActivity.this, SurveyContinue.class);
+                }
+                else if (survey_stats == 1){
+                    intent = new Intent(MainActivity.this, Survey_opening2.class);
+
                 }
                 else {
                     intent = getNextIntent();

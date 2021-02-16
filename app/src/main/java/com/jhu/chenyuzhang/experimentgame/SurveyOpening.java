@@ -187,7 +187,7 @@ public class SurveyOpening extends AppCompatActivity {
                     }
                 }
                 prefSurvey.edit().putInt("Status", 1).apply();
-                Intent intent = new Intent(SurveyOpening.this, SurveyContinue.class);
+                Intent intent = new Intent(SurveyOpening.this, Survey_opening2.class);
                 startActivity(intent);
                 finish();
             }

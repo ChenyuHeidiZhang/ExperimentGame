@@ -58,12 +58,8 @@ public class SurveyContinue extends AppCompatActivity {
         a5 = findViewById(R.id.A5);
         next = findViewById(R.id.Next3);
 
-        if (count < 21) {
-            instruct.setText(getResources().getString(R.string.instruct1));
-        }
-        else if (count < 30) {
-            instruct.setText(getResources().getString(R.string.instruct2));
-        }
+
+        instruct.setText(getResources().getString(R.string.instruct1));
         Q1 = questions[count];
         q1.setText(questions[count++]);
         Q2 = questions[count];
@@ -78,6 +74,9 @@ public class SurveyContinue extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (count >= 21) {
+                    instruct.setText(getResources().getString(R.string.instruct2));
+                }
                 recordEvent(Q1);
                 recordEvent(a1.getText().toString());
                 a1.setText("");
@@ -94,7 +93,7 @@ public class SurveyContinue extends AppCompatActivity {
                 recordEvent(a5.getText().toString());
                 a5.setText("");
                 if (count == 30) {
-                    prefSurvey.edit().putInt("Status", 2).apply();
+                    prefSurvey.edit().putInt("Status", 3).apply();
                     Intent intent = new Intent(SurveyContinue.this, MainActivity.class);
                     startActivity(intent);
                     finish();
