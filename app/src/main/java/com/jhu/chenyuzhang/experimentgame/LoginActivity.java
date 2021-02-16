@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
     public static final String KEY_LAST_TOTAL = "keyLastTotal";
+    private SharedPreferences prefSurvey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_login);
-
+        prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
+        prefSurvey.edit().putInt("Status", 0).apply();
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
 
@@ -139,5 +141,8 @@ public class LoginActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd:G:HH:mm:ss");
         String formattedDate = dateFormat.format(date);
         return formattedDate;
+    }
+    @Override
+    public void onBackPressed() {
     }
 }

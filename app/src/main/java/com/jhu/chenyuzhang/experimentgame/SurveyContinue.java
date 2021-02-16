@@ -1,6 +1,7 @@
 package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +32,8 @@ public class SurveyContinue extends AppCompatActivity {
     String Q5;
     TextView instruct;
     Button next;
+    private SharedPreferences prefSurvey;
+    private long backPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,9 @@ public class SurveyContinue extends AppCompatActivity {
         setContentView(R.layout.activity_survey_continue);
         final String[] questions = getResources().getStringArray(R.array.SurveyQs);
         timeRecordDb = new TimeDbHelper(this);
+
+        prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
+
 
         instruct = findViewById(R.id.Survey_instruct);
         q1 = findViewById(R.id.Q1);
@@ -88,7 +94,8 @@ public class SurveyContinue extends AppCompatActivity {
                 recordEvent(a5.getText().toString());
                 a5.setText("");
                 if (count == 30) {
-                    Intent intent = new Intent(SurveyContinue.this, SurveyMore.class);
+                    prefSurvey.edit().putInt("Status", 2).apply();
+                    Intent intent = new Intent(SurveyContinue.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -118,5 +125,17 @@ public class SurveyContinue extends AppCompatActivity {
             finish();
         }
         return timeString;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            timeRecordDb.close();
+            finish();
+        } else {
+            Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }

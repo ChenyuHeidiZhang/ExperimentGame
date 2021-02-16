@@ -1,6 +1,7 @@
 package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
 
@@ -28,6 +27,9 @@ public class SurveyOpening extends AppCompatActivity {
     RadioButton visionContacts;
     RadioButton visionGlasses;
     Button next;
+    private SharedPreferences prefSurvey;
+    private long backPressedTime;
+
 
     Boolean lan = null;
     Boolean handedness = null;
@@ -42,7 +44,7 @@ public class SurveyOpening extends AppCompatActivity {
         timeRecordDb = new TimeDbHelper(this);
         date = findViewById(R.id.editTextDate);
         age = findViewById(R.id.editTextNumber);
-        disease = findViewById(R.id.editTextTextPersonName);
+        disease = findViewById(R.id.disease);
         languageYes = findViewById(R.id.Lan_yes);
         languageNo = findViewById(R.id.Lan_no);
         handnessLeft = findViewById(R.id.Handedness_left);
@@ -53,6 +55,7 @@ public class SurveyOpening extends AppCompatActivity {
         visionContacts = findViewById(R.id.Vision_contacts);
         visionGlasses = findViewById(R.id.Vision_glasses);
         next = findViewById(R.id.Next);
+        prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
 
         languageYes.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -151,7 +154,7 @@ public class SurveyOpening extends AppCompatActivity {
             public void onClick(View v) {
                 recordEvent("Date: " + date.getText().toString());
                 recordEvent("Age: " + age.getText().toString());
-                recordEvent("Disease" + age.getText().toString());
+                recordEvent("Disease" + disease.getText().toString());
                 if (lan != null && lan) {
                     recordEvent("Native English speaker");
                 }
@@ -183,6 +186,7 @@ public class SurveyOpening extends AppCompatActivity {
                             break;
                     }
                 }
+                prefSurvey.edit().putInt("Status", 1).apply();
                 Intent intent = new Intent(SurveyOpening.this, SurveyContinue.class);
                 startActivity(intent);
                 finish();
@@ -200,5 +204,17 @@ public class SurveyOpening extends AppCompatActivity {
             finish();
         }
         return timeString;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            timeRecordDb.close();
+            finish();
+        } else {
+            Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }

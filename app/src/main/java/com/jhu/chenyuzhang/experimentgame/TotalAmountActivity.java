@@ -107,7 +107,7 @@ public class TotalAmountActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 } else {
-                    Intent intent = new Intent(TotalAmountActivity.this, SurveyOpening.class);
+                    Intent intent = new Intent(TotalAmountActivity.this, SurveyMore.class);
                     startActivity(intent);
                 }
 

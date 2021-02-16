@@ -85,4 +85,9 @@ public class SurveyMore extends AppCompatActivity {
         }
         return timeString;
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
 }

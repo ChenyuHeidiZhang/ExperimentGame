@@ -71,8 +71,10 @@ public class MainActivity extends AppCompatActivity {
     //private Spinner spnBT;
     private Bluetooth bluetooth;
     private String signInDate;
+    private SharedPreferences prefSurvey;
 
     private long backPressedTime = 0;
+    int survey_stats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
+
 
         setContentView(R.layout.activity_main);
 
@@ -163,7 +168,17 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                  */
-                Intent intent = getNextIntent();
+                survey_stats = prefSurvey.getInt("Status", 0);
+                Intent intent;
+                if (survey_stats == 0) {
+                    intent = new Intent(MainActivity.this, SurveyOpening.class);
+                }
+                else if (survey_stats == 1) {
+                    intent = new Intent(MainActivity.this, SurveyContinue.class);
+                }
+                else {
+                    intent = getNextIntent();
+                }
                 startActivity(intent);
             }
         });
