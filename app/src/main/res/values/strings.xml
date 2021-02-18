@@ -97,9 +97,6 @@
         <item>I enjoy starting projects.</item>
     </string-array>
     <string-array name="longquestions">
-        <item>On a scale from 1 to 5, how motivated are you to do well on this task?
-            With 1 being not motivated at all, and 5 being extremely motivated.
-            Please be as honest as possible.</item>
         <item>On a scale from 1 to 5, how engaged were you in the task?
             With 1 being not engaged at all, and 5 being extremely engaged.
             Please be as honest as possible.</item>
@@ -117,8 +114,13 @@
             (4 options, each with 4 attributes) relative to the most simple case
             (2 options, each with 2 attributes)?
         (1: no difference in strategy, 5: completely different strategies)</item>
+        <item> </item>
 
     </string-array>
+
+    <string name="Survey_single">On a scale from 1 to 5, how motivated are you to do well on this task?
+            With 1 being not motivated at all, and 5 being extremely motivated.
+            Please be as honest as possible.</string>
 
     <string name="Qs1">Using a scale from 1 to 5, how would
         you rate the influence of the following attributes

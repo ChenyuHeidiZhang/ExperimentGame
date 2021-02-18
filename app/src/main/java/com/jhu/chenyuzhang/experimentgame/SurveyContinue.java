@@ -94,7 +94,7 @@ public class SurveyContinue extends AppCompatActivity {
                 a5.setText("");
                 if (count == 30) {
                     prefSurvey.edit().putInt("Status", 3).apply();
-                    Intent intent = new Intent(SurveyContinue.this, MainActivity.class);
+                    Intent intent = new Intent(SurveyContinue.this, SurveySingle.class);
                     startActivity(intent);
                     finish();
                 }

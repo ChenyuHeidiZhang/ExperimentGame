@@ -70,6 +70,7 @@ public class SurveyMore extends AppCompatActivity {
                     q2.setText(questions[count++]);
                     Q3 = questions[count];
                     q3.setText(questions[count++]);
+                    a3.setVisibility(View.INVISIBLE);
                 }
             }
         });

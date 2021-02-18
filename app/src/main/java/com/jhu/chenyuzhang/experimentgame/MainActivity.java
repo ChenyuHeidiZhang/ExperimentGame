@@ -180,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(MainActivity.this, Survey_opening2.class);
 
                 }
+                else if (survey_stats == 3) {
+                    intent = new Intent(MainActivity.this, SurveySingle.class);
+                }
                 else {
                     intent = getNextIntent();
                 }
