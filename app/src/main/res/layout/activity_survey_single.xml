@@ -10,14 +10,14 @@
         android:id="@+id/Next6"
         android:layout_width="88dp"
         android:layout_height="48dp"
+        android:layout_marginTop="200dp"
         android:layout_marginEnd="100dp"
-        android:layout_marginBottom="100dp"
         android:background="#3F51B5"
         android:text="Next"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_a1" />
 
     <TextView
         android:id="@+id/single_q1"

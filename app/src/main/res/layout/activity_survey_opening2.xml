@@ -4,216 +4,228 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:windowSoftInputMode="adjustPan"
     tools:context=".Survey_opening2">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="500dp"
-        android:layout_height="192dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="40dp"
-        android:text="@string/survey_claim"
-        android:textColor="#0E0E0E"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/Survey_sex"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:id="@+id/opening2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/Survey_sex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/survey_personal_info_sex"
-        android:textColor="#100F0F"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/Sex_female"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <RadioButton
-        android:id="@+id/Sex_female"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="40dp"
-        android:text="Female"
-        android:textColor="#100F0F"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Survey_Ethnic"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="500dp"
+                android:layout_height="192dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="40dp"
+                android:text="@string/survey_claim"
+                android:textColor="#0E0E0E"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/Survey_sex"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioButton
-        android:id="@+id/Sex_male"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="85dp"
-        android:layout_marginEnd="85dp"
-        android:text="Male"
-        android:textColor="#0E0E0E"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Sex_female"
-        app:layout_constraintEnd_toStartOf="@+id/Sex_no_response"
-        app:layout_constraintStart_toEndOf="@+id/Sex_female" />
+            <TextView
+                android:id="@+id/Survey_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/survey_personal_info_sex"
+                android:textColor="#100F0F"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/Sex_female"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <RadioButton
-        android:id="@+id/Sex_no_response"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:text="No response"
-        android:textColor="#151414"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Sex_male"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <RadioButton
+                android:id="@+id/Sex_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginBottom="40dp"
+                android:text="Female"
+                android:textColor="#100F0F"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/Survey_Ethnic"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/Survey_Ethnic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/survey_personal_info_ethnic"
-        android:textColor="#070707"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/Ethnic_Hispanic"
-        app:layout_constraintStart_toStartOf="parent" />
+            <RadioButton
+                android:id="@+id/Sex_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="85dp"
+                android:layout_marginEnd="85dp"
+                android:text="Male"
+                android:textColor="#0E0E0E"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/Sex_female"
+                app:layout_constraintEnd_toStartOf="@+id/Sex_no_response"
+                app:layout_constraintStart_toEndOf="@+id/Sex_female" />
 
-    <RadioButton
-        android:id="@+id/Ethnic_Hispanic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="40dp"
-        android:text="Hispanic or Latino"
-        android:textColor="#100F0F"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Survey_racial"
-        app:layout_constraintStart_toStartOf="parent" />
+            <RadioButton
+                android:id="@+id/Sex_no_response"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="100dp"
+                android:text="No response"
+                android:textColor="#151414"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/Sex_male"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    <RadioButton
-        android:id="@+id/Ethnic_no_hispanic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="8dp"
-        android:text="Not Hispanic nor Latino"
-        android:textColor="#070707"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Ethnic_Hispanic"
-        app:layout_constraintEnd_toStartOf="@+id/Ethnic_no_response"
-        app:layout_constraintStart_toEndOf="@+id/Ethnic_Hispanic" />
+            <TextView
+                android:id="@+id/Survey_Ethnic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/survey_personal_info_ethnic"
+                android:textColor="#070707"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/Ethnic_Hispanic"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <RadioButton
-        android:id="@+id/Ethnic_no_response"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:text="No response"
-        android:textColor="#0B0A0A"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Ethnic_no_hispanic"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <RadioButton
+                android:id="@+id/Ethnic_Hispanic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginBottom="40dp"
+                android:text="Hispanic or Latino"
+                android:textColor="#100F0F"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/Survey_racial"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/Survey_racial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/survey_personal_info_racial"
-        android:textColor="#151515"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/Racial_American"
-        app:layout_constraintStart_toStartOf="parent" />
+            <RadioButton
+                android:id="@+id/Ethnic_no_hispanic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="8dp"
+                android:text="Not Hispanic nor Latino"
+                android:textColor="#070707"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/Ethnic_Hispanic"
+                app:layout_constraintEnd_toStartOf="@+id/Ethnic_no_response"
+                app:layout_constraintStart_toEndOf="@+id/Ethnic_Hispanic" />
 
-    <RadioButton
-        android:id="@+id/Racial_American"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="20dp"
-        android:text="American Indian/Alaska Native"
-        android:textColor="#101010"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Racial_Hawaiian"
-        app:layout_constraintStart_toStartOf="parent" />
+            <RadioButton
+                android:id="@+id/Ethnic_no_response"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="60dp"
+                android:text="No response"
+                android:textColor="#0B0A0A"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/Ethnic_no_hispanic"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    <RadioButton
-        android:id="@+id/Racial_Asia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:text="Asian"
-        android:textColor="#0E0E0E"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Racial_American"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/Survey_racial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/survey_personal_info_racial"
+                android:textColor="#151515"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/Racial_American"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <RadioButton
-        android:id="@+id/Racial_black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="55dp"
-        android:text="Black or African American"
-        android:textColor="#101010"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Racial_Hawaiian"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <RadioButton
+                android:id="@+id/Racial_American"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginBottom="20dp"
+                android:text="American Indian/Alaska Native"
+                android:textColor="#101010"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/Racial_Hawaiian"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <RadioButton
-        android:id="@+id/Racial_Hawaiian"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginBottom="20dp"
-        android:text="Pacific Islander or Native Hawaiian"
-        android:textColor="#131313"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Racial_white"
-        app:layout_constraintStart_toStartOf="parent" />
+            <RadioButton
+                android:id="@+id/Racial_Asia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="100dp"
+                android:text="Asian"
+                android:textColor="#0E0E0E"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/Racial_American"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    <RadioButton
-        android:id="@+id/Racial_white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="150dp"
-        android:text="White"
-        android:textColor="#0E0E0E"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Next5"
-        app:layout_constraintStart_toStartOf="parent" />
+            <RadioButton
+                android:id="@+id/Racial_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="55dp"
+                android:text="Black or African American"
+                android:textColor="#101010"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/Racial_Hawaiian"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    <RadioButton
-        android:id="@+id/Racial_no_response"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:text="No response"
-        android:textColor="#0C0C0C"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Racial_white"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <RadioButton
+                android:id="@+id/Racial_Hawaiian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="55dp"
+                android:layout_marginBottom="20dp"
+                android:text="Pacific Islander or Native Hawaiian"
+                android:textColor="#131313"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/Racial_white"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/Next5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="100dp"
-        android:background="#3F51B5"
-        android:text="Next"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <RadioButton
+                android:id="@+id/Racial_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginBottom="150dp"
+                android:text="White"
+                android:textColor="#0E0E0E"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/Next5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RadioButton
+                android:id="@+id/Racial_no_response"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="100dp"
+                android:text="No response"
+                android:textColor="#0C0C0C"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/Racial_white"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/Next5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="100dp"
+                android:background="#3F51B5"
+                android:text="Next"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

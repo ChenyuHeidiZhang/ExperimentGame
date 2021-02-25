@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +73,8 @@ public class SurveyMore extends AppCompatActivity {
                     q3.setText(questions[count++]);
                     a3.setVisibility(View.INVISIBLE);
                 }
+                ScrollView scrollView = findViewById(R.id.more);
+                scrollView.scrollTo(0, 0);
             }
         });
 
