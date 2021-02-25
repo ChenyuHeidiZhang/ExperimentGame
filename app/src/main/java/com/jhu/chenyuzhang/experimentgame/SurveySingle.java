@@ -35,12 +35,17 @@ public class SurveySingle extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prefSurvey.edit().putInt("Status", 4).apply();
-                recordEvent(Q1.getText().toString());
-                recordEvent(a1.getText().toString());
-                Intent intent = new Intent(SurveySingle.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                if (!a1.getText().toString().equals("")) {
+                    prefSurvey.edit().putInt("Status", 4).apply();
+                    recordEvent(Q1.getText().toString());
+                    recordEvent(a1.getText().toString());
+                    Intent intent = new Intent(SurveySingle.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Toast.makeText(SurveySingle.this, "Please answer this question before you proceed", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

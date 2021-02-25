@@ -80,40 +80,57 @@ public class SurveySpecial extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recordEvent(q1.getText().toString());
-                recordEvent(q11.getText().toString());
-                recordEvent(a11.getText().toString());
-                recordEvent(q12.getText().toString());
-                recordEvent(a12.getText().toString());
-                recordEvent(q13.getText().toString());
-                recordEvent(a13.getText().toString());
-                recordEvent(q14.getText().toString());
-                recordEvent(a14.getText().toString());
+                if (allFilled()) {
+                    recordEvent(q1.getText().toString());
+                    recordEvent(q11.getText().toString());
+                    recordEvent(a11.getText().toString());
+                    recordEvent(q12.getText().toString());
+                    recordEvent(a12.getText().toString());
+                    recordEvent(q13.getText().toString());
+                    recordEvent(a13.getText().toString());
+                    recordEvent(q14.getText().toString());
+                    recordEvent(a14.getText().toString());
 
-                recordEvent(q2.getText().toString());
-                recordEvent(q21.getText().toString());
-                recordEvent(a21.getText().toString());
-                recordEvent(q22.getText().toString());
-                recordEvent(a22.getText().toString());
-                recordEvent(q23.getText().toString());
-                recordEvent(a23.getText().toString());
-                recordEvent(q24.getText().toString());
-                recordEvent(a24.getText().toString());
+                    recordEvent(q2.getText().toString());
+                    recordEvent(q21.getText().toString());
+                    recordEvent(a21.getText().toString());
+                    recordEvent(q22.getText().toString());
+                    recordEvent(a22.getText().toString());
+                    recordEvent(q23.getText().toString());
+                    recordEvent(a23.getText().toString());
+                    recordEvent(q24.getText().toString());
+                    recordEvent(a24.getText().toString());
 
-                recordEvent(q3.getText().toString());
-                recordEvent(q31.getText().toString());
-                recordEvent(a31.getText().toString());
-                recordEvent(q32.getText().toString());
-                recordEvent(a32.getText().toString());
-                Intent intent = new Intent(SurveySpecial.this, LoginActivity.class);
-                startActivity(intent);
-                timeRecordDb.close();
-                finish();
+                    recordEvent(q3.getText().toString());
+                    recordEvent(q31.getText().toString());
+                    recordEvent(a31.getText().toString());
+                    recordEvent(q32.getText().toString());
+                    recordEvent(a32.getText().toString());
+                    Intent intent = new Intent(SurveySpecial.this, LoginActivity.class);
+                    startActivity(intent);
+                    timeRecordDb.close();
+                    finish();
+                }
             }
         });
+    }
 
-
-
+    private boolean allFilled() {
+        if (a11.getText().toString().equals("") || a12.getText().toString().equals("") ||
+                a13.getText().toString().equals("") || a14.getText().toString().equals("")) {
+            Toast.makeText(SurveySpecial.this, "Please answer all the sub-questions from the first question before going to the next page", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (a21.getText().toString().equals("") || a22.getText().toString().equals("") ||
+        a23.getText().toString().equals("") || a24.getText().toString().equals("")) {
+            Toast.makeText(SurveySpecial.this, "Please answer all the sub-questions from the second question before going to the next page", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (a31.getText().toString().equals("") || a32.getText().toString().equals("")) {
+            Toast.makeText(SurveySpecial.this, "Please answer all the sub-questions from the third question before going to the next page", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
     private String recordEvent(String event) {
         String timeString = getCurrentTime();

@@ -216,48 +216,57 @@ public class Survey_opening2 extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (gender == 1) {
-                    recordEvent("Female");
+                if (allFilled()) {
+                    if (gender == 1) {
+                        recordEvent("Female");
+                    } else if (gender == 2) {
+                        recordEvent("Male");
+                    } else {
+                        recordEvent("Sex no response");
+                    }
+                    if (ethnicity == 1) {
+                        recordEvent("Hispanic or Latino");
+                    } else if (ethnicity == 2) {
+                        recordEvent("Not Hispanic nor Latino");
+                    } else {
+                        recordEvent("Ethnicity no response");
+                    }
+                    if (race == 1) {
+                        recordEvent("American");
+                    } else if (race == 2) {
+                        recordEvent("Asian");
+                    } else if (race == 3) {
+                        recordEvent("Hawaiian");
+                    } else if (race == 4) {
+                        recordEvent("Black");
+                    } else if (race == 5) {
+                        recordEvent("White");
+                    } else {
+                        recordEvent("Race no response");
+                    }
+                    prefSurvey.edit().putInt("Status", 2).apply();
+                    Intent intent = new Intent(Survey_opening2.this, SurveyContinue.class);
+                    startActivity(intent);
+                    finish();
                 }
-                else if(gender == 2) {
-                    recordEvent("Male");
-                }
-                else {
-                    recordEvent("Sex no response");
-                }
-                if (ethnicity == 1) {
-                    recordEvent("Hispanic or Latino");
-                }
-                else if(ethnicity == 2) {
-                    recordEvent("Not Hispanic nor Latino");
-                }
-                else {
-                    recordEvent("Ethnicity no response");
-                }
-                if (race == 1) {
-                    recordEvent("American");
-                }
-                else if(race == 2) {
-                    recordEvent("Asian");
-                }
-                else if (race == 3) {
-                    recordEvent("Hawaiian");
-                }
-                else if (race == 4) {
-                    recordEvent("Black");
-                }
-                else if (race == 5) {
-                    recordEvent("White");
-                }
-                else {
-                    recordEvent("Race no response");
-                }
-                prefSurvey.edit().putInt("Status", 2).apply();
-                Intent intent = new Intent(Survey_opening2.this, SurveyContinue.class);
-                startActivity(intent);
-                finish();
             }
         });
+    }
+
+    private boolean allFilled() {
+        if (gender == -1) {
+            Toast.makeText(Survey_opening2.this, "Please indicate your gender", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (ethnicity == -1) {
+            Toast.makeText(Survey_opening2.this, "Please indicate your ethnicity", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (race == -1) {
+            Toast.makeText(Survey_opening2.this, "Please indicate your race", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private String recordEvent(String event) {

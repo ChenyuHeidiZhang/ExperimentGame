@@ -153,47 +153,78 @@ public class SurveyOpening extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recordEvent("Date: " + date.getText().toString());
-                recordEvent("Age: " + age.getText().toString());
-                recordEvent("Disease" + disease.getText().toString());
-                if (lan != null && lan) {
-                    recordEvent("Native English speaker");
-                }
-                else if(lan != null) {
-                    recordEvent("Not native English speaker");
-                }
-                if (handedness != null && handedness) {
-                    recordEvent("Left handed");
-                }
-                else if(handedness != null) {
-                    recordEvent("right handed");
-                }
-                if (color != null && color) {
-                    recordEvent("Is color blind");
-                }
-                else if(color != null) {
-                    recordEvent("Is not color blind");
-                }
-                if (vision != -1) {
-                    switch (vision) {
-                        case 1:
-                            recordEvent("Normal vision");
-                            break;
-                        case 2:
-                            recordEvent("Wear contacts");
-                            break;
-                        case 3:
-                            recordEvent("Wear glasses");
-                            break;
+                if (allFilled()) {
+                    recordEvent("Date: " + date.getText().toString());
+                    recordEvent("Age: " + age.getText().toString());
+                    recordEvent("Disease" + disease.getText().toString());
+                    if (lan != null && lan) {
+                        recordEvent("Native English speaker");
+                    } else if (lan != null) {
+                        recordEvent("Not native English speaker");
                     }
+                    if (handedness != null && handedness) {
+                        recordEvent("Left handed");
+                    } else if (handedness != null) {
+                        recordEvent("right handed");
+                    }
+                    if (color != null && color) {
+                        recordEvent("Is color blind");
+                    } else if (color != null) {
+                        recordEvent("Is not color blind");
+                    }
+                    if (vision != -1) {
+                        switch (vision) {
+                            case 1:
+                                recordEvent("Normal vision");
+                                break;
+                            case 2:
+                                recordEvent("Wear contacts");
+                                break;
+                            case 3:
+                                recordEvent("Wear glasses");
+                                break;
+                        }
+                    }
+                    prefSurvey.edit().putInt("Status", 1).apply();
+                    Intent intent = new Intent(SurveyOpening.this, Survey_opening2.class);
+                    startActivity(intent);
+                    finish();
                 }
-                prefSurvey.edit().putInt("Status", 1).apply();
-                Intent intent = new Intent(SurveyOpening.this, Survey_opening2.class);
-                startActivity(intent);
-                finish();
             }
         });
 
+    }
+
+    boolean allFilled() {
+        if (date.getText().toString().equals("")) {
+            Toast.makeText(SurveyOpening.this, "Please fill in the date", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (age.getText().toString().equals("")) {
+            Toast.makeText(SurveyOpening.this, "Please fill in your age", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (disease.getText().toString().equals("")) {
+            Toast.makeText(SurveyOpening.this, "Please fill in the last question. Type NONE if no disease", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (lan == null) {
+            Toast.makeText(SurveyOpening.this, "Please indicate your language", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (handedness == null) {
+            Toast.makeText(SurveyOpening.this, "Please indicate your handedness", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (color == null) {
+            Toast.makeText(SurveyOpening.this, "Please indicate whether you have color blindness", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (vision == -1) {
+            Toast.makeText(SurveyOpening.this, "Please answer the question regarding your vision", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private String recordEvent(String event) {

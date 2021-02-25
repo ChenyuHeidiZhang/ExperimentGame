@@ -50,34 +50,50 @@ public class SurveyMore extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recordEvent(Q1);
-                recordEvent(a1.getText().toString());
-                a1.setText("");
-                recordEvent(Q2);
-                recordEvent(a2.getText().toString());
-                a2.setText("");
-                recordEvent(Q3);
-                recordEvent(a3.getText().toString());
-                a3.setText("");
-                if (count == 6) {
-                    Intent intent = new Intent(SurveyMore.this, SurveySpecial.class);
-                    startActivity(intent);
-                    finish();
+                if (allFilled()) {
+                    recordEvent(Q1);
+                    recordEvent(a1.getText().toString());
+                    a1.setText("");
+                    recordEvent(Q2);
+                    recordEvent(a2.getText().toString());
+                    a2.setText("");
+                    recordEvent(Q3);
+                    recordEvent(a3.getText().toString());
+                    //a3.setText("");
+                    if (count == 6) {
+                        Intent intent = new Intent(SurveyMore.this, SurveySpecial.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Q1 = questions[count];
+                        q1.setText(questions[count++]);
+                        Q2 = questions[count];
+                        q2.setText(questions[count++]);
+                        Q3 = questions[count];
+                        q3.setText(questions[count++]);
+                        a3.setVisibility(View.INVISIBLE);
+                    }
+                    ScrollView scrollView = findViewById(R.id.more);
+                    scrollView.scrollTo(0, 0);
                 }
-                else {
-                    Q1 = questions[count];
-                    q1.setText(questions[count++]);
-                    Q2 = questions[count];
-                    q2.setText(questions[count++]);
-                    Q3 = questions[count];
-                    q3.setText(questions[count++]);
-                    a3.setVisibility(View.INVISIBLE);
-                }
-                ScrollView scrollView = findViewById(R.id.more);
-                scrollView.scrollTo(0, 0);
             }
         });
 
+    }
+    private boolean allFilled() {
+        if (a1.getText().toString().equals("")) {
+            Toast.makeText(SurveyMore.this, "Please answer the first question before going to the next page", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (a2.getText().toString().equals("")) {
+            Toast.makeText(SurveyMore.this, "Please answer the second question before going to the next page", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (a3.getText().toString().equals("")) {
+            Toast.makeText(SurveyMore.this, "Please answer the third question before going to the next page", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
     private String recordEvent(String event) {
         String timeString = getCurrentTime();
