@@ -136,4 +136,6 @@
         the degree of difficulty of finding the best available option?
         (1: weakest, 5: strongest)</string>
 
+    <string name="lastQ">Do you have any additional comments on this experiment?</string>
+
 </resources>

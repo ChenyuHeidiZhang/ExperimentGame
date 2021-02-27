@@ -106,7 +106,7 @@ public class SurveySpecial extends AppCompatActivity {
                     recordEvent(a31.getText().toString());
                     recordEvent(q32.getText().toString());
                     recordEvent(a32.getText().toString());
-                    Intent intent = new Intent(SurveySpecial.this, LoginActivity.class);
+                    Intent intent = new Intent(SurveySpecial.this, SurveyLast.class);
                     startActivity(intent);
                     timeRecordDb.close();
                     finish();

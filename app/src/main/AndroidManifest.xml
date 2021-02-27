@@ -17,32 +17,33 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SurveySingle"></activity>
-        <activity android:name=".Survey_opening2" />
-        <activity android:name=".SurveySpecial" />
-        <activity android:name=".SurveyMore" />
-        <activity android:name=".SurveyContinue" />
-        <activity android:name=".SurveyOpening" />
-        <activity android:name=".Database_fail" />
-        <activity android:name=".TotalAmountActivity" />
-        <activity android:name=".Questions.Question2Att4OpHorizontal" />
-        <activity android:name=".Questions.Question2Att4OpActivity" />
-        <activity android:name=".Questions.Question4Att2OpHorizontal" />
-        <activity android:name=".Questions.Question4Att2OpActivity" />
-        <activity android:name=".Questions.Question4ActivityHorizontal" />
-        <activity android:name=".Questions.Question4Activity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".SurveyLast" android:screenOrientation="portrait"/>
+        <activity android:name=".SurveySingle" android:screenOrientation="portrait"/>
+        <activity android:name=".Survey_opening2" android:screenOrientation="portrait"/>
+        <activity android:name=".SurveySpecial" android:screenOrientation="portrait"/>
+        <activity android:name=".SurveyMore" android:screenOrientation="portrait"/>
+        <activity android:name=".SurveyContinue" android:screenOrientation="portrait"/>
+        <activity android:name=".SurveyOpening" android:screenOrientation="portrait"/>
+        <activity android:name=".Database_fail" android:screenOrientation="portrait"/>
+        <activity android:name=".TotalAmountActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Questions.Question2Att4OpHorizontal" android:screenOrientation="portrait"/>
+        <activity android:name=".Questions.Question2Att4OpActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Questions.Question4Att2OpHorizontal" android:screenOrientation="portrait"/>
+        <activity android:name=".Questions.Question4Att2OpActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Questions.Question4ActivityHorizontal" android:screenOrientation="portrait"/>
+        <activity android:name=".Questions.Question4Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ResultActivity" />
-        <activity android:name=".Questions.QuestionActivity" />
-        <activity android:name=".Questions.QuestionActivityHorizontal" />
-        <activity android:name=".EndDemoActivity" />
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ResultActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Questions.QuestionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Questions.QuestionActivityHorizontal" android:screenOrientation="portrait"/>
+        <activity android:name=".EndDemoActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
