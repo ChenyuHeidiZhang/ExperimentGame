@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private long backPressedTime = 0;
     private BluetoothAdapter bluetoothAdapter;
-
+    private Button test;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        test = findViewById(R.id.button_test);
 
         setContentView(R.layout.activity_main);
 
@@ -154,6 +155,13 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = getNextIntent();
                     startActivity(intent);
                 }
+            }
+        });
+
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bluetooth.timeStamper("Test", getCurrentTime());
             }
         });
 
@@ -363,4 +371,5 @@ public class MainActivity extends AppCompatActivity {
 
         backPressedTime = System.currentTimeMillis();
     }
+
 }
