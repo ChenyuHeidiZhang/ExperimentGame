@@ -67,7 +67,7 @@ public class TotalAmountActivity extends AppCompatActivity {
             float thisAmount = totalAmountWon - lastAmount;
             Log.d("My last amount is", String.valueOf(thisAmount));
             if ((int)thisAmount < getResources().getInteger(R.integer.PAYMAX)) {
-                tvTotal.setText("Total Amount Won Over 4 Blocks: $" + String.format("%.2f", thisAmount));
+                tvTotal.setText("Total Amount Won Up to Now: $" + String.format("%.2f", thisAmount));
                 recordEvent("Display 4 block total: $" + thisAmount);
             }
             else {
