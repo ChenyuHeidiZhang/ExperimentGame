@@ -236,16 +236,35 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 + ", " + "41 " + attributes.get(12) + " " + attributes.get(13)
                 + ", " + "42 " + attributes.get(14) + " " + attributes.get(15));
 
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // send attribute magnitudes
         bluetooth.timeStamperJustID("40"); // event code for horizontal display
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+60.0)));
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(9))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(11))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(13))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(15))*10.0+60.0)));
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // end the stream with the identifier 0
         bluetooth.timeStamper(Integer.toString(0), dbTstamp);

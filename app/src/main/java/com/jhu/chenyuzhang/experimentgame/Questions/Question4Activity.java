@@ -217,24 +217,57 @@ public class Question4Activity extends AppCompatActivity {
                 + ", " + "43 " + attributes.get(28) + " " + attributes.get(29)
                 + ", " + "44 " + attributes.get(30) + " " + attributes.get(31));
 
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // send attribute magnitudes
         bluetooth.timeStamperJustID("41"); // event code for vertical display
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+60.0)));
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(9))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(11))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(13))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(15))*10.0+60.0)));
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(17))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(19))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(21))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(23))*10.0+60.0)));
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(25))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(27))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(29))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(31))*10.0+60.0)));
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // end the stream with the identifier 0
         bluetooth.timeStamper(Integer.toString(0), dbTstamp);

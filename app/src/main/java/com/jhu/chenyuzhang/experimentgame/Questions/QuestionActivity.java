@@ -198,12 +198,24 @@ public class QuestionActivity extends AppCompatActivity {
                 + ", " + "21 " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + "22 " + attributes.get(6) + " " + attributes.get(7));
 
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // send attribute magnitudes
         bluetooth.timeStamperJustID("41"); // event code for vertical display
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+60.0)));
         bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+60.0)));
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // end the stream with the identifier 0
         bluetooth.timeStamper(Integer.toString(0), dbTstamp);
