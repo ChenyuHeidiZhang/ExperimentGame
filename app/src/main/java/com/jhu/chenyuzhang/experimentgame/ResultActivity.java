@@ -150,17 +150,21 @@ public class ResultActivity extends AppCompatActivity {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
                 timeRecordDb.close();
-                if (!isDemo && (trialCounter - 1) % 160 == 0) {
+                if (!isDemo && (trialCounter - 1) % 2 == 0) {
                     Log.d("160trial", "in if");
                     Log.d("160trial", Integer.toString(trialCounter - 1));
                     //incrementTrialCounter();
                     Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
-                    intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
+                    if (trialCounter-1 == 4) {
+                        intent_total.putExtra("EXTRA_DISPLAY_ID", 2); //2 means to display sona information
+                    }
+                    else {
+                        intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
+                    }
                     startActivity(intent_total);
                     finish();
 
                 } else {
-                    Log.d("160trial", "out of if");
                     Log.d("160trial", Integer.toString(trialCounter - 1));
                     Intent intent = getNextIntent();
                     startActivity(intent);

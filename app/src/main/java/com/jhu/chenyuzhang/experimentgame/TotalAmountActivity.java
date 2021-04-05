@@ -48,7 +48,7 @@ public class TotalAmountActivity extends AppCompatActivity {
 
         display_id = getIntent().getIntExtra("EXTRA_DISPLAY_ID", 0);   // get total amount passed as extra
 
-        TextView tvTotal = findViewById(R.id.text_view_total);
+        final TextView tvTotal = findViewById(R.id.text_view_total);
         Button btNext = findViewById(R.id.button_next);
 
         SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
@@ -63,7 +63,7 @@ public class TotalAmountActivity extends AppCompatActivity {
         Log.d("value", Double.toString(totalAmountWon));
         Log.d("value", String.valueOf(getResources().getInteger(R.integer.PAYMAX)));
 
-        if (display_id == 1) {  // display total amount over the past 4 blocks
+        if (display_id > 0) {  // display total amount over the past 4 blocks
             float thisAmount = totalAmountWon - lastAmount;
             Log.d("My last amount is", String.valueOf(thisAmount));
             if ((int)thisAmount < getResources().getInteger(R.integer.PAYMAX)) {
@@ -77,6 +77,7 @@ public class TotalAmountActivity extends AppCompatActivity {
 
             pref_last.edit().putFloat(KEY_LAST_TOTAL, totalAmountWon).apply();  // update last_total with current_total
 
+
         } else {    // id == 0, display the grand total
 
             if ((int)totalAmountWon < getResources().getInteger(R.integer.PAYMAX)) {
@@ -89,6 +90,7 @@ public class TotalAmountActivity extends AppCompatActivity {
                 tvTotal.setText("Congratulations!" + "\n" + "You have won the maximum amount possible,\n" + "you will get a payment of $" + getResources().getInteger(R.integer.PAYMAX));
                 recordEvent("Got " + totalAmountWon + "Display grand total: $" + getResources().getInteger(R.integer.PAYMAX));
             }
+
         }
 
         btNext.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +98,11 @@ public class TotalAmountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 timeRecordDb.insertData(signInDate, "Signed in time");
                 timeRecordDb.close();
-                if (display_id == 1) {
+                if (display_id == 2) {
+                    tvTotal.setText(getResources().getString(R.string.inform_sona));
+                    display_id -= 1;
+                }
+                else if (display_id == 1) {
                     int random = new Random().nextInt(2);
                     Intent intent;
                     if (random == 0) {
@@ -105,13 +111,14 @@ public class TotalAmountActivity extends AppCompatActivity {
                         intent = new Intent(TotalAmountActivity.this, QuestionActivityHorizontal.class);
                     }
                     startActivity(intent);
+                    finish();
 
                 } else {
                     Intent intent = new Intent(TotalAmountActivity.this, SurveyMore.class);
                     startActivity(intent);
+                    finish();
                 }
 
-                finish();
             }
         });
 
