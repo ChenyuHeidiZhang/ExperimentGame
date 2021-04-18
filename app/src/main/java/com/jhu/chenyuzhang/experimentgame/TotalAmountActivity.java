@@ -3,6 +3,8 @@ package com.jhu.chenyuzhang.experimentgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,7 +51,7 @@ public class TotalAmountActivity extends AppCompatActivity {
         display_id = getIntent().getIntExtra("EXTRA_DISPLAY_ID", 0);   // get total amount passed as extra
 
         final TextView tvTotal = findViewById(R.id.text_view_total);
-        Button btNext = findViewById(R.id.button_next);
+        final Button btNext = findViewById(R.id.button_next);
 
         SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
         float totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
@@ -100,7 +102,26 @@ public class TotalAmountActivity extends AppCompatActivity {
                 timeRecordDb.close();
                 if (display_id == 2) {
                     tvTotal.setText(getResources().getString(R.string.inform_sona));
+                    tvTotal.setTextColor(Color.RED);
+                    tvTotal.setTextSize(45);
                     display_id -= 1;
+                    Handler next_handler = new Handler();
+                    btNext.setVisibility(View.INVISIBLE);
+                    next_handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                /*
+                try {
+                    // send identifier and timestamp
+                    bluetooth.timeStamper( "resultID", getCurrentTime());
+                    //bluetooth.sendData(String.format ("%.2f",amountWon));
+                } catch (IOException e) {}
+                 */
+
+                            btNext.setVisibility(View.VISIBLE);
+                            timeRecordDb.insertData(getCurrentTime(), "Next Button Displayed");
+                        }
+                    }, 1500);
                 }
                 else if (display_id == 1) {
                     int random = new Random().nextInt(2);
