@@ -1,6 +1,7 @@
 package com.jhu.chenyuzhang.experimentgame;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -14,8 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ParcelUuid;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +27,8 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpHorizontal;

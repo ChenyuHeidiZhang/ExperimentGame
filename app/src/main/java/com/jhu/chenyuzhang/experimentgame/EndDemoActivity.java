@@ -2,12 +2,13 @@ package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;

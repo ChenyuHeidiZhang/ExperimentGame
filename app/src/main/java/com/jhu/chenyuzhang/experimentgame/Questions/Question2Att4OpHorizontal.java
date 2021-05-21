@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.jhu.chenyuzhang.experimentgame.Bluetooth;
 import com.jhu.chenyuzhang.experimentgame.Database_fail;
 import com.jhu.chenyuzhang.experimentgame.EndDemoActivity;

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "284260332941",
+    "project_id": "experiment-game-mad",
+    "storage_bucket": "experiment-game-mad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:284260332941:android:eb3b53d57c4ae6d95eb9c4",
+        "android_client_info": {
+          "package_name": "com.jhu.chenyuzhang.experimentgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "284260332941-nl49t2rkse7tgltsfarddpa3ibf1mele.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEv-It-JP_dmxUI-jjITSa5xZdKQolhXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "284260332941-nl49t2rkse7tgltsfarddpa3ibf1mele.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

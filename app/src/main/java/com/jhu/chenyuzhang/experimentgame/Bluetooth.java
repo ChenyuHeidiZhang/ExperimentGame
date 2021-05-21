@@ -1,5 +1,6 @@
 package com.jhu.chenyuzhang.experimentgame;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Looper;
 import android.widget.TextView;
@@ -12,8 +13,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.ParcelUuid;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;

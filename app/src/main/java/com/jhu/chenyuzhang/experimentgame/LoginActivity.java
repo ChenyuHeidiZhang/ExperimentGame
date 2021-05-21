@@ -3,21 +3,29 @@ package com.jhu.chenyuzhang.experimentgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,30 +35,36 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextKey;
     private EditText editTextNotes;
     private Button buttonSignIn;
+
     private String name;
     private String key;
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private DatabaseReference userContent;
+
     private boolean isSignedIn;
+    private boolean isSameUser;
+
     private SharedPreferences prefSignedIn;
     private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
-
     private static final String KEY_DO_DEMO = "keyDoDemo";
-
     private static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
-
     private static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
     public static final String KEY_LAST_TOTAL = "keyLastTotal";
+    public static final String KEY_USER = "keyUser";
     private SharedPreferences prefSurvey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
+
         prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
         prefSurvey.edit().putInt("Status", 0).apply();
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
@@ -66,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
 
             buttonSignIn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
                     name = editTextName.getText().toString();
                     // Check that if the patient id contains special characters, then it is invalid.
                     Pattern pattern = Pattern.compile("[^A-Za-z0-9_]");
@@ -104,20 +117,45 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefLastAmount = getSharedPreferences("lastTotal", MODE_PRIVATE);
         prefLastAmount.edit().putFloat(KEY_LAST_TOTAL, 0).apply();  // total amount 4 blocks ago
 
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+        String pastUser = prefUserName.getString(KEY_USER, "");
+
         SharedPreferences prefSigninTime = getSharedPreferences("SignIn", MODE_PRIVATE);
 
-        String tableName = "timeRecord_table_" + name;
+         currentUser = mAuth.getCurrentUser();
 
-        TimeDbHelper timeRecordDb = new TimeDbHelper(LoginActivity.this);
-        timeRecordDb.createTableIfNotExists(tableName);
+        isSameUser = pastUser.equals(name);
+
+        if (currentUser == null) {
+            Log.d("sign_in", "here");
+            mAuth.signInAnonymously()
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("sign_in", "signInAnonymously:success");
+                                currentUser = mAuth.getCurrentUser();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("sign_in", "signInAnonymously:failure", task.getException());
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+        Log.d("sign_in", "here indeed");
+        if (!isSameUser) {
+            Log.d("sign_in", "same user");
+            userContent = FirebaseDatabase.getInstance().getReference().child("users");
+            userContent.child(currentUser.getUid()).child("user").setValue(name);
+        }
 
         String startTimeWorld = getCurrentTime();
+        userContent.child(currentUser.getUid()).child("Sign_in_time").setValue(startTimeWorld);
+
         String notes = editTextNotes.getText().toString();
-        timeRecordDb.insertData(startTimeWorld, "Sign In: Patient ID: " + name + ", Password: " + key + ", Notes: " + notes);
-        String current_date = getCurrentDate();
-        timeRecordDb.insertData(current_date,"Sign in(date + time)");
-        prefSigninTime.edit().putString("date", current_date).apply();
-        timeRecordDb.close();
+        userContent.child(currentUser.getUid()).child("Notes").setValue(notes);
 
         goToMainActivity();
     }
@@ -145,4 +183,5 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
     }
+
 }
