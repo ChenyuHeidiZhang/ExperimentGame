@@ -14,6 +14,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SurveyContinue extends AppCompatActivity {
     int count = 0;
@@ -38,6 +41,8 @@ public class SurveyContinue extends AppCompatActivity {
     String Q5;
 
     Button next;
+
+    List<List<String>> list = new ArrayList<>();
 
     private SharedPreferences prefSurvey;
     public static final String KEY_USER = "keyUser";
@@ -93,16 +98,23 @@ public class SurveyContinue extends AppCompatActivity {
                     if (count >= 21) {
                         instruct.setText(getResources().getString(R.string.instruct2));
                     }
-                    userContent.child(Q1).setValue(a1.getText().toString());
+                    storeData(Q1, a1.getText().toString());
                     a1.setText("");
-                    userContent.child(Q2).setValue(a2.getText().toString());
+
+                    storeData(Q2, a2.getText().toString());
                     a2.setText("");
-                    userContent.child(Q3).setValue(a3.getText().toString());
+
+                    storeData(Q3, a3.getText().toString());
                     a3.setText("");
-                    userContent.child(Q4).setValue(a4.getText().toString());
+
+                    storeData(Q4, a4.getText().toString());
                     a4.setText("");
-                    userContent.child(Q5).setValue(a5.getText().toString());
+
+                    storeData(Q5, a5.getText().toString());
                     a5.setText("");
+
+                    userContent.child(getCurrentTime()).setValue(list);
+
                     if (count == 30) {
                         prefSurvey.edit().putInt("Status", 3).apply();
                         Intent intent = new Intent(SurveyContinue.this, SurveySingle.class);
@@ -127,6 +139,13 @@ public class SurveyContinue extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void storeData(String s1, String s2) {
+        List<String> temp = new ArrayList<>();
+        temp.add(s1);
+        temp.add(s2);
+        list.add(temp);
     }
 
     private boolean allFilled() {

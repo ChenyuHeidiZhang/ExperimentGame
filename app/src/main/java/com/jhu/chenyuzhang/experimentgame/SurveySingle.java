@@ -15,6 +15,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SurveySingle extends AppCompatActivity {
     private SharedPreferences prefSurvey;
@@ -25,6 +28,8 @@ public class SurveySingle extends AppCompatActivity {
     Button next;
     TextView Q1;
     EditText a1;
+
+    List<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,10 @@ public class SurveySingle extends AppCompatActivity {
             public void onClick(View v) {
                 if (!a1.getText().toString().equals("")) {
                     prefSurvey.edit().putInt("Status", 4).apply();
-                    userContent.child(Q1.getText().toString()).setValue(a1.getText().toString());
+                    list.add(0, Q1.getText().toString());
+                    list.add(1, a1.getText().toString());
+                    userContent.child(getCurrentTime()).setValue(list);
+
                     Intent intent = new Intent(SurveySingle.this, MainActivity.class);
                     startActivity(intent);
                     finish();

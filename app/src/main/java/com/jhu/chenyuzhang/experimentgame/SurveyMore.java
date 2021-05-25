@@ -14,6 +14,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SurveyMore extends AppCompatActivity {
     int count = 0;
@@ -34,6 +37,8 @@ public class SurveyMore extends AppCompatActivity {
 
     public static final String KEY_USER = "keyUser";
     private DatabaseReference userContent;
+
+    List<List<String>> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +72,15 @@ public class SurveyMore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (allFilled()) {
-                    userContent.child(Q1).setValue(a1.getText().toString());
+                    storeData(Q1, a1.getText().toString());
                     a1.setText("");
-                    userContent.child(Q2).setValue(a2.getText().toString());
+
+                    storeData(Q2, a2.getText().toString());
                     a2.setText("");
-                    userContent.child(Q3).setValue(a3.getText().toString());
+
+                    storeData(Q3, a3.getText().toString());
+                    userContent.child(getCurrentTime()).setValue(list);
+
                     if (count == 6) {
                         Intent intent = new Intent(SurveyMore.this, SurveySpecial.class);
                         startActivity(intent);
@@ -91,6 +100,13 @@ public class SurveyMore extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void storeData(String s1, String s2) {
+        List<String> temp = new ArrayList<>();
+        temp.add(s1);
+        temp.add(s2);
+        list.add(temp);
     }
     private boolean allFilled() {
         if (a1.getText().toString().equals("")) {

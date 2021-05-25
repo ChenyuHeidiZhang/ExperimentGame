@@ -15,7 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import java.util.ArrayList;
+import java.util.List;
 import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
 
 public class SurveySpecial extends AppCompatActivity {
@@ -48,6 +49,8 @@ public class SurveySpecial extends AppCompatActivity {
 
     public static final String KEY_USER = "keyUser";
     private DatabaseReference userContent;
+
+    List<List<String>> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,24 +97,20 @@ public class SurveySpecial extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (allFilled()) {
-                    userContent.child(getCurrentTime()).setValue(q1.getText().toString());
+                    storeData(q11.getText().toString(),a11.getText().toString());
+                    storeData(q12.getText().toString(),a12.getText().toString());
+                    storeData(q13.getText().toString(),a13.getText().toString());
+                    storeData(q14.getText().toString(),a14.getText().toString());
 
-                    userContent.child(q11.getText().toString()).setValue(a11.getText().toString());
-                    userContent.child(q12.getText().toString()).setValue(a12.getText().toString());
-                    userContent.child(q13.getText().toString()).setValue(a13.getText().toString());
-                    userContent.child(q14.getText().toString()).setValue(a14.getText().toString());
+                    storeData(q21.getText().toString(),a21.getText().toString());
+                    storeData(q22.getText().toString(),a22.getText().toString());
+                    storeData(q23.getText().toString(),a23.getText().toString());
+                    storeData(q24.getText().toString(),a24.getText().toString());
 
-                    userContent.child(getCurrentTime()).setValue(q2.getText().toString());
+                    storeData(q31.getText().toString(),a31.getText().toString());
+                    storeData(q32.getText().toString(),a32.getText().toString());
 
-                    userContent.child(q21.getText().toString()).setValue(a21.getText().toString());
-                    userContent.child(q22.getText().toString()).setValue(a22.getText().toString());
-                    userContent.child(q23.getText().toString()).setValue(a23.getText().toString());
-                    userContent.child(q24.getText().toString()).setValue(a24.getText().toString());
-
-                    userContent.child(getCurrentTime()).setValue(q3.getText().toString());
-
-                    userContent.child(q31.getText().toString()).setValue(a31.getText().toString());
-                    userContent.child(q32.getText().toString()).setValue(a32.getText().toString());
+                    userContent.child(getCurrentTime()).setValue(list);
 
                     Intent intent = new Intent(SurveySpecial.this, SurveyLast.class);
                     startActivity(intent);
@@ -120,6 +119,13 @@ public class SurveySpecial extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void storeData(String s1, String s2) {
+        List<String> temp = new ArrayList<>();
+        temp.add(s1);
+        temp.add(s2);
+        list.add(temp);
     }
 
     private boolean allFilled() {

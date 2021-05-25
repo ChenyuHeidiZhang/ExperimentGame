@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
 
@@ -42,6 +44,7 @@ public class SurveyOpening extends AppCompatActivity {
     Boolean handedness = null;
     Boolean color = null;
     int vision = -1;
+    List<String> list = new ArrayList<>();
 
     private DatabaseReference userContent;
 
@@ -169,37 +172,38 @@ public class SurveyOpening extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (allFilled()) {
-                    userContent.child("Date").setValue(date.getText().toString());
-                    userContent.child("Age").setValue(age.getText().toString());
-                    userContent.child("Disease").setValue(disease.getText().toString());
+                    list.add("Date: " + date.getText().toString());
+                    list.add("Age: " + age.getText().toString());
+                    list.add("Disease: " + disease.getText().toString());
                     if (lan != null && lan) {
-                        userContent.child(getCurrentTime()).setValue("Native English speaker");
+                        list.add("Native English speaker");
                     } else if (lan != null) {
-                        userContent.child(getCurrentTime()).setValue("Not native English speaker");
+                        list.add("Not native English speaker");
                     }
                     if (handedness != null && handedness) {
-                        userContent.child(getCurrentTime()).setValue("Left handed");
+                        list.add("Left handed");
                     } else if (handedness != null) {
-                        userContent.child(getCurrentTime()).setValue("right handed");
+                        list.add("right handed");
                     }
                     if (color != null && color) {
-                        userContent.child(getCurrentTime()).setValue("Is color blind");
+                        list.add("Is color blind");
                     } else if (color != null) {
-                        userContent.child(getCurrentTime()).setValue("Is not color blind");
+                        list.add("Is not color blind");
                     }
                     if (vision != -1) {
                         switch (vision) {
                             case 1:
-                                userContent.child(getCurrentTime()).setValue("Normal vision");
+                                list.add("Normal vision");
                                 break;
                             case 2:
-                                userContent.child(getCurrentTime()).setValue("Wear contacts");
+                                list.add("Wear contacts");
                                 break;
                             case 3:
-                                userContent.child(getCurrentTime()).setValue("Wear glasses");
+                                list.add("Wear glasses");
                                 break;
                         }
                     }
+                    userContent.child(getCurrentTime()).setValue(list);
                     prefSurvey.edit().putInt("Status", 1).apply();
                     Intent intent = new Intent(SurveyOpening.this, Survey_opening2.class);
                     startActivity(intent);

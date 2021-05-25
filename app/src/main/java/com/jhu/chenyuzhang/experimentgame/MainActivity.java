@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 survey_stats = prefSurvey.getInt("Status", 0);
                 Intent intent;
-                /*
                 if (survey_stats == 0) {
                     intent = new Intent(MainActivity.this, SurveyOpening.class);
                 }
@@ -83,9 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     intent = getNextIntent();
                 }
-
-                 */
-                intent = getNextIntent();
                 startActivity(intent);
             }
         });

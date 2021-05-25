@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import java.util.ArrayList;
+import java.util.List;
 import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
 
 public class Survey_opening2 extends AppCompatActivity {
@@ -40,6 +42,7 @@ public class Survey_opening2 extends AppCompatActivity {
     private long backPressedTime;
     public static final String KEY_USER = "keyUser";
     private DatabaseReference userContent;
+    List<String> list = new ArrayList<>();
 
     int gender = -1;
     int ethnicity = -1;
@@ -231,32 +234,33 @@ public class Survey_opening2 extends AppCompatActivity {
             public void onClick(View v) {
                 if (allFilled()) {
                     if (gender == 1) {
-                        userContent.child(getCurrentTime()).setValue("Female");
+                        list.add("Female");
                     } else if (gender == 2) {
-                        userContent.child(getCurrentTime()).setValue("Male");
+                        list.add("Male");
                     } else {
-                        userContent.child(getCurrentTime()).setValue("Sex no response");
+                        list.add("Sex no response");
                     }
                     if (ethnicity == 1) {
-                        userContent.child(getCurrentTime()).setValue("Hispanic or Latino");
+                        list.add("Hispanic or Latino");
                     } else if (ethnicity == 2) {
-                        userContent.child(getCurrentTime()).setValue("Not Hispanic nor Latino");
+                        list.add("Not Hispanic nor Latino");
                     } else {
-                        userContent.child(getCurrentTime()).setValue("Ethnicity no response");
+                        list.add("Ethnicity no response");
                     }
                     if (race == 1) {
-                        userContent.child(getCurrentTime()).setValue("American");
+                        list.add("American");
                     } else if (race == 2) {
-                        userContent.child(getCurrentTime()).setValue("Asian");
+                        list.add("Asian");
                     } else if (race == 3) {
-                        userContent.child(getCurrentTime()).setValue("Hawaiian");
+                        list.add("Hawaiian");
                     } else if (race == 4) {
-                        userContent.child(getCurrentTime()).setValue("Black");
+                        list.add("Black");
                     } else if (race == 5) {
-                        userContent.child(getCurrentTime()).setValue("White");
+                        list.add("White");
                     } else {
-                        userContent.child(getCurrentTime()).setValue("Race no response");
+                        list.add("Race no response");
                     }
+                    userContent.child(getCurrentTime()).setValue(list);
                     prefSurvey.edit().putInt("Status", 2).apply();
                     Intent intent = new Intent(Survey_opening2.this, SurveyContinue.class);
                     startActivity(intent);
