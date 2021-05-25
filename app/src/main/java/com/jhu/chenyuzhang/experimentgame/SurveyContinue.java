@@ -9,42 +9,56 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SurveyContinue extends AppCompatActivity {
-    TimeDbHelper timeRecordDb;
     int count = 0;
+
     EditText a1;
     EditText a2;
     EditText a3;
     EditText a4;
     EditText a5;
+
     TextView q1;
-    String Q1;
     TextView q2;
-    String Q2;
     TextView q3;
-    String Q3;
     TextView q4;
-    String Q4;
     TextView q5;
-    String Q5;
     TextView instruct;
+
+    String Q1;
+    String Q2;
+    String Q3;
+    String Q4;
+    String Q5;
+
     Button next;
+
     private SharedPreferences prefSurvey;
+    public static final String KEY_USER = "keyUser";
+
     private long backPressedTime;
+    private DatabaseReference userContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_continue);
+
         final String[] questions = getResources().getStringArray(R.array.SurveyQs);
-        timeRecordDb = new TimeDbHelper(this);
 
         prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("survey");
 
 
         instruct = findViewById(R.id.Survey_instruct);
@@ -59,7 +73,6 @@ public class SurveyContinue extends AppCompatActivity {
         a4 = findViewById(R.id.A4);
         a5 = findViewById(R.id.A5);
         next = findViewById(R.id.Next3);
-
 
         instruct.setText(getResources().getString(R.string.instruct1));
         Q1 = questions[count];
@@ -80,20 +93,15 @@ public class SurveyContinue extends AppCompatActivity {
                     if (count >= 21) {
                         instruct.setText(getResources().getString(R.string.instruct2));
                     }
-                    recordEvent(Q1);
-                    recordEvent(a1.getText().toString());
+                    userContent.child(Q1).setValue(a1.getText().toString());
                     a1.setText("");
-                    recordEvent(Q2);
-                    recordEvent(a2.getText().toString());
+                    userContent.child(Q2).setValue(a2.getText().toString());
                     a2.setText("");
-                    recordEvent(Q3);
-                    recordEvent(a3.getText().toString());
+                    userContent.child(Q3).setValue(a3.getText().toString());
                     a3.setText("");
-                    recordEvent(Q4);
-                    recordEvent(a4.getText().toString());
+                    userContent.child(Q4).setValue(a4.getText().toString());
                     a4.setText("");
-                    recordEvent(Q5);
-                    recordEvent(a5.getText().toString());
+                    userContent.child(Q5).setValue(a5.getText().toString());
                     a5.setText("");
                     if (count == 30) {
                         prefSurvey.edit().putInt("Status", 3).apply();
@@ -144,6 +152,7 @@ public class SurveyContinue extends AppCompatActivity {
         }
         return true;
     }
+    /*
     private String recordEvent(String event) {
         String timeString = getCurrentTime();
 
@@ -155,10 +164,12 @@ public class SurveyContinue extends AppCompatActivity {
         return timeString;
     }
 
+     */
+
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            timeRecordDb.close();
+            //timeRecordDb.close();
             finish();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();

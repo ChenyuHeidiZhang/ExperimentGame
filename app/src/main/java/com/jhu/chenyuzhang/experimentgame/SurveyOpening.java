@@ -7,18 +7,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.ScrollView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
 
 public class SurveyOpening extends AppCompatActivity {
-    TimeDbHelper timeRecordDb;
     EditText date;
     EditText age;
     EditText disease;
+
     RadioButton languageYes;
     RadioButton languageNo;
     RadioButton handnessLeft;
@@ -28,22 +31,25 @@ public class SurveyOpening extends AppCompatActivity {
     RadioButton visionNormal;
     RadioButton visionContacts;
     RadioButton visionGlasses;
+
     Button next;
+
     private SharedPreferences prefSurvey;
+    public static final String KEY_USER = "keyUser";
+
     private long backPressedTime;
-
-
     Boolean lan = null;
     Boolean handedness = null;
     Boolean color = null;
     int vision = -1;
+
+    private DatabaseReference userContent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_opening);
-        timeRecordDb = new TimeDbHelper(this);
         date = findViewById(R.id.editTextDate);
         age = findViewById(R.id.editTextNumber);
         disease = findViewById(R.id.disease);
@@ -57,7 +63,15 @@ public class SurveyOpening extends AppCompatActivity {
         visionContacts = findViewById(R.id.Vision_contacts);
         visionGlasses = findViewById(R.id.Vision_glasses);
         next = findViewById(R.id.Next);
+
         prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("survey");
+
 
         languageYes.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -155,34 +169,34 @@ public class SurveyOpening extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (allFilled()) {
-                    recordEvent("Date: " + date.getText().toString());
-                    recordEvent("Age: " + age.getText().toString());
-                    recordEvent("Disease" + disease.getText().toString());
+                    userContent.child("Date").setValue(date.getText().toString());
+                    userContent.child("Age").setValue(age.getText().toString());
+                    userContent.child("Disease").setValue(disease.getText().toString());
                     if (lan != null && lan) {
-                        recordEvent("Native English speaker");
+                        userContent.child(getCurrentTime()).setValue("Native English speaker");
                     } else if (lan != null) {
-                        recordEvent("Not native English speaker");
+                        userContent.child(getCurrentTime()).setValue("Not native English speaker");
                     }
                     if (handedness != null && handedness) {
-                        recordEvent("Left handed");
+                        userContent.child(getCurrentTime()).setValue("Left handed");
                     } else if (handedness != null) {
-                        recordEvent("right handed");
+                        userContent.child(getCurrentTime()).setValue("right handed");
                     }
                     if (color != null && color) {
-                        recordEvent("Is color blind");
+                        userContent.child(getCurrentTime()).setValue("Is color blind");
                     } else if (color != null) {
-                        recordEvent("Is not color blind");
+                        userContent.child(getCurrentTime()).setValue("Is not color blind");
                     }
                     if (vision != -1) {
                         switch (vision) {
                             case 1:
-                                recordEvent("Normal vision");
+                                userContent.child(getCurrentTime()).setValue("Normal vision");
                                 break;
                             case 2:
-                                recordEvent("Wear contacts");
+                                userContent.child(getCurrentTime()).setValue("Wear contacts");
                                 break;
                             case 3:
-                                recordEvent("Wear glasses");
+                                userContent.child(getCurrentTime()).setValue("Wear glasses");
                                 break;
                         }
                     }
@@ -228,6 +242,7 @@ public class SurveyOpening extends AppCompatActivity {
         return true;
     }
 
+    /*
     private String recordEvent(String event) {
         String timeString = getCurrentTime();
 
@@ -239,10 +254,12 @@ public class SurveyOpening extends AppCompatActivity {
         return timeString;
     }
 
+     */
+
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            timeRecordDb.close();
+            //timeRecordDb.close();
             finish();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();

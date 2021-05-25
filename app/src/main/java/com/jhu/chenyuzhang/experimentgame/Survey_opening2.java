@@ -8,15 +8,18 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
 
 public class Survey_opening2 extends AppCompatActivity {
     TextView sex;
     TextView ethnic;
     TextView racial;
+
     RadioButton sex_female;
     RadioButton sex_male;
     RadioButton sex_none;
@@ -29,10 +32,14 @@ public class Survey_opening2 extends AppCompatActivity {
     RadioButton racial_black;
     RadioButton racial_white;
     RadioButton racial_none;
+
     SharedPreferences prefSurvey;
-    TimeDbHelper timeRecordDb;
+
     Button next;
+
     private long backPressedTime;
+    public static final String KEY_USER = "keyUser";
+    private DatabaseReference userContent;
 
     int gender = -1;
     int ethnicity = -1;
@@ -42,7 +49,6 @@ public class Survey_opening2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_opening2);
-        timeRecordDb = new TimeDbHelper(this);
 
         sex = findViewById(R.id.Survey_sex);
         ethnic = findViewById(R.id.Survey_Ethnic);
@@ -63,6 +69,12 @@ public class Survey_opening2 extends AppCompatActivity {
         next = findViewById(R.id.Next5);
 
         prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("survey");
 
         sex_female.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -219,31 +231,31 @@ public class Survey_opening2 extends AppCompatActivity {
             public void onClick(View v) {
                 if (allFilled()) {
                     if (gender == 1) {
-                        recordEvent("Female");
+                        userContent.child(getCurrentTime()).setValue("Female");
                     } else if (gender == 2) {
-                        recordEvent("Male");
+                        userContent.child(getCurrentTime()).setValue("Male");
                     } else {
-                        recordEvent("Sex no response");
+                        userContent.child(getCurrentTime()).setValue("Sex no response");
                     }
                     if (ethnicity == 1) {
-                        recordEvent("Hispanic or Latino");
+                        userContent.child(getCurrentTime()).setValue("Hispanic or Latino");
                     } else if (ethnicity == 2) {
-                        recordEvent("Not Hispanic nor Latino");
+                        userContent.child(getCurrentTime()).setValue("Not Hispanic nor Latino");
                     } else {
-                        recordEvent("Ethnicity no response");
+                        userContent.child(getCurrentTime()).setValue("Ethnicity no response");
                     }
                     if (race == 1) {
-                        recordEvent("American");
+                        userContent.child(getCurrentTime()).setValue("American");
                     } else if (race == 2) {
-                        recordEvent("Asian");
+                        userContent.child(getCurrentTime()).setValue("Asian");
                     } else if (race == 3) {
-                        recordEvent("Hawaiian");
+                        userContent.child(getCurrentTime()).setValue("Hawaiian");
                     } else if (race == 4) {
-                        recordEvent("Black");
+                        userContent.child(getCurrentTime()).setValue("Black");
                     } else if (race == 5) {
-                        recordEvent("White");
+                        userContent.child(getCurrentTime()).setValue("White");
                     } else {
-                        recordEvent("Race no response");
+                        userContent.child(getCurrentTime()).setValue("Race no response");
                     }
                     prefSurvey.edit().putInt("Status", 2).apply();
                     Intent intent = new Intent(Survey_opening2.this, SurveyContinue.class);
@@ -270,6 +282,7 @@ public class Survey_opening2 extends AppCompatActivity {
         return true;
     }
 
+    /*
     private String recordEvent(String event) {
         String timeString = getCurrentTime();
 
@@ -281,10 +294,12 @@ public class Survey_opening2 extends AppCompatActivity {
         return timeString;
     }
 
+     */
+
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            timeRecordDb.close();
+            //timeRecordDb.close();
             finish();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();

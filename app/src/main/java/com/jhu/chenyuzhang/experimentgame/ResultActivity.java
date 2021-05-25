@@ -14,10 +14,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpHorizontal;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question4Activity;
@@ -26,51 +29,47 @@ import com.jhu.chenyuzhang.experimentgame.Questions.Question4Att2OpActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question4Att2OpHorizontal;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-import java.io.IOException;
 
 public class ResultActivity extends AppCompatActivity {
     private double amountWon;
     private String temp;
     private Trial prevTrial;
+    private long backPressedTime;
+    boolean stop;
+    private boolean isDemo;
+    private int trialCounter;
+
     private ImageView imageViewCongrats;
     private TextView textViewSorry;
     private TextView textViewAmount;
     private Button buttonNextTrial;
-    private long backPressedTime;
-    boolean stop;
 
-    private boolean isDemo;
+    private SharedPreferences counter_prefs;
+
+    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
+    public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
     private static final String KEY_DO_DEMO = "keyDoDemo";
+    public static final String KEY_USER = "keyUser";
 
     TrialDbHelper trialInfoDb;
 
-    private SharedPreferences counter_prefs;
-    private int trialCounter;
-    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
-
-    public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
-
-    TimeDbHelper timeRecordDb;
-    Bluetooth bluetooth;
-    private String resultID = "37";
+    private DatabaseReference userContent;
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_result);
+
         stop = false;
+
         imageViewCongrats = findViewById(R.id.image_view_congrats);
         textViewSorry = findViewById(R.id.text_view_sorry);
         textViewAmount = findViewById(R.id.text_view_result_amount);
@@ -78,8 +77,15 @@ public class ResultActivity extends AppCompatActivity {
 
         amountWon = getIntent().getDoubleExtra("EXTRA_AMOUNT_WON", 0);   // get amount won passed as extra
         temp = getIntent().getStringExtra("DATABASE_RECORD_STRING");
+
         SharedPreferences demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("actions");
 
         // update total amount won; only add to totalAmountWon with some probability and if is not in training
         //int rewardPercentage = getResources().getInteger(R.integer.reward_percentage);
@@ -95,35 +101,22 @@ public class ResultActivity extends AppCompatActivity {
             Log.d("TAG-total_amount", Double.toString(totalAmountWon));
         }
 
-        timeRecordDb = new TimeDbHelper(this);
-
         trialInfoDb = new TrialDbHelper(this);
 
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
 
-        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
-
         // get the trial whose result is shown
         prevTrial = trialInfoDb.getTrial(trialCounter - 1);
 
         Handler handler = new Handler();
-        timeRecordDb.insertData(getCurrentTime(), "Blank Blue Screen On");
+        userContent.child(getCurrentTime()).setValue("Blank Blue Screen On");
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                /*
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( "resultID", getCurrentTime());
-                    //bluetooth.sendData(String.format ("%.2f",amountWon));
-                } catch (IOException e) {}
-                 */
-
-                //buttonNextTrial.setVisibility(View.VISIBLE);
                 if (!stop) {
                     displayResult();
-                    timeRecordDb.insertData(getCurrentTime(), temp);
+                    userContent.child(getCurrentTime()).setValue(temp);
                 }
             }
         }, 1000);
@@ -132,16 +125,8 @@ public class ResultActivity extends AppCompatActivity {
         next_handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                /*
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( "resultID", getCurrentTime());
-                    //bluetooth.sendData(String.format ("%.2f",amountWon));
-                } catch (IOException e) {}
-                 */
-
                 buttonNextTrial.setVisibility(View.VISIBLE);
-                timeRecordDb.insertData(getCurrentTime(), "Next Button Displayed");
+                userContent.child(getCurrentTime()).setValue("Next Button Displayed");
             }
         }, 2000);
 
@@ -150,7 +135,6 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
-                timeRecordDb.close();
                 if (!isDemo && (trialCounter - 1) % 160 == 0) {
                     Log.d("160trial", "in if");
                     Log.d("160trial", Integer.toString(trialCounter - 1));
@@ -171,30 +155,6 @@ public class ResultActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-
-                /*
-                if (!isDemo && trialCounter % 3 == 0) {
-                    Log.d("160trial", "in if");
-                    //incrementTrialCounter();
-                    Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
-                    intent_total.putExtra("EXTRA_DISPLAY_ID", 1);  // 1 means to display amount over 4 blocks
-                    startActivity(intent_total);
-
-                } else {
-                    Log.d("160trial", "out of if");
-                    Log.d("160trial", Integer.toString(trialCounter));
-                    //Intent intent = getNextIntent();
-                    //startActivity(intent);
-                }
-
-
-                finish();
-                timeRecordDb.insertData(getCurrentTime(), "Next Tapped");
-                Intent intent = getNextIntent();
-                startActivity(intent);
-                finish();
-
-                 */
             }
         });
     }

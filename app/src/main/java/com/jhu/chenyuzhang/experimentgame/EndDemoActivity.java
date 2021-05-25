@@ -7,12 +7,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
-
 import java.util.Random;
 
 public class EndDemoActivity extends AppCompatActivity {

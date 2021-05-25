@@ -11,11 +11,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SurveySingle extends AppCompatActivity {
-    TimeDbHelper timeRecordDb;
     private SharedPreferences prefSurvey;
+    public static final String KEY_USER = "keyUser";
+    private DatabaseReference userContent;
+
     private long backPressedTime;
     Button next;
     TextView Q1;
@@ -26,20 +31,24 @@ public class SurveySingle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_single);
 
-        timeRecordDb = new TimeDbHelper(this);
         next = findViewById(R.id.Next6);
         Q1 = findViewById(R.id.single_q1);
         a1 = findViewById(R.id.single_a1);
-        prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
 
+        prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("survey");
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!a1.getText().toString().equals("")) {
                     prefSurvey.edit().putInt("Status", 4).apply();
-                    recordEvent(Q1.getText().toString());
-                    recordEvent(a1.getText().toString());
+                    userContent.child(Q1.getText().toString()).setValue(a1.getText().toString());
                     Intent intent = new Intent(SurveySingle.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -52,6 +61,7 @@ public class SurveySingle extends AppCompatActivity {
 
     }
 
+    /*
     private String recordEvent(String event) {
         String timeString = getCurrentTime();
 
@@ -63,10 +73,12 @@ public class SurveySingle extends AppCompatActivity {
         return timeString;
     }
 
+     */
+
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            timeRecordDb.close();
+            //timeRecordDb.close();
             finish();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();

@@ -1,6 +1,7 @@
 package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,30 +9,44 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SurveyMore extends AppCompatActivity {
-    TimeDbHelper timeRecordDb;
     int count = 0;
+
     EditText a1;
     EditText a2;
     EditText a3;
+
     TextView q1;
-    String Q1;
     TextView q2;
-    String Q2;
     TextView q3;
+
+    String Q1;
+    String Q2;
     String Q3;
+
     Button next;
+
+    public static final String KEY_USER = "keyUser";
+    private DatabaseReference userContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_more);
         final String[] questions = getResources().getStringArray(R.array.longquestions);
-        timeRecordDb = new TimeDbHelper(this);
+
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("survey");
 
         q1 = findViewById(R.id.Ql1);
         q2 = findViewById(R.id.Ql2);
@@ -52,15 +67,11 @@ public class SurveyMore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (allFilled()) {
-                    recordEvent(Q1);
-                    recordEvent(a1.getText().toString());
+                    userContent.child(Q1).setValue(a1.getText().toString());
                     a1.setText("");
-                    recordEvent(Q2);
-                    recordEvent(a2.getText().toString());
+                    userContent.child(Q2).setValue(a2.getText().toString());
                     a2.setText("");
-                    recordEvent(Q3);
-                    recordEvent(a3.getText().toString());
-                    //a3.setText("");
+                    userContent.child(Q3).setValue(a3.getText().toString());
                     if (count == 6) {
                         Intent intent = new Intent(SurveyMore.this, SurveySpecial.class);
                         startActivity(intent);
@@ -96,6 +107,7 @@ public class SurveyMore extends AppCompatActivity {
         }
         return true;
     }
+    /*
     private String recordEvent(String event) {
         String timeString = getCurrentTime();
 
@@ -106,6 +118,8 @@ public class SurveyMore extends AppCompatActivity {
         }
         return timeString;
     }
+
+     */
 
     @Override
     public void onBackPressed() {

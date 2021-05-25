@@ -1,7 +1,7 @@
 package com.jhu.chenyuzhang.experimentgame;
 
 import android.content.Intent;
-import android.os.Handler;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +11,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
 
@@ -26,7 +29,9 @@ public class SurveySpecial extends AppCompatActivity {
     EditText a24;
     EditText a31;
     EditText a32;
+
     Button next;
+
     TextView q1;
     TextView q11;
     TextView q12;
@@ -40,13 +45,14 @@ public class SurveySpecial extends AppCompatActivity {
     TextView q3;
     TextView q31;
     TextView q32;
-    TimeDbHelper timeRecordDb;
+
+    public static final String KEY_USER = "keyUser";
+    private DatabaseReference userContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_special);
-        timeRecordDb = new TimeDbHelper(this);
 
         a11 = findViewById(R.id.As11);
         a12 = findViewById(R.id.As12);
@@ -75,41 +81,41 @@ public class SurveySpecial extends AppCompatActivity {
         q2 = findViewById(R.id.Qs2);
         q3 = findViewById(R.id.Qs3);
 
-
         next = findViewById(R.id.Next4);
+
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("survey");
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (allFilled()) {
-                    recordEvent(q1.getText().toString());
-                    recordEvent(q11.getText().toString());
-                    recordEvent(a11.getText().toString());
-                    recordEvent(q12.getText().toString());
-                    recordEvent(a12.getText().toString());
-                    recordEvent(q13.getText().toString());
-                    recordEvent(a13.getText().toString());
-                    recordEvent(q14.getText().toString());
-                    recordEvent(a14.getText().toString());
+                    userContent.child(getCurrentTime()).setValue(q1.getText().toString());
 
-                    recordEvent(q2.getText().toString());
-                    recordEvent(q21.getText().toString());
-                    recordEvent(a21.getText().toString());
-                    recordEvent(q22.getText().toString());
-                    recordEvent(a22.getText().toString());
-                    recordEvent(q23.getText().toString());
-                    recordEvent(a23.getText().toString());
-                    recordEvent(q24.getText().toString());
-                    recordEvent(a24.getText().toString());
+                    userContent.child(q11.getText().toString()).setValue(a11.getText().toString());
+                    userContent.child(q12.getText().toString()).setValue(a12.getText().toString());
+                    userContent.child(q13.getText().toString()).setValue(a13.getText().toString());
+                    userContent.child(q14.getText().toString()).setValue(a14.getText().toString());
 
-                    recordEvent(q3.getText().toString());
-                    recordEvent(q31.getText().toString());
-                    recordEvent(a31.getText().toString());
-                    recordEvent(q32.getText().toString());
-                    recordEvent(a32.getText().toString());
+                    userContent.child(getCurrentTime()).setValue(q2.getText().toString());
+
+                    userContent.child(q21.getText().toString()).setValue(a21.getText().toString());
+                    userContent.child(q22.getText().toString()).setValue(a22.getText().toString());
+                    userContent.child(q23.getText().toString()).setValue(a23.getText().toString());
+                    userContent.child(q24.getText().toString()).setValue(a24.getText().toString());
+
+                    userContent.child(getCurrentTime()).setValue(q3.getText().toString());
+
+                    userContent.child(q31.getText().toString()).setValue(a31.getText().toString());
+                    userContent.child(q32.getText().toString()).setValue(a32.getText().toString());
+
                     Intent intent = new Intent(SurveySpecial.this, SurveyLast.class);
                     startActivity(intent);
-                    timeRecordDb.close();
+                    //timeRecordDb.close();
                     finish();
                 }
             }
@@ -133,6 +139,7 @@ public class SurveySpecial extends AppCompatActivity {
         }
         return true;
     }
+    /*
     private String recordEvent(String event) {
         String timeString = getCurrentTime();
 
@@ -143,6 +150,8 @@ public class SurveySpecial extends AppCompatActivity {
         }
         return timeString;
     }
+
+     */
 
     @Override
     public void onBackPressed() {

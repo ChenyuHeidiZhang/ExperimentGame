@@ -16,6 +16,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
 
@@ -24,30 +28,36 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import static com.jhu.chenyuzhang.experimentgame.MainActivity.getCurrentTime;
+
 public class TotalAmountActivity extends AppCompatActivity {
 
     public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
     public static final String KEY_LAST_TOTAL = "keyLastTotal";
+
     private long backPressedTime;
     private int display_id; // = 1: display total over 4 blocks; = 0: display grand total
-
-    SharedPreferences signinTime;
     String signInDate;
 
-    TimeDbHelper timeRecordDb;
+    SharedPreferences signinTime;
+
+    public static final String KEY_USER = "keyUser";
+    private DatabaseReference userContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_total_amount);
 
-        timeRecordDb = new TimeDbHelper(this);
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("actions");
 
         display_id = getIntent().getIntExtra("EXTRA_DISPLAY_ID", 0);   // get total amount passed as extra
 
@@ -71,11 +81,11 @@ public class TotalAmountActivity extends AppCompatActivity {
             Log.d("My last amount is", String.valueOf(thisAmount));
             if ((int)thisAmount < getResources().getInteger(R.integer.PAYMAX)) {
                 tvTotal.setText("Total Amount Won In This Block: $" + String.format("%.2f", thisAmount));
-                recordEvent("Display 4 block total: $" + thisAmount);
+                userContent.child(getCurrentTime()).setValue("Display 4 block total: $" + thisAmount);
             }
             else {
                 tvTotal.setText("Congratulations!" + "\n" + "You have won the maximum amount possible,\n" + "you will get a payment of $" + getResources().getInteger(R.integer.PAYMAX));
-                recordEvent("Got " + totalAmountWon + "Display 4 block total: $" + getResources().getInteger(R.integer.PAYMAX));
+                userContent.child(getCurrentTime()).setValue("Got " + totalAmountWon + "Display 4 block total: $" + getResources().getInteger(R.integer.PAYMAX));
             }
 
             pref_last.edit().putFloat(KEY_LAST_TOTAL, totalAmountWon).apply();  // update last_total with current_total
@@ -86,12 +96,12 @@ public class TotalAmountActivity extends AppCompatActivity {
             if ((int)totalAmountWon < getResources().getInteger(R.integer.PAYMAX)) {
                 Log.d("not_much", "less");
                 tvTotal.setText("Total Amount Won: $" + String.format("%.2f", totalAmountWon));
-                recordEvent("Display grand total: $" + totalAmountWon);
+                userContent.child(getCurrentTime()).setValue("Display grand total: $" + totalAmountWon);
             }
             else {
                 Log.d("a_lot", "more");
                 tvTotal.setText("Congratulations!" + "\n" + "You have won the maximum amount possible,\n" + "you will get a payment of $" + getResources().getInteger(R.integer.PAYMAX));
-                recordEvent("Got " + totalAmountWon + "Display grand total: $" + getResources().getInteger(R.integer.PAYMAX));
+                userContent.child(getCurrentTime()).setValue("Got " + totalAmountWon + "Display grand total: $" + getResources().getInteger(R.integer.PAYMAX));
             }
 
         }
@@ -99,8 +109,8 @@ public class TotalAmountActivity extends AppCompatActivity {
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timeRecordDb.insertData(signInDate, "Signed in time");
-                timeRecordDb.close();
+                userContent.child("Signed in time").setValue(signInDate);
+                //timeRecordDb.close();
                 if (display_id == 2) {
                     tvTotal.setText(getResources().getString(R.string.inform_sona));
                     tvTotal.setTextColor(Color.RED);
@@ -111,16 +121,8 @@ public class TotalAmountActivity extends AppCompatActivity {
                     next_handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                /*
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( "resultID", getCurrentTime());
-                    //bluetooth.sendData(String.format ("%.2f",amountWon));
-                } catch (IOException e) {}
-                 */
-
                             btNext.setVisibility(View.VISIBLE);
-                            timeRecordDb.insertData(getCurrentTime(), "Next Button Displayed");
+                            userContent.child(getCurrentTime()).setValue("Next Button Displayed");
                         }
                     }, 1500);
                 }
@@ -153,14 +155,17 @@ public class TotalAmountActivity extends AppCompatActivity {
         return formattedDate;
     }
 
+    /*
     private void recordEvent(String event) {    // only record once and close the db
         timeRecordDb.insertData(getCurrentTime(), event);
         timeRecordDb.close();
     }
+
+     */
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            timeRecordDb.close();
+            //timeRecordDb.close();
             finish();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
