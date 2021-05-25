@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,18 +15,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.jhu.chenyuzhang.experimentgame.Bluetooth;
-import com.jhu.chenyuzhang.experimentgame.Database_fail;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jhu.chenyuzhang.experimentgame.EndDemoActivity;
 import com.jhu.chenyuzhang.experimentgame.R;
 import com.jhu.chenyuzhang.experimentgame.ResultActivity;
-import com.jhu.chenyuzhang.experimentgame.TimeDbHelper;
 import com.jhu.chenyuzhang.experimentgame.Trial;
 import com.jhu.chenyuzhang.experimentgame.TrialDbHelper;
-import com.jhu.chenyuzhang.experimentgame.Database_fail;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,34 +33,43 @@ import java.util.HashMap;
 
 public class Question2Att4OpHorizontal extends AppCompatActivity {
     private boolean isDemo;
-    private SharedPreferences counter_prefs;
-    private SharedPreferences demo_prefs;
-    private static final String KEY_DO_DEMO = "keyDoDemo";
-    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
     private CountDownTimer countDownTimer;
-    private TrialDbHelper trialInfoDb;
-    private Trial currentTrial;
-    private static int trialCounter;
     private double amountWon;
-    private double a1, a2, a3, a4;
-    private double p1, p2, p3, p4;
-    private TimeDbHelper timeRecordDb;
-    private ViewAnimator viewAnimator11, viewAnimator12;
-    private ViewAnimator viewAnimator21, viewAnimator22;
-    private ViewAnimator viewAnimator31, viewAnimator32;
-    private ViewAnimator viewAnimator41, viewAnimator42;
-    private Button buttonSelect1, buttonSelect2, buttonSelect3, buttonSelect4;
     private String eventClick = "Clicked";
     private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
-    private String dbTstamp;
     private String not_covered = "";
     private boolean stop;
     private long backPressedTime;
     private long startTime;
+    private Button buttonSelect1, buttonSelect2, buttonSelect3, buttonSelect4;
+
+    private SharedPreferences counter_prefs;
+    private SharedPreferences demo_prefs;
+
+    private static final String KEY_DO_DEMO = "keyDoDemo";
+    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
+    public static final String KEY_USER = "keyUser";
+
+
+    private TrialDbHelper trialInfoDb;
+    private Trial currentTrial;
+    private static int trialCounter;
+
+
+    private double a1, a2, a3, a4;
+    private double p1, p2, p3, p4;
+
+    private ViewAnimator viewAnimator11, viewAnimator12;
+    private ViewAnimator viewAnimator21, viewAnimator22;
+    private ViewAnimator viewAnimator31, viewAnimator32;
+    private ViewAnimator viewAnimator41, viewAnimator42;
+
     // A map from viewAnimator ID to their corresponding handlers.
     private HashMap<Integer, Handler> viewHandlerMap = new HashMap<>();
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
+
+    private DatabaseReference userContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +80,18 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         setContentView(R.layout.activity_question_2att_4op_horizontal);
 
         stop = false;
-        timeRecordDb = new TimeDbHelper(this);
         trialInfoDb = new TrialDbHelper(this);
+
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
-        // 1st 2 items in the string are the event codes sent to the arduino
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("actions");
+
+       // 1st 2 items in the string are the event codes sent to the arduino
         // 3rd item is stored in the database along with the timestamp
         if(a1>0) {
             identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
@@ -145,7 +158,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
 
             buttonEndDemo.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    dbTstamp = recordEvent("Training ended");
+                    userContent.child(getCurrentTime()).setValue("Training ended");
                     endDemo();
                 }
             });
@@ -164,13 +177,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         }.start();
 
         if (isDemo) {
-            dbTstamp = recordEvent("startTrainingTrial " + trialCounter);
+            userContent.child(getCurrentTime()).setValue("startTrainingTrial " + trialCounter);
         } else {
-            dbTstamp = recordEvent("startTrial " + trialCounter);
+            userContent.child(getCurrentTime()).setValue("startTrial " + trialCounter);
         }
 
         ArrayList<String> attributes = currentTrial.getAttributes();
-        dbTstamp = recordEvent("H " + "11 " + attributes.get(0) + " " + attributes.get(1)
+        userContent.child(getCurrentTime()).setValue("H " + "11 " + attributes.get(0) + " " + attributes.get(1)
                 + ", " + "12 " + attributes.get(2) + " " + attributes.get(3)
                 + ", " + "21 " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + "22 " + attributes.get(6) + " " + attributes.get(7)
@@ -249,13 +262,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option1 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option1 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12}, "Option1");
                     showResult(a1, 1);
                 }
                 else {
-                    dbTstamp = recordEvent("Option1 selected");
+                    userContent.child(getCurrentTime()).setValue("Option1 selected");
                 }
             }
         });
@@ -263,13 +276,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option2 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option2 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22}, "Option2");
                     showResult(a2, 2);
                 }
                 else {
-                    dbTstamp = recordEvent("Option2 selected");
+                    userContent.child(getCurrentTime()).setValue("Option2 selected");
                 }
             }
         });
@@ -277,13 +290,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option3 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option3 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32}, "Option3");
                     showResult(a3, 3);
                 }
                 else {
-                    dbTstamp = recordEvent("Option3 selected");
+                    userContent.child(getCurrentTime()).setValue("Option3 selected");
                 }
 
             }
@@ -292,13 +305,13 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option4 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option4 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42}, "Option4");
                     showResult(a4, 4);
                 }
                 else {
-                    dbTstamp = recordEvent("Option4 selected");
+                    userContent.child(getCurrentTime()).setValue("Option4 selected");
                 }
             }
         });
@@ -308,12 +321,12 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         /* on tap, if the attribute view is covered, uncover it for 1s and cover other attributes */
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId()); // get the corresponding identifiers for the clicked attribute
-            dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
+            userContent.child(getCurrentTime()).setValue(codes[2] + ", " + codes[3] + " " + eventClick);
             if (!not_covered.equals("")) {
                 /* if other attributes are uncovered, cover them */
                 for (ViewAnimator v: otherViews) {
                     if (v.getDisplayedChild() == 1) {
-                        dbTstamp = recordEvent(not_covered +  " Early Mask On");
+                        userContent.child(getCurrentTime()).setValue(not_covered +  " Early Mask On");
                         not_covered = "";
                         v.showNext();
                     }
@@ -327,7 +340,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                     tappedView.showNext();  /* uncover */
                 }
             }, 100);
-            dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+            userContent.child(getCurrentTime()).setValue(codes[2] + ", " + codes[3] + " " + eventDisplay);
             not_covered = codes[2] + ", " + codes[3];
 
             Handler handler = new Handler();
@@ -336,7 +349,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1 && !not_covered.equals("")) {
                         tappedView.showNext();
-                        dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
+                        userContent.child(getCurrentTime()).setValue(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                         not_covered = "";
                     }
                 }
@@ -448,6 +461,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         return formattedDate;
     }
 
+    /*
     private String recordEvent(String event) {
         String timeString = getCurrentTime();
 
@@ -460,6 +474,8 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         }
         return timeString;
     }
+
+     */
 
     private boolean checkMinimumTimePassed() {
         if (System.currentTimeMillis() - startTime <
@@ -477,7 +493,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
             for (ViewAnimator a : all) {
                 a.setDisplayedChild(0);
             }
-            recordEvent(not_covered + " Early Mask On");
+            userContent.child(getCurrentTime()).setValue(not_covered + " Early Mask On");
             not_covered = "";
         }
         for (ViewAnimator v : viewAnimators) {
@@ -488,7 +504,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
-        recordEvent(option + " Mask off");
+        userContent.child(getCurrentTime()).setValue(option + " Mask off");
 
         buttonSelect1.setEnabled(false);
         buttonSelect2.setEnabled(false);
@@ -506,7 +522,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
         }
         final String temp = "Option" + option + " selected, $" + amountWon + " won";
 
-        timeRecordDb.close();
+        //timeRecordDb.close();
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -526,7 +542,7 @@ public class Question2Att4OpHorizontal extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            recordEvent("Pressed back button, return to main page");
+            userContent.child(getCurrentTime()).setValue("Pressed back button, return to main page");
             stop = true;
             finish();
         } else {

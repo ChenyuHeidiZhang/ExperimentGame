@@ -80,7 +80,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_question_2att_4op);
 
-        //Get shared preference to judge whether it's demo section
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);
         SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);

@@ -17,17 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.jhu.chenyuzhang.experimentgame.Bluetooth;
-import com.jhu.chenyuzhang.experimentgame.Database_fail;
 import com.jhu.chenyuzhang.experimentgame.EndDemoActivity;
 import com.jhu.chenyuzhang.experimentgame.R;
 import com.jhu.chenyuzhang.experimentgame.ResultActivity;
-import com.jhu.chenyuzhang.experimentgame.TimeDbHelper;
 import com.jhu.chenyuzhang.experimentgame.Trial;
 import com.jhu.chenyuzhang.experimentgame.TrialDbHelper;
 import java.text.DateFormat;
