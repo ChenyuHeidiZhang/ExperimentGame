@@ -24,8 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,9 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
         String pastUser = prefUserName.getString(KEY_USER, "");
 
-        SharedPreferences prefSigninTime = getSharedPreferences("SignIn", MODE_PRIVATE);
-
-         currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
 
         isSameUser = pastUser.equals(name);
 
@@ -150,6 +146,11 @@ public class LoginActivity extends AppCompatActivity {
             userContent = FirebaseDatabase.getInstance().getReference().child("users");
             userContent.child(currentUser.getUid()).child("user").setValue(name);
         }
+
+        prefUserName.edit().putString(KEY_USER, currentUser.getUid()).apply();
+
+        String date = getCurrentDate();
+        userContent.child(currentUser.getUid()).child("Sign_in_date").setValue(date);
 
         String startTimeWorld = getCurrentTime();
         userContent.child(currentUser.getUid()).child("Sign_in_time").setValue(startTimeWorld);

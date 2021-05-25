@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -17,9 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
-
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jhu.chenyuzhang.experimentgame.Bluetooth;
 import com.jhu.chenyuzhang.experimentgame.Database_fail;
 import com.jhu.chenyuzhang.experimentgame.EndDemoActivity;
@@ -28,38 +30,34 @@ import com.jhu.chenyuzhang.experimentgame.ResultActivity;
 import com.jhu.chenyuzhang.experimentgame.TimeDbHelper;
 import com.jhu.chenyuzhang.experimentgame.Trial;
 import com.jhu.chenyuzhang.experimentgame.TrialDbHelper;
-import com.jhu.chenyuzhang.experimentgame.Database_fail;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Random;
-import java.io.IOException;
 
 public class QuestionActivityHorizontal extends AppCompatActivity {
     private boolean isDemo;
-    private static final String KEY_DO_DEMO = "keyDoDemo";
-    private SharedPreferences demo_prefs;
     boolean stop;
-
     private CountDownTimer countDownTimer;
+
+    private static final String KEY_DO_DEMO = "keyDoDemo";
+    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
+    public static final String KEY_USER = "keyUser";
+
+
+    private SharedPreferences demo_prefs;
+    private SharedPreferences counter_prefs;
 
     private TrialDbHelper trialInfoDb;
     private Trial currentTrial;
     public static int trialCounter;
-    private SharedPreferences counter_prefs;
-    private SharedPreferences prefTrialStatus;
-    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
+
     private double amountWon;
     private double a1;
     private double p1;
     private double a2;
     private double p2;
-
-    private TimeDbHelper timeRecordDb;
 
     private ViewAnimator viewAnimator11;  // 11: 1st of first option (top left here)
     private ViewAnimator viewAnimator12;  // 12: 2nd of first option (bottom left)
@@ -70,7 +68,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     private String eventClick = "Clicked";
     private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
-    private String dbTstamp;
     private String not_covered = "";
 
     private long backPressedTime;
@@ -79,34 +76,31 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     // A map from viewAnimator ID to their corresponding handlers.
     private HashMap<Integer, Handler> viewHandlerMap = new HashMap<>();
 
-    Bluetooth bluetooth;
 
     // identifiers maps the id of a attribute view to the code sent when it is uncovered
     // for each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
-    // the code sent when an attribute view is covered after 1s
-    private String identifier_cover = "34";
-    private String identifier_coverEarly = "35";
-    private String choice = "36";
-    private String resultID = "37";
+    private DatabaseReference userContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
-        //prefTrialStatus.edit().putBoolean("trialDone", false).apply();
-
-        stop = false;
-        // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_question_horizontal);
 
+        stop = false;
+
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("actions");
 
         if(a1>0) {
             identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
@@ -147,24 +141,13 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
             buttonEndDemo.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    dbTstamp = recordEvent("Training ended");
-                    /* Bluetooth
-                    try {
-                        // send identifier and timestamp
-                        bluetooth.timeStamper(dbTstamp, "Training ended");
-                    } catch (IOException e) {}
-
-                     */
-                    // end the training; go to EndDemoActivity
+                    userContent.child(getCurrentTime()).setValue("Training ended");
                     endDemo();
                 }
             });
         }
-
-        //startTime = System.nanoTime();    // get relative start time in nanoseconds; not used for now
         startTime = System.currentTimeMillis();
 
-        //finish activity after 1 minute of inactivity
         int timeoutLength = getResources().getInteger(R.integer.trial_timeout_millis);
         countDownTimer = new CountDownTimer(timeoutLength,1000) {
             @Override
@@ -177,41 +160,21 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             }
         }.start();
 
-        timeRecordDb = new TimeDbHelper(this);
         trialInfoDb = new TrialDbHelper(this);
-        bluetooth = new Bluetooth(this.getApplicationContext(), timeRecordDb);
 
         setupTrial();
 
         if (isDemo) {
-            dbTstamp = recordEvent("startTrainingTrial " + trialCounter);
+            userContent.child(getCurrentTime()).setValue("startTrainingTrial " + trialCounter);
         } else {
-            dbTstamp = recordEvent("startTrial " + trialCounter);
+            userContent.child(getCurrentTime()).setValue("startTrial " + trialCounter);
         }
         // store trial parameters in database
         ArrayList<String> attributes = currentTrial.getAttributes();
-        dbTstamp = recordEvent("H " + "11 " + attributes.get(0) + " " + attributes.get(1)
+        userContent.child(getCurrentTime()).setValue("H " + "11 " + attributes.get(0) + " " + attributes.get(1)
                 + ", " + "12 " + attributes.get(2) + " " + attributes.get(3)
                 + ", " + "21 " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + "22 " + attributes.get(6) + " " + attributes.get(7));
-        /* Bluetooth
-        // send trial number + 100 followed by trial parameters followed by 0
-        try {
-            // send trial number
-            bluetooth.timeStamper(Integer.toString(trialCounter +100),dbTstamp);
-            // send attribute magnitudes
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(1))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(3))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(5))*10.0+50.0)));
-            bluetooth.timeStamperJustID(Double.toString(Math.round(Double.parseDouble(attributes.get(7))*10.0+50.0)));
-
-            // end the stream with the identifier 0
-            bluetooth.timeStamperJustID(Integer.toString(0));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-         */
 
         viewAnimator11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -244,44 +207,28 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         buttonSelect1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                /* Bluetooth
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( choice, dbTstamp);
-                } catch (IOException e) {e.printStackTrace();}
-
-                 */
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option1 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option1 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12}, "Option1");
                     showResult(a1, 1);
                 }
                 else {
-                    dbTstamp = recordEvent("Option1 selected");
+                    userContent.child(getCurrentTime()).setValue("Option1 selected");
                 }
             }
         });
 
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
-                //prefTrialStatus.edit().putBoolean("trialDone", true).apply();
-                /* Bluetooth
-                try {
-                    // send identifier and timestamp
-                    bluetooth.timeStamper( choice, dbTstamp);
-                } catch (IOException e) {e.printStackTrace();}
-
-                 */
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option2 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option2 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22}, "Option2");
                     showResult(a2, 2);
                 }
                 else {
-                    dbTstamp = recordEvent("Option2 selected");
+                    userContent.child(getCurrentTime()).setValue("Option2 selected");
                 }
             }
         });
@@ -293,29 +240,14 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId());
 
-            dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
-            /* Bluetooth
-            try {
-                // send identifier and timestamp
-                bluetooth.timeStamper( codes[0], dbTstamp);
-            } catch (IOException e) {}
-
-             */
-
+            userContent.child(getCurrentTime()).setValue(codes[2] + ", " + codes[3] + " " + eventClick);
             //armVSyncHandlerA1();
             if (!not_covered.equals("")) {
                 /* if other attributes are uncovered, cover them */
                 for (ViewAnimator v: otherViews) {
                     if (v.getDisplayedChild() == 1) {
-                        dbTstamp = recordEvent(not_covered + " Early Mask On");
+                        userContent.child(getCurrentTime()).setValue(not_covered + " Early Mask On");
                         not_covered = "";
-                    /* Bluetooth
-                    try {
-                        bluetooth.timeStamper( identifier_coverEarly, dbTstamp);
-                    } catch (IOException e) {}
-
-                     */
-
                         v.showNext();
                     }
                 }
@@ -327,17 +259,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                     tappedView.showNext();  /* uncover */
                 }
             }, 100);
-            dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+            userContent.child(getCurrentTime()).setValue(codes[2] + ", " + codes[3] + " " + eventDisplay);
             not_covered = codes[2] + ", " + codes[3];
-            /* Bluetooth
-            try {
-                bluetooth.timeStamper( codes[1], dbTstamp);
-            } catch (IOException e) {}
-
-             */
-
-
-
             Log.d("Questions", codes[3]);
 
             /* automatically re-cover after 1000ms */
@@ -347,15 +270,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1 && !not_covered.equals("")) {
                         tappedView.showNext();
-                        dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
+                        userContent.child(getCurrentTime()).setValue(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                         not_covered = "";
-                        /* Bluetooth
-                        try {
-                            bluetooth.timeStamper( identifier_cover, dbTstamp);
-                        } catch (IOException e) {}
-
-                         */
-
                     }
                 }
             }, 1000);
@@ -404,33 +320,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
 
         identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "21", attributes.get(4)});
         identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "22", attributes.get(6)});
-
-        // 1st 2 items in the string are the event codes sent to the arduino
-        // 3rd item is stored in the database along with the timestamp
-        /*
-        if(a1>0) {
-            identifiers.put(R.id.view_animator_11, new String[] {"2", "18", "A+1"});
-        }else{
-            identifiers.put(R.id.view_animator_11, new String[] {"6", "22", "A-1"});
-        }
-        if(p1>0) {
-            identifiers.put(R.id.view_animator_12, new String[] {"3", "19", "P+1"});
-        }else{
-            identifiers.put(R.id.view_animator_12, new String[] {"7", "23", "P-1"});
-        }
-
-        if(a2>0) {
-            identifiers.put(R.id.view_animator_21, new String[] {"4", "20", "A+2"});
-        }else{
-            identifiers.put(R.id.view_animator_21, new String[] {"8", "24", "A-2"});
-        }
-        if(p2>0) {
-            identifiers.put(R.id.view_animator_22, new String[] {"5", "21", "P+2"});
-        }else{
-            identifiers.put(R.id.view_animator_22, new String[] {"9", "25", "P-2"});
-        }
-
-         */
     }
 
     private void setAttributesForOneVA(ViewAnimator va, String attType, String att) {
@@ -474,9 +363,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         return formattedDate;
     }
 
+    /*
     private String recordEvent(String event) {
-        //long timeSpan = System.nanoTime() - startTime;
-        //String timeString = String.format("%d", timeSpan / 1000);
         String timeString = getCurrentTime();
 
         if (!timeRecordDb.insertData(timeString, event)) {
@@ -488,6 +376,8 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         }
         return timeString;
     }
+
+     */
 
     private boolean checkMinimumTimePassed() {
         if (System.currentTimeMillis() - startTime <
@@ -505,7 +395,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             for (ViewAnimator a : all) {
                 a.setDisplayedChild(0);
             }
-            recordEvent(not_covered + " Early Mask On");
+            userContent.child(getCurrentTime()).setValue(not_covered + " Early Mask On");
             not_covered = "";
         }
         for (ViewAnimator v : viewAnimators) {
@@ -516,7 +406,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             }
 
         }
-        recordEvent(option + " Mask off");
+        userContent.child(getCurrentTime()).setValue(option + " Mask off");
         buttonSelect1.setEnabled(false);
         buttonSelect2.setEnabled(false);
     }
@@ -530,15 +420,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
             amountWon = 0;
         }
         final String temp = "Option" + option + " selected, $" + amountWon + " won";
-        /* Bluetooth
-        try {
-            // send identifier and timestamp
-            bluetooth.timeStamper( resultID, dbTstamp);
-            //bluetooth.sendData(String.format ("%.2f",amountWon));
-        } catch (IOException e) {}
-
-         */
-        timeRecordDb.close();
 
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();
@@ -561,8 +442,7 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            //timeRecordDb.close();
-            recordEvent("Pressed back button, return to main page");
+            userContent.child(getCurrentTime()).setValue("Pressed back button, return to main page");
             stop = true;
             finish();
         } else {

@@ -15,17 +15,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.jhu.chenyuzhang.experimentgame.Database_fail;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jhu.chenyuzhang.experimentgame.EndDemoActivity;
 import com.jhu.chenyuzhang.experimentgame.R;
 import com.jhu.chenyuzhang.experimentgame.ResultActivity;
-import com.jhu.chenyuzhang.experimentgame.TimeDbHelper;
 import com.jhu.chenyuzhang.experimentgame.Trial;
 import com.jhu.chenyuzhang.experimentgame.TrialDbHelper;
-import com.jhu.chenyuzhang.experimentgame.Database_fail;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,44 +32,50 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class Question2Att4OpActivity extends AppCompatActivity {
-    private CountDownTimer countDownTimer; //Going back to the main page after countDownTime
-    private SharedPreferences demo_prefs; //The shared preference storing the status for demo
-    private SharedPreferences counter_prefs; //Count how many trials have been done
-    private boolean isDemo;
-    private TrialDbHelper trialInfoDb;
-    private Trial currentTrial;
     private static int trialCounter; //A trial counter just for this specific trial
     private double amountWon; //If negative, then it's lose
     private double a1, a2, a3, a4; //Value of choices
     private double p1, p2, p3, p4; //Probability of choices
-    private TimeDbHelper timeRecordDb; //The helper to help insert data
+    private boolean isDemo;
+    private boolean stop; //Record the stopping point of the user (whether a trial is finished)
+    private long backPressedTime; //The time when the user pressed back button
+    private long startTime; //When does the trial start
+
+    private CountDownTimer countDownTimer; //Going back to the main page after countDownTime
+    private TrialDbHelper trialInfoDb;
+    private Trial currentTrial;
+
+    private SharedPreferences demo_prefs; //The shared preference storing the status for demo
+    private SharedPreferences counter_prefs; //Count how many trials have been done
+
     //Animators for attributes
     private ViewAnimator viewAnimator11, viewAnimator12;
     private ViewAnimator viewAnimator21, viewAnimator22;
     private ViewAnimator viewAnimator31, viewAnimator32;
     private ViewAnimator viewAnimator41, viewAnimator42;
     private Button buttonSelect1, buttonSelect2, buttonSelect3, buttonSelect4; //Four selection button
+
     //Actions to record
     private String eventClick = "Clicked";
     private String eventDisplay = "Displayed";
     private String eventTimeOut = "TimeOut, Covered";
-    private String dbTstamp; //Used especially in Bluetooth version to take the return string from the recordEvent() method
     private String not_covered = ""; //Store which attribute(s) is not covered
+
     private static final String KEY_TRIAL_COUNTER = "keyTrialCounter"; //Key for the shared preference storing the number of trials
     private static final String KEY_DO_DEMO = "keyDoDemo"; //Key for the shared preference storing whether the trial is demo
-    private boolean stop; //Record the stopping point of the user (whether a trial is finished)
-    private long backPressedTime; //The time when the user pressed back button
-    private long startTime; //When does the trial start
+    public static final String KEY_USER = "keyUser";
+
     private HashMap<Integer, Handler> viewHandlerMap = new HashMap<>(); //A map from viewAnimator ID to their corresponding handlers.
     //Identifiers maps the id of a attribute view to the code sent when it is uncovered
     //For each attribute, contains two codes before and after the uncover; third code is its alias in the database
     private HashMap<Integer, String[]> identifiers = new HashMap<>();
 
+    private DatabaseReference userContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_question_2att_4op);
@@ -78,11 +83,16 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         //Get shared preference to judge whether it's demo section
         demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);
+        SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
 
-        //initialization
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userName = prefUserName.getString(KEY_USER, "");
+        userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("actions");
+
         stop = false;
-        timeRecordDb = new TimeDbHelper(this);
         trialInfoDb = new TrialDbHelper(this);
+
         // 1st and 2nd items in the string are the event codes sent to the Arduino
         // 3rd item is stored in the database along with the timestamp
         if(a1>0) {
@@ -154,7 +164,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             //If end training button is clicked
             buttonEndDemo.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    dbTstamp = recordEvent("Training ended");
+                    userContent.child(getCurrentTime()).setValue("Training ended");
                     endDemo();
                 }
             });
@@ -162,9 +172,9 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         //Start recording data
         if (isDemo) {
-            dbTstamp = recordEvent("startTrainingTrial " + trialCounter);
+            userContent.child(getCurrentTime()).setValue("startTrainingTrial " + trialCounter);
         } else {
-            dbTstamp = recordEvent("startTrial " + trialCounter);
+            userContent.child(getCurrentTime()).setValue("startTrial " + trialCounter);
         }
 
         //Go back to the entry page after 1 minute of inactivity
@@ -182,7 +192,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         // store trial parameters in database
         ArrayList<String> attributes = currentTrial.getAttributes();
-        dbTstamp = recordEvent("V " + "11 " + attributes.get(0) + " " + attributes.get(1)
+        userContent.child(getCurrentTime()).setValue("V " + "11 " + attributes.get(0) + " " + attributes.get(1)
                 + ", " + "12 " + attributes.get(2) + " " + attributes.get(3)
                 + ", " + "21 " + attributes.get(4) + " " + attributes.get(5)
                 + ", " + "22 " + attributes.get(6) + " " + attributes.get(7)
@@ -256,52 +266,53 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             public void onClick(View V) {
                 //If minimum time not reached, prevent user from clicking
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option1 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option1 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator11, viewAnimator12}, "Option1");
                     showResult(a1, 1);
                 }
                 else {
-                    dbTstamp = recordEvent("Option1 selected");
+                    userContent.child(getCurrentTime()).setValue("Option1 selected");
+
                 }
             }
         });
         buttonSelect2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option2 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option2 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator21, viewAnimator22}, "Option2");
                     showResult(a2, 2);
                 }
                 else {
-                    dbTstamp = recordEvent("Option2 selected");
+                    userContent.child(getCurrentTime()).setValue("Option2 selected");
                 }
             }
         });
         buttonSelect3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option3 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option3 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator31, viewAnimator32}, "Option3");
                     showResult(a3, 3);
                 }
                 else {
-                    dbTstamp = recordEvent("Option3 selected");
+                    userContent.child(getCurrentTime()).setValue("Option3 selected");
                 }
             }
         });
         buttonSelect4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
                 if (checkMinimumTimePassed()) {
-                    dbTstamp = recordEvent("Option4 selected successfully");
+                    userContent.child(getCurrentTime()).setValue("Option4 selected successfully");
                     incrementTrialCounter();
                     unmaskAttributes(new ViewAnimator[]{viewAnimator41, viewAnimator42}, "Option4");
                     showResult(a4, 4);
                 }
                 else {
-                    dbTstamp = recordEvent("Option4 selected");
+                    userContent.child(getCurrentTime()).setValue("Option4 selected");
                 }
             }
         });
@@ -317,12 +328,12 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         if (tappedView.getDisplayedChild() == 0) {
             final String[] codes = identifiers.get(tappedView.getId());
             //Store the action of clicking the attribute
-            dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventClick);
+            userContent.child(getCurrentTime()).setValue(codes[2] + ", " + codes[3] + " " + eventClick);
             //If there is another attribute that is not covered, cover them
             if (!not_covered.equals("")) {
                 for (ViewAnimator v : otherViews) {
                     if (v.getDisplayedChild() == 1) {
-                        dbTstamp = recordEvent(not_covered + " Early Mask On");
+                        userContent.child(getCurrentTime()).setValue(not_covered + " Early Mask On");
                         not_covered = "";
                         v.showNext();
                     }
@@ -338,7 +349,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 }
             }, 100);
             //Store the action of displaying
-            dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventDisplay);
+            userContent.child(getCurrentTime()).setValue(codes[2] + ", " + codes[3] + " " + eventDisplay);
             not_covered = codes[2] + ", " + codes[3];
 
             //Automatically re-cover after 1000ms
@@ -348,7 +359,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 public void run() {
                     if (tappedView.getDisplayedChild() == 1 && !not_covered.equals("")) {
                         tappedView.showNext();
-                        dbTstamp = recordEvent(codes[2] + ", " + codes[3] + " " + eventTimeOut);
+                        userContent.child(getCurrentTime()).setValue(codes[2] + ", " + codes[3] + " " + eventTimeOut);
                         not_covered = "";
                     }
                 }
@@ -478,11 +489,13 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         return formattedDate;
     }
 
+
     /**
      * A helper function to insert data into database
      * @param event The description of the data
      * @return The current time string
      */
+    /*
     private String recordEvent(String event) {
         String timeString = getCurrentTime();
         //If inserting not success, go to the error page
@@ -495,6 +508,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
         }
         return timeString;
     }
+
+     */
 
     /**
      * This is a helper function checking whether the user stay on the trial page for a minimum amount of time
@@ -522,7 +537,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
             for (ViewAnimator a : all) {
                 a.setDisplayedChild(0);
             }
-            recordEvent(not_covered + " Early Mask On");
+            userContent.child(getCurrentTime()).setValue(not_covered + " Early Mask On");
             not_covered = "";
         }
         //Uncover all the attributes from the specific selection
@@ -534,7 +549,8 @@ public class Question2Att4OpActivity extends AppCompatActivity {
                 handler.removeCallbacksAndMessages(null);
             }
         }
-        recordEvent(option + " Mask Off");
+        userContent.child(getCurrentTime()).setValue(option + " Mask Off");
+
         //Disable all the button
         buttonSelect1.setEnabled(false);
         buttonSelect2.setEnabled(false);
@@ -558,7 +574,6 @@ public class Question2Att4OpActivity extends AppCompatActivity {
 
         //Store the display of amount into a string
         final String temp = "Option" + option + " selected, $" + amountWon + " won";
-        timeRecordDb.close();
 
         // Wait for one second during the display of attributes.
         Handler handler = new Handler();
@@ -583,7 +598,7 @@ public class Question2Att4OpActivity extends AppCompatActivity {
     public void onBackPressed() {
         //If pressing twice
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            recordEvent("Pressed back button, return to main page");
+            userContent.child(getCurrentTime()).setValue("Pressed back button, return to main page");
             stop = true;
             finish();
         } else {

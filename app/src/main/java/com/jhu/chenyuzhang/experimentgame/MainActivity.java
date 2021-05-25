@@ -1,35 +1,19 @@
 package com.jhu.chenyuzhang.experimentgame;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.ParcelUuid;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.PopupWindow;
-import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpHorizontal;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question4Activity;
@@ -38,139 +22,51 @@ import com.jhu.chenyuzhang.experimentgame.Questions.Question4Att2OpActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question4Att2OpHorizontal;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivity;
 import com.jhu.chenyuzhang.experimentgame.Questions.QuestionActivityHorizontal;
-
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "Bluetooth_Main";
-    //private final String BluetoothName = "J205";    //HC-06
 
     private static boolean isSignedIn;
-    private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
-    private SharedPreferences prefSignedIn;
-    private static final String KEY_CONNECTED_BLUETOOTH = "keyConnectedBluetooth";
-    private SharedPreferences prefBluetooth;
-    private SharedPreferences prefTrialStatus;
-    private SharedPreferences counter_prefs;
-    private SharedPreferences signinTime;
-
-    private TimeDbHelper timeRecordDb;
-
-    TrialDbHelper trialInfoDb;
-
-    public static int trialCounter;
-    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
-
-    private static final String SPINNER_DEFAULT = "- Bluetooth -";
-    //private Spinner spnBT;
-    private Bluetooth bluetooth;
-    private String signInDate;
-    private SharedPreferences prefSurvey;
-
     private long backPressedTime = 0;
     int survey_stats;
+    public static int trialCounter;
+
+    private SharedPreferences prefSignedIn;
+    private SharedPreferences counter_prefs;
+    private SharedPreferences prefSurvey;
+
+    private static final String KEY_IS_SIGNED_IN = "keyIsSignedIn";
+    public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
+
+    TrialDbHelper trialInfoDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        // hide the status bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
-
-
         setContentView(R.layout.activity_main);
 
-        timeRecordDb = new TimeDbHelper(this);
-
         Button playGame = findViewById(R.id.button_playGame);
-
         Button signOut = findViewById(R.id.button_signOut);
+
+        prefSurvey = getSharedPreferences("Survey", MODE_PRIVATE);
         prefSignedIn = getSharedPreferences("isSignedIn", MODE_PRIVATE);
+        counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
+
         isSignedIn = prefSignedIn.getBoolean(KEY_IS_SIGNED_IN, false);
 
         trialInfoDb = new TrialDbHelper(this);
 
-        prefBluetooth = getSharedPreferences("connectedBluetooth", MODE_PRIVATE);
-        String connectedBluetooth = prefBluetooth.getString(KEY_CONNECTED_BLUETOOTH, "");
-
-        // bluetooth set up
-        bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
-        //spnBT = findViewById(R.id.spinner_bluetooth);  // The dropdown selector for bluetooth devices.
-
-        signinTime = getSharedPreferences("SignIn", MODE_PRIVATE);
-        signInDate = signinTime.getString("date", "");
-
-        prefTrialStatus = getSharedPreferences("theTrialStatus", MODE_PRIVATE);
-        counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
-
-        if (!initiateBT()) {
-            Toast.makeText(this, "No bluetooth adapter available. Cannot connect to Bluetooth.", Toast.LENGTH_SHORT).show();
-        } else {
-            List<String> spnBluetoothItems = getBluetoothItems();
-
-            ArrayAdapter<String> btItemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spnBluetoothItems);
-            btItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            //spnBT.setAdapter(btItemsAdapter);
-
-            /*
-            // Set the currently connected device on the spinner so that we don't need to connect again.
-            if (!"".equals(connectedBluetooth)) {
-                int spnPosition = btItemsAdapter.getPosition(connectedBluetooth);
-                if (spnPosition != -1) {
-                    spnBT.setSelection(spnPosition);
-                }
-            }
-
-             */
-        }
-
-        final Context context = getApplicationContext();
-        /*
-        spnBT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String itemSelected = spnBT.getSelectedItem().toString();
-                // If a Bluetooth module is selected, connect to it.
-                if (!SPINNER_DEFAULT.equals(itemSelected)) {
-                    try {
-                        Toast.makeText(context, "Trying to connect to Bluetooth...", Toast.LENGTH_SHORT).show();
-                        findBT(itemSelected);
-                        Toast.makeText(context, "Bluetooth connected", Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        Toast.makeText(context, "bluetooth not connected", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-         */
-
         playGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                if (prefTrialStatus.getBoolean("trialDone", false)) {
-                    incrementTrialCounter();
-                }
-
-                 */
                 survey_stats = prefSurvey.getInt("Status", 0);
                 Intent intent;
+                /*
                 if (survey_stats == 0) {
                     intent = new Intent(MainActivity.this, SurveyOpening.class);
                 }
@@ -187,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     intent = getNextIntent();
                 }
+
+                 */
+                intent = getNextIntent();
                 startActivity(intent);
             }
         });
@@ -198,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void incrementTrialCounter() {  // increment trial counter
         if (trialCounter == trialInfoDb.getNumRows()){
             trialCounter = 1;       // wrap around if reaches the end
@@ -211,8 +111,6 @@ public class MainActivity extends AppCompatActivity {
     private Trial getNextTrial() {
         SharedPreferences counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
-        // always start with the shared trialCounter, which is initiated to 1 in Login and updated in ResultActivity
-
         return trialInfoDb.getTrial(trialCounter);
     }
 
@@ -243,63 +141,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return intent;
-    }
-
-    /* Returns true if bluetooth adapter is successfully initiated or false otherwise. */
-    public boolean initiateBT() {
-        bluetooth.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(bluetooth.mBluetoothAdapter == null) {
-            Log.d(TAG,"No bluetooth adapter available");
-            return false;
-        } else {
-            Log.d(TAG, "Bluetooth adapter is not null");
-        }
-
-        if(!bluetooth.mBluetoothAdapter.isEnabled()) {
-            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBluetooth, 0);
-        }
-        return true;
-    }
-
-    /*
-     * Returns a list of Bluetooth items to be shown in the dropdown.
-     * Throws NullPointerException if the mBluetoothAdapter is null.
-     */
-    public List<String> getBluetoothItems() throws NullPointerException {
-        Set<BluetoothDevice> pairedDevices = bluetooth.mBluetoothAdapter.getBondedDevices();
-        List<String> bluetoothItems = new ArrayList<>();
-        bluetoothItems.add(SPINNER_DEFAULT);
-        if(pairedDevices.size() > 0) {
-            Log.d(TAG, "pairedDevices>0");
-            for(BluetoothDevice device : pairedDevices) {
-                bluetoothItems.add(device.getName());
-            }
-        }
-        return bluetoothItems;
-    }
-
-    public void findBT(String bluetoothName) throws IOException {
-        Set<BluetoothDevice> pairedDevices = bluetooth.mBluetoothAdapter.getBondedDevices();
-        for(BluetoothDevice device : pairedDevices) {
-            if(device.getName().equals(bluetoothName)) {
-                bluetooth.mmDevice = device;
-
-                ParcelUuid[] uuids = device.getUuids();
-                bluetooth.openBT(uuids);    // call openBT method in bluetooth class
-                /*
-                try {
-                    bluetooth.openBT(uuids);
-                } catch (IOException e) {
-                    Log.d(TAG, "can't openBT with "+ uuids[0].getUuid());
-                }
-                */
-                break;
-            }
-        }
-        Log.d(TAG,"Bluetooth Device Found");
-
-        prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, bluetoothName).apply();
     }
 
     public void checkPasswordDialog() {
@@ -347,24 +188,10 @@ public class MainActivity extends AppCompatActivity {
         return formattedDate;
     }
 
-    public static String getBinaryTime() {
-        String time = getCurrentTime();
-        String binaryTime = "";
-        // sending numbers instead of binary string
-        // 14 characters instead of 32
-        binaryTime = time;
-        return binaryTime;
-    }
-
     @Override
     public void onBackPressed() {
         // Finish the app if the user back presses twice within 2 seconds.
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            // Shutdown bluetooth connection before exiting the app.
-            timeRecordDb.insertData(getCurrentTime(), "Pressed back button, exit the app");
-            timeRecordDb.close();
-            bluetooth.resetConnection();
-            prefBluetooth.edit().putString(KEY_CONNECTED_BLUETOOTH, "").apply();
             finish();
         } else {
             Toast.makeText(MainActivity.this, "Press back again to exit the app", Toast.LENGTH_SHORT).show();
