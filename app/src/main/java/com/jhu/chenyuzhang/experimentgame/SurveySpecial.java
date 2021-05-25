@@ -10,9 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
@@ -88,8 +85,6 @@ public class SurveySpecial extends AppCompatActivity {
 
         SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         String userName = prefUserName.getString(KEY_USER, "");
         userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("survey");
 
@@ -145,19 +140,6 @@ public class SurveySpecial extends AppCompatActivity {
         }
         return true;
     }
-    /*
-    private String recordEvent(String event) {
-        String timeString = getCurrentTime();
-
-        if (!timeRecordDb.insertData(timeString, event)) {
-            Toast.makeText(getApplicationContext(), "Something goes wrong with database", Toast.LENGTH_LONG).show();
-            timeRecordDb.close();
-            finish();
-        }
-        return timeString;
-    }
-
-     */
 
     @Override
     public void onBackPressed() {

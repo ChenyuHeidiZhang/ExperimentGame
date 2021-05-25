@@ -17,8 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jhu.chenyuzhang.experimentgame.EndDemoActivity;
@@ -93,8 +91,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get shared preference of whether this is a training session
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         String userName = prefUserName.getString(KEY_USER, "");
         userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("actions");
 
@@ -358,22 +354,6 @@ public class QuestionActivityHorizontal extends AppCompatActivity {
         String formattedDate= dateFormat.format(date);
         return formattedDate;
     }
-
-    /*
-    private String recordEvent(String event) {
-        String timeString = getCurrentTime();
-
-        if (!timeRecordDb.insertData(timeString, event)) {
-            Toast.makeText(getApplicationContext(), "Something goes wrong with database", Toast.LENGTH_LONG).show();
-            timeRecordDb.close();
-            Intent intent = new Intent(QuestionActivityHorizontal.this, Database_fail.class);
-            startActivity(intent);
-            finish();
-        }
-        return timeString;
-    }
-
-     */
 
     private boolean checkMinimumTimePassed() {
         if (System.currentTimeMillis() - startTime <

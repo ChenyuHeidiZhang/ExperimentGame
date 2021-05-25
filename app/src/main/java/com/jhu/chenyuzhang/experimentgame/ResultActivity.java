@@ -16,9 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpActivity;
@@ -82,8 +79,6 @@ public class ResultActivity extends AppCompatActivity {
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
         SharedPreferences prefUserName = getSharedPreferences("user", MODE_PRIVATE);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         String userName = prefUserName.getString(KEY_USER, "");
         userContent = FirebaseDatabase.getInstance().getReference().child("users").child(userName).child("actions");
 
