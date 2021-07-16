@@ -63,4 +63,16 @@
         android:textColor="@color/black_overlay"
         android:textSize="40sp" />
 
+    <TextView
+        android:id="@+id/trial_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="80dp"
+        android:text="@string/num_trials"
+        android:textColor="#FF9800"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
 </LinearLayout>

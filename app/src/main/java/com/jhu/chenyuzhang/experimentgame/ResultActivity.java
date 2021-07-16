@@ -47,9 +47,10 @@ public class ResultActivity extends AppCompatActivity {
     TrialDbHelper trialInfoDb;
 
     private SharedPreferences counter_prefs;
+    private SharedPreferences prefTraining;
     private int trialCounter;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
-
+    public static final String KEY_TRAINING_NUM = "keyTrainingNum";
     public static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
 
     TimeDbHelper timeRecordDb;
@@ -59,6 +60,7 @@ public class ResultActivity extends AppCompatActivity {
     private String tap_next = "39";
     private String blue_screen = "42";
     boolean stop;
+    private int trainingNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,14 @@ public class ResultActivity extends AppCompatActivity {
         bluetooth_indicator = getIntent().getStringExtra("RESULTID");
         SharedPreferences demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
+
+        if (isDemo) {
+            prefTraining = getSharedPreferences("prefTraining", MODE_PRIVATE);
+            trainingNum = prefTraining.getInt(KEY_TRAINING_NUM, 0);
+            trainingNum++;
+            Log.d("trialCounter", Integer.toString(trainingNum) + " training");
+            prefTraining.edit().putInt(KEY_TRAINING_NUM, trainingNum).apply();
+        }
 
         // update total amount won; only add to totalAmountWon with some probability and if is not in training
         //int rewardPercentage = getResources().getInteger(R.integer.reward_percentage);

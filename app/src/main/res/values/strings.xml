@@ -14,6 +14,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="password">neurons</string>
     <string name="BTonOff">Bluetooth</string>
+    <string name="num_trials"><br>Number of training trials completed: 0</br><br>Number of real trials completed: 0</br></string>
 
     <string name="demo">TRAINING</string>
     <string name="end_demo">END TRAINING</string>
