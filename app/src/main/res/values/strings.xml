@@ -17,6 +17,7 @@
 
     <string name="demo">TRAINING</string>
     <string name="end_demo">END TRAINING</string>
+    <string name="num_trials"><br>Number of training trials completed: 0</br><br>Number of real trials completed: 0</br></string>
     <string name="finish_demo">You\'ve finished the training! \n\nGood luck playing!</string>
 
     <string name="select">Select</string>

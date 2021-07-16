@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jhu.chenyuzhang.experimentgame.Questions.Question2Att4OpActivity;
@@ -59,18 +60,25 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefTrialStatus;
     private SharedPreferences counter_prefs;
     private SharedPreferences signinTime;
+    private SharedPreferences prefTraining;
+    private SharedPreferences demo_prefs;
 
     private TimeDbHelper timeRecordDb;
 
     TrialDbHelper trialInfoDb;
 
     public static int trialCounter;
+    private int trialCompleteCounter;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
-
+    public static final String KEY_TRAINING_NUM = "keyTrainingNum";
     private static final String SPINNER_DEFAULT = "- Bluetooth -";
+    private static final String KEY_DO_DEMO = "keyDoDemo";
     //private Spinner spnBT;
     private Bluetooth bluetooth;
     private String signInDate;
+    private TextView show_trial_num;
+    private boolean isDemo;
+    private int trainingNum;
 
     private long backPressedTime = 0;
 
@@ -87,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
         timeRecordDb = new TimeDbHelper(this);
 
+        demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
+        isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);
+
         Button playGame = findViewById(R.id.button_playGame);
 
         Button signOut = findViewById(R.id.button_signOut);
@@ -97,6 +108,19 @@ public class MainActivity extends AppCompatActivity {
 
         prefBluetooth = getSharedPreferences("connectedBluetooth", MODE_PRIVATE);
         String connectedBluetooth = prefBluetooth.getString(KEY_CONNECTED_BLUETOOTH, "");
+
+        prefTraining = getSharedPreferences("prefTraining", MODE_PRIVATE);
+        trainingNum = prefTraining.getInt(KEY_TRAINING_NUM, 0);
+        show_trial_num = findViewById(R.id.trial_num);
+
+        if (isDemo) {
+            trialCompleteCounter = 0;
+        }
+        else {
+            trialCompleteCounter = trialCounter;
+            Log.d("counter complete", Double.toString(trialCounter));
+        }
+        show_trial_num.setText("Number of training trials completed:" + trainingNum + "\nNumber of real trials completed:" + trialCompleteCounter);
 
         // bluetooth set up
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
@@ -175,6 +199,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        trainingNum = prefTraining.getInt(KEY_TRAINING_NUM, 0);
+        show_trial_num = findViewById(R.id.trial_num);
+        trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
+        isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);
+
+        if (isDemo) {
+            trialCompleteCounter = 0;
+        }
+        else {
+            trialCompleteCounter = trialCounter - 1;
+        }
+        Log.d("counter complete", Double.toString(trialCompleteCounter));
+        show_trial_num.setText("Number of training trials completed:" + trainingNum + "\nNumber of real trials completed:" + trialCompleteCounter);
+    }
+
+
     private void incrementTrialCounter() {  // increment trial counter
         if (trialCounter == trialInfoDb.getNumRows()){
             trialCounter = 1;       // wrap around if reaches the end

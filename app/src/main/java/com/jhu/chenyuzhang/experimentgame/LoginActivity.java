@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String KEY_TOTAL_AMOUNT = "keyTotalAmount";
     public static final String KEY_LAST_TOTAL = "keyLastTotal";
+    public static final String KEY_TRAINING_NUM = "keyTrainingNum";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,9 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences prefLastAmount = getSharedPreferences("lastTotal", MODE_PRIVATE);
         prefLastAmount.edit().putFloat(KEY_LAST_TOTAL, 0).apply();  // total amount 4 blocks ago
+
+        SharedPreferences prefTraining = getSharedPreferences("prefTraining", MODE_PRIVATE);
+        prefTraining.edit().putInt(KEY_TRAINING_NUM, 0).apply();
 
         SharedPreferences prefSigninTime = getSharedPreferences("SignIn", MODE_PRIVATE);
 

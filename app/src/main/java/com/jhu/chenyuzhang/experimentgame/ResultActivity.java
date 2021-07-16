@@ -41,6 +41,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextView textViewAmount;
     private Button buttonNextTrial;
     private long backPressedTime;
+    private int trainingNum;
     boolean stop;
 
     private boolean isDemo;
@@ -49,6 +50,8 @@ public class ResultActivity extends AppCompatActivity {
     TrialDbHelper trialInfoDb;
 
     private SharedPreferences counter_prefs;
+    private SharedPreferences prefTraining;
+    public static final String KEY_TRAINING_NUM = "keyTrainingNum";
     private int trialCounter;
     public static final String KEY_TRIAL_COUNTER = "keyTrialCounter";
 
@@ -69,6 +72,7 @@ public class ResultActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_result);
+
         stop = false;
         imageViewCongrats = findViewById(R.id.image_view_congrats);
         textViewSorry = findViewById(R.id.text_view_sorry);
@@ -79,6 +83,14 @@ public class ResultActivity extends AppCompatActivity {
         temp = getIntent().getStringExtra("DATABASE_RECORD_STRING");
         SharedPreferences demo_prefs = getSharedPreferences("doDemo", MODE_PRIVATE);
         isDemo = demo_prefs.getBoolean(KEY_DO_DEMO, true);   // get whether to initiate a training trial
+
+        if (isDemo) {
+            prefTraining = getSharedPreferences("prefTraining", MODE_PRIVATE);
+            trainingNum = prefTraining.getInt(KEY_TRAINING_NUM, 0);
+            trainingNum++;
+            Log.d("trialCounter", Integer.toString(trainingNum) + " training");
+            prefTraining.edit().putInt(KEY_TRAINING_NUM, trainingNum).apply();
+        }
 
         // update total amount won; only add to totalAmountWon with some probability and if is not in training
         //int rewardPercentage = getResources().getInteger(R.integer.reward_percentage);
@@ -100,6 +112,7 @@ public class ResultActivity extends AppCompatActivity {
 
         counter_prefs = getSharedPreferences("trialCounter", MODE_PRIVATE);
         trialCounter = counter_prefs.getInt(KEY_TRIAL_COUNTER, 1);
+        Log.d("trialCounter", Integer.toString(trialCounter));
 
         bluetooth = new Bluetooth(getApplicationContext(), timeRecordDb);
 
