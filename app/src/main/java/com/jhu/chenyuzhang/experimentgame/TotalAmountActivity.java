@@ -69,7 +69,7 @@ public class TotalAmountActivity extends AppCompatActivity {
             float thisAmount = totalAmountWon - lastAmount;
             Log.d("My last amount is", String.valueOf(thisAmount));
             if ((int)thisAmount < getResources().getInteger(R.integer.PAYMAX)) {
-                tvTotal.setText("Total Amount Won In This Block: $" + String.format("%.2f", thisAmount));
+                tvTotal.setText("Total Amount Won So Far $" + String.format("%.2f", thisAmount));
                 recordEvent("Display 4 block total: $" + thisAmount);
             }
             else {
@@ -95,11 +95,25 @@ public class TotalAmountActivity extends AppCompatActivity {
 
         }
 
+        final Runnable automaticClick = new Runnable() {
+            @Override
+            public void run() {
+                recordEvent("Auto change page after 5 seconds");
+                btNext.performClick();
+            }
+        };
+
+        final Handler automaticNext = new Handler();
+
+        automaticNext.postDelayed(automaticClick,6000);
+
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recordEvent("Next button clicked");
                 timeRecordDb.insertData(signInDate, "Signed in time");
                 timeRecordDb.close();
+                automaticNext.removeCallbacks(automaticClick);
                 if (display_id == 2) {
                     tvTotal.setText(getResources().getString(R.string.inform_sona));
                     tvTotal.setTextColor(Color.RED);
