@@ -95,6 +95,7 @@ public class TotalAmountActivity extends AppCompatActivity {
         final Runnable automaticClick = new Runnable() {
             @Override
             public void run() {
+                recordEvent("Auto change page after 5 seconds");
                 btNext.performClick();
             }
         };
@@ -105,6 +106,7 @@ public class TotalAmountActivity extends AppCompatActivity {
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recordEvent("Next button clicked");
                 timeRecordDb.insertData(signInDate, "Signed in time");
                 timeRecordDb.close();
                 automaticNext.removeCallbacks(automaticClick);
