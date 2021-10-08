@@ -1,4 +1,11 @@
 # ExperimentGame
-**Bluetooth2.0 is created in the summer of 2020.</br>**
-**This version is based on the bluetooth branch, however, this version contains trial counters on the main page**
+**Bluetooth2.1 is created Oct. 8th 2021.</br>**
+**This version is based on the bluetooth2.0 branch and has the following changes:**
 
+**1. We add the feature that on the result page/total amount page, if the user doesn't press "next" button, the page will shift to the next one automatically after 5 seconds (5 seconds after the "next" button is shown)**
+
+**2. We change the block size from 160 to 5**
+
+**3. The wording on the totalAmount result page is changed to "Total Amount Won So Far"**
+
+**4. The wording in the database is updated: if the page is changed automatically, there will be a line "Auto change page after 5 seconds" before "Next button clicked"**
