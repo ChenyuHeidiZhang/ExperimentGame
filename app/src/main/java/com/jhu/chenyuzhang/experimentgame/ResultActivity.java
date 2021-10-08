@@ -157,12 +157,23 @@ public class ResultActivity extends AppCompatActivity {
             }
         }, 2000);
 
+        final Runnable automaticClick = new Runnable() {
+            @Override
+            public void run() {
+                buttonNextTrial.performClick();
+            }
+        };
+
+        final Handler automaticNext = new Handler();
+        automaticNext.postDelayed(automaticClick,6000);
+
         buttonNextTrial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
                 timeRecordDb.close();
+                automaticNext.removeCallbacks(automaticClick);
                 if (!isDemo && (trialCounter - 1) % 160 == 0) {
                     Log.d("160trial", "in if");
                     Log.d("160trial", Integer.toString(trialCounter - 1));
