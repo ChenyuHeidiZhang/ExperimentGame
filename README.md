@@ -1,5 +1,5 @@
 # ExperimentGame
-This branch is based on the original master branch (without survey)
+This branch is based on the original master branch (without survey)</br>
 In this version, the following changes are made:
 
 **1. We add the feature that on the result page/total amount page, if the user doesn't press "next" button, the page will shift to the next one automatically after 5 seconds (5 seconds after the "next" button is shown)**
