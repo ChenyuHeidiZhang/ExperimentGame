@@ -160,8 +160,8 @@ public class ResultActivity extends AppCompatActivity {
         final Runnable automaticClick = new Runnable() {
             @Override
             public void run() {
-                buttonNextTrial.performClick();
                 timeRecordDb.insertData(getCurrentTime(), "Auto change page after 5 seconds");
+                buttonNextTrial.performClick();
             }
         };
 
