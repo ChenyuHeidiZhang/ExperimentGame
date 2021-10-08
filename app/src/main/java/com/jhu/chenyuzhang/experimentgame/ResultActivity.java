@@ -161,6 +161,7 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void run() {
                 buttonNextTrial.performClick();
+                timeRecordDb.insertData(getCurrentTime(), "Auto change page after 5 seconds");
             }
         };
 
@@ -172,9 +173,11 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
+                timeRecordDb.insertData(getCurrentTime(), "Next button clicked");
                 timeRecordDb.close();
                 automaticNext.removeCallbacks(automaticClick);
-                if (!isDemo && (trialCounter - 1) % 160 == 0) {
+
+                if (!isDemo && (trialCounter - 1) % 5 == 0) {
                     Log.d("160trial", "in if");
                     Log.d("160trial", Integer.toString(trialCounter - 1));
                     //incrementTrialCounter();

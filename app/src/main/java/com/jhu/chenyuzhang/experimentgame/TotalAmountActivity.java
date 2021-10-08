@@ -3,6 +3,7 @@ package com.jhu.chenyuzhang.experimentgame;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,7 +50,7 @@ public class TotalAmountActivity extends AppCompatActivity {
         display_id = getIntent().getIntExtra("EXTRA_DISPLAY_ID", 0);   // get total amount passed as extra
 
         TextView tvTotal = findViewById(R.id.text_view_total);
-        Button btNext = findViewById(R.id.button_next);
+        final Button btNext = findViewById(R.id.button_next);
 
         SharedPreferences prefs = getSharedPreferences("totalAmountWon", MODE_PRIVATE);
         float totalAmountWon = prefs.getFloat(KEY_TOTAL_AMOUNT, 0);
@@ -67,7 +68,7 @@ public class TotalAmountActivity extends AppCompatActivity {
             float thisAmount = totalAmountWon - lastAmount;
             Log.d("My last amount is", String.valueOf(thisAmount));
             if ((int)thisAmount < getResources().getInteger(R.integer.PAYMAX)) {
-                tvTotal.setText("Total Amount Won Over 4 Blocks: $" + String.format("%.2f", thisAmount));
+                tvTotal.setText("Total Amount Won So Far: $" + String.format("%.2f", thisAmount));
                 recordEvent("Display 4 block total: $" + thisAmount);
             }
             else {
@@ -91,11 +92,22 @@ public class TotalAmountActivity extends AppCompatActivity {
             }
         }
 
+        final Runnable automaticClick = new Runnable() {
+            @Override
+            public void run() {
+                btNext.performClick();
+            }
+        };
+
+        final Handler automaticNext = new Handler();
+
+        automaticNext.postDelayed(automaticClick,6000);
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timeRecordDb.insertData(signInDate, "Signed in time");
                 timeRecordDb.close();
+                automaticNext.removeCallbacks(automaticClick);
                 if (display_id == 1) {
                     int random = new Random().nextInt(2);
                     Intent intent;
