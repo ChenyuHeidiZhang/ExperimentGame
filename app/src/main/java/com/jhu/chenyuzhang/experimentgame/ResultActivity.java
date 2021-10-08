@@ -152,13 +152,26 @@ public class ResultActivity extends AppCompatActivity {
             }
         }, 2000);
 
+        final Runnable automaticClick = new Runnable() {
+            @Override
+            public void run() {
+                recordEvent("Auto change page after 5 seconds");
+                buttonNextTrial.performClick();
+            }
+        };
+
+        final Handler automaticNext = new Handler();
+        automaticNext.postDelayed(automaticClick,6000);
+
         buttonNextTrial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // at the end of every 4 blocks (160 trials), display the amount won during these 4 blocks;
                 // go to new trial in that activity
+                recordEvent("Next button clicked");
+                automaticNext.removeCallbacks(automaticClick);
                 timeRecordDb.close();
-                if (!isDemo && (trialCounter - 1) % 160 == 0) {
+                if (!isDemo && (trialCounter - 1) % 5 == 0) {
                     //incrementTrialCounter();
                     Log.d("160trial", Integer.toString(trialCounter - 1));
                     Intent intent_total = new Intent(ResultActivity.this, TotalAmountActivity.class);
